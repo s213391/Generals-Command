@@ -119,6 +119,7 @@ namespace DS_BasicCombat
                 CombatManager.instance.Attack(target, damageType, attackDamage, this);
                 currentlyAttacking = true;
                 StartCoroutine(AttackDuration());
+                transform.LookAt(target.transform);
 
                 onAttackEvents.Invoke();
             }

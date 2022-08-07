@@ -238,7 +238,19 @@ namespace RTSModularSystem
                     switch (oc.location)
                     {
                         case ObjectCreationLocation.atPoint:
-                            prefab = Instantiate(oc.prefab, oc.position, Quaternion.Euler(oc.rotation));
+                            Vector3 pos;
+                            if (oc.worldPosition)
+                                pos = oc.position;
+                            else
+                                pos = gameObject.transform.position + oc.position;
+
+                            Quaternion rot; 
+                            if (oc.worldRotation)
+                                rot = Quaternion.Euler(oc.rotation);
+                            else
+                                rot = gameObject.transform.rotation * Quaternion.Euler(oc.rotation);
+
+                            prefab = Instantiate(oc.prefab, pos, rot);
                             break;
 
                         //create object at mouse position and add to mouse tracking list for rest of action
@@ -250,7 +262,7 @@ namespace RTSModularSystem
                             else
                                 ray = inputData.mouseRay;
                             RaycastHit hit;
-                            Physics.Raycast(ray, out hit, 25.0f, oc.mouseLayerMask);
+                            Physics.Raycast(ray, out hit, 50.0f, oc.mouseLayerMask);
 
                             if (hit.point != null)
                                 prefab = Instantiate(oc.prefab, hit.point, Quaternion.identity);
@@ -352,7 +364,7 @@ namespace RTSModularSystem
                         foreach (MouseTrackingObject olm in objectsFollowingMouse)
                         {
                             RaycastHit hit;
-                            Physics.Raycast(ray, out hit, 25.0f, olm.layerMask);
+                            Physics.Raycast(ray, out hit, 50.0f, olm.layerMask);
 
                             //reset rotation every frame
                             olm.obj.transform.rotation = Quaternion.identity;

@@ -71,6 +71,13 @@ namespace DS_BasicCombat
         }
 
 
+        //delete health bar
+        private void OnDestroy()
+        {
+            Destroy(healthBar);
+        }
+
+
         //changes the health value and gives xp to attacker if health goes below zero
         public void HealthChange(DamageType type, int damage, Attacker attacker = null)
         {
@@ -93,6 +100,7 @@ namespace DS_BasicCombat
                 if (currentHealth - finalDamage <= 0)
                 {
                     currentHealth = 0;
+                    Destroy(gameObject);
                     if (attacker != null)
                         attacker.XPChange(xpOnDeath);
                 }

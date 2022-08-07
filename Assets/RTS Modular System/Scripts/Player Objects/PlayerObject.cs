@@ -188,11 +188,11 @@ namespace RTSModularSystem
                 }
 
                 //hide mobile enemy units
-                if (!ownedByLocalPlayer && data.moveable)
+                /*if (!ownedByLocalPlayer && data.moveable)
                 {
                     isHidden = true;
                     renderer.enabled = false;
-                }
+                }*/
             }
 
             //start any actions marked as auto start
@@ -217,7 +217,7 @@ namespace RTSModularSystem
             if (owningPlayer == 9999 || !data.moveable || (RTSPlayer.localPlayer && RTSPlayer.Owns(this)))
                 return;
 
-            bool visible = RTSPlayer.fogSampler.IsVisible(transform.position);
+            /*bool visible = RTSPlayer.fogSampler.IsVisible(transform.position);
 
             if (visible != isHidden)
                 return;
@@ -227,7 +227,7 @@ namespace RTSModularSystem
             //update the state of the renderers
             Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
             foreach (Renderer renderer in renderers)
-                renderer.enabled = visible;
+                renderer.enabled = visible;*/
         }
 
 
