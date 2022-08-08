@@ -100,7 +100,9 @@ namespace DS_BasicCombat
                 if (currentHealth - finalDamage <= 0)
                 {
                     currentHealth = 0;
-                    Destroy(gameObject);
+                    isVisible = false;
+                    healthBar.UpdateMeter();
+                    gameObject.SetActive(false);
                     if (attacker != null)
                         attacker.XPChange(xpOnDeath);
                 }
