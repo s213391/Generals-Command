@@ -262,7 +262,7 @@ namespace RTSModularSystem
                             else
                                 ray = inputData.mouseRay;
                             RaycastHit hit;
-                            Physics.Raycast(ray, out hit, 50.0f, oc.mouseLayerMask);
+                            Physics.Raycast(ray, out hit, 250.0f, oc.mouseLayerMask);
 
                             if (hit.point != null)
                                 prefab = Instantiate(oc.prefab, hit.point, Quaternion.identity);
@@ -364,7 +364,7 @@ namespace RTSModularSystem
                         foreach (MouseTrackingObject olm in objectsFollowingMouse)
                         {
                             RaycastHit hit;
-                            Physics.Raycast(ray, out hit, 50.0f, olm.layerMask);
+                            Physics.Raycast(ray, out hit, 250.0f, olm.layerMask);
 
                             //reset rotation every frame
                             olm.obj.transform.rotation = Quaternion.identity;

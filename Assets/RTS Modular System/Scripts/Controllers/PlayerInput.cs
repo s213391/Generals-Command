@@ -86,13 +86,13 @@ namespace RTSModularSystem
             mouseRay = mainCam.ScreenPointToRay(Input.mousePosition);
 
             //check the terrain to get the world space position of the mouse
-            if (Physics.Raycast(mouseRay, out RaycastHit terrainHit, 50.0f, terrainLayers))
+            if (Physics.Raycast(mouseRay, out RaycastHit terrainHit, 250.0f, terrainLayers))
                 mouseWorldSpace = terrainHit.point;
             else
                 mouseWorldSpace = nullState;
 
             //check player objects to see if any are under the mouse
-            if (Physics.Raycast(mouseRay, out RaycastHit objectHit, 50.0f, objectLayers))
+            if (Physics.Raycast(mouseRay, out RaycastHit objectHit, 250.0f, objectLayers))
                 objectUnderMouse = objectHit.collider.GetComponentInParent<PlayerObject>();
             else
                 objectUnderMouse = null;

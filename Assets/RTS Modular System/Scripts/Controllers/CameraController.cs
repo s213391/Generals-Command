@@ -18,9 +18,9 @@ namespace RTSModularSystem
 
         [Header("Zoom")]
         public float zoomSpeed = 2.0f;
-        [Min(0.1f)] [Tooltip("The minimum distance from target object the camera can be. \nIncrease if camera clips through ground")]
+        [Range(0.1f, 200.0f)] [Tooltip("The minimum distance from target object the camera can be. \nIncrease if camera clips through ground")]
         public float minZoom = 2.0f;
-        [Tooltip("The maximum distance from target object the camera can be. \nDecrease if world disappears or mouse tracking stops working")]
+        [Range(0.1f, 200.0f)] [Tooltip("The maximum distance from target object the camera can be. \nDecrease if world disappears or mouse tracking stops working")]
         public float maxZoom = 10.0f;
         [Tooltip("How much of an effect that zooming out has on speeding up camera movement. \n0 or less will disable this feature")]
         public float speedUpOnZoomOut = 0.2f;
@@ -32,17 +32,13 @@ namespace RTSModularSystem
         [Tooltip("Uses the mouse position as well as a safe zone and a read zone to determine how fast to move the camera.")]
         public bool moveWithMouse;
 
-        [Tooltip("The percentage width of the screen that moving the mouse in won't move the camera sideways. \nValue of 1 will only move camera if mouse is outside of window")]
-        [Range(0f, 1f)]
+        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1f)] [Tooltip("The percentage width of the screen that moving the mouse in won't move the camera sideways. \nValue of 1 will only move camera if mouse is outside of window")]
         public float xSafeZone = 0.6f;
-        [Tooltip("The percentage height of the screen that moving the mouse in won't move the camera up or down. \nValue of 1 will only move camera if mouse is outside of window")]
-        [Range(0f, 1f)]
+        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1f)] [Tooltip("The percentage height of the screen that moving the mouse in won't move the camera up or down. \nValue of 1 will only move camera if mouse is outside of window")]
         public float ySafeZone = 0.8f;
-        [Tooltip("The percentage of the screen width that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
-        [Range(0f, 1.5f)]
+        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1.5f)] [Tooltip("The percentage of the screen width that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
         public float xReadZone = 1.0f;
-        [Tooltip("The percentage of the screen heigth that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
-        [Range(0f, 1.5f)]
+        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1.5f)] [Tooltip("The percentage of the screen heigth that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
         public float yReadZone = 1.0f;
         [Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
         public bool moveWhenOutsideOfReadZone;
