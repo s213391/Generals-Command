@@ -211,7 +211,7 @@ namespace RTSModularSystem
 
 
         //enables/disables camera movement
-        public void ToggeCameraInputs(bool enabled)
+        public void ToggleCameraInputs(bool enabled)
         {
             movementEnabled = enabled;
         }
