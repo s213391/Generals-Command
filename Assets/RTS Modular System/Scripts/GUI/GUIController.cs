@@ -27,11 +27,8 @@ namespace RTSModularSystem
         {
             if (instance != null)
             {
-                //set gui active based on platform
-                if (SystemInfo.deviceType == DeviceType.Desktop)
-                    instance.transform.GetChild(0).gameObject.SetActive(true);
-                else
-                    instance.transform.GetChild(1).gameObject.SetActive(true);
+                //set gui active
+                instance.transform.GetChild(0).gameObject.SetActive(true);
 
                 //initialise all components of the gui
                 guiResources = instance.GetComponentInChildren<GUIResources>();
