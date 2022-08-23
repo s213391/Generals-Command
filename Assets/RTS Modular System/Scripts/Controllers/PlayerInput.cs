@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 using DS_Selection;
 
 using Selectable = DS_Selection.Selectable;
@@ -21,8 +20,6 @@ namespace RTSModularSystem
         private LayerMask objectLayers;
         [SerializeField]
         private LayerMask terrainLayers;
-        [SerializeField]
-        private LayerMask uiLayers;
         [SerializeField]
         private float dragDelay = 0.1f;
 
@@ -73,17 +70,25 @@ namespace RTSModularSystem
         //read and handle global player input while publicly exposing values for other scripts to use this frame
         public void OnUpdate()
         {
-            //check inputs from mouse or single finger touch
-            if (device == DeviceType.Desktop || (device == DeviceType.Handheld && Input.touchCount == 1))
+            if (device == DeviceType.Desktop)
             {
                 CheckUnderScreenPoint();
                 HandleSelectionInputs();
                 HandleMovementInputs();
             }
-            else
+            else if (device == DeviceType.Handheld)
             {
-                objectUnderScreenPoint = null;
-                screenPointWorldSpace = nullState;
+                //only check if the screen is being touched with one finger
+                if (Input.touchCount == 1)
+                {
+                    CheckUnderScreenPoint();
+                    HandleSelectionInputs();
+                    HandleMovementInputs();
+                }
+                else
+                {
+                    objectUnderScreenPoint = null;
+                }
             }
         }
 
@@ -91,37 +96,18 @@ namespace RTSModularSystem
         //get information involving the mouse and anything under it
         private void CheckUnderScreenPoint()
         {
-            //set up appropriate ray from camera based on device and return if over UI
             if (device == DeviceType.Desktop)
-            {
                 screenRay = mainCam.ScreenPointToRay(Input.mousePosition);
-
-                if (EventSystem.current.IsPointerOverGameObject())
-                {
-                    screenPointWorldSpace = nullState;
-                    objectUnderScreenPoint = null;
-                    return;
-                }
-            }
             else if (device == DeviceType.Handheld)
-            {
                 screenRay = mainCam.ScreenPointToRay(Input.GetTouch(0).position);
 
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                {
-                    screenPointWorldSpace = nullState;
-                    objectUnderScreenPoint = null;
-                    return;
-                }
-            }
-
-            //check the terrain to get the world space position of the cursor or touch
+            //check the terrain to get the world space position of the mouse
             if (Physics.Raycast(screenRay, out RaycastHit terrainHit, 250.0f, terrainLayers))
                 screenPointWorldSpace = terrainHit.point;
             else
                 screenPointWorldSpace = nullState;
 
-            //check player objects to see if any are under the cursor or touch
+            //check player objects to see if any are under the mouse
             if (Physics.Raycast(screenRay, out RaycastHit objectHit, 250.0f, objectLayers))
                 objectUnderScreenPoint = objectHit.collider.GetComponentInParent<PlayerObject>();
             else
@@ -154,8 +140,8 @@ namespace RTSModularSystem
                 up = touch.phase == TouchPhase.Ended;
             }
             
-            //if the touch/click began this frame and is not over UI, turn on selection box
-            if (down && screenPointWorldSpace != nullState)
+            //if the touch/click began this frame, set initial values
+            if (down)
             {
                 selectionBox.sizeDelta = Vector2.zero;
                 selectionImage.enabled = true;
@@ -167,7 +153,7 @@ namespace RTSModularSystem
                     originalPos = Input.GetTouch(0).rawPosition;
             }
             //if the touch/click is still down, update timer and selection box
-            else if (held && selectionImage.enabled == true)
+            else if (held)
             {
                 downTime += Time.deltaTime;
                 if (downTime >= dragDelay)
@@ -192,7 +178,7 @@ namespace RTSModularSystem
                 }
             }
             //if the touch/click ended this frame, check if anything has been selected
-            else if (up && selectionImage.enabled == true)
+            else if (up)
             {
                 //only check the shift key mechanic on desktop
                 bool shift = false;
