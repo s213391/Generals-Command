@@ -278,7 +278,7 @@ namespace RTSModularSystem
 
 
         //enables/disables selection and movement
-        public void ToggleSelectionInputs(bool enabled)
+        public void ToggeSelectionInputs(bool enabled)
         {
             selectionEnabled = enabled;
         }
