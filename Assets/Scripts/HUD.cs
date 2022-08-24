@@ -13,13 +13,13 @@ public class HUD : MonoBehaviour
     public GameObject selectionToggleMinimised;
     public GameObject selectedMenuExpanded;
     public GameObject selectedMenuMinimised;
-    public GameObject pauseMenuExpanded;
-    public GameObject pauseMenuMinimised;
+    public GameObject ingameMenuExpanded;
+    public GameObject ingameMenuMinimised;
     public GameObject addToGroupMenuExpanded;
     public GameObject addToGroupMenuMinimised;
 
-    public CameraController cameraController;
-    public PlayerInput playerInput;
+    private CameraController cameraController;
+    private PlayerInput playerInput;
     
 
     //opens/closes the minimap window while hiding/showing the button respectively
@@ -52,6 +52,11 @@ public class HUD : MonoBehaviour
         selectionToggleExpanded.SetActive(selectionOn);
         selectionToggleMinimised.SetActive(!selectionOn);
 
+        if (!playerInput)
+            playerInput = PlayerInput.instance;
+        if (!cameraController)
+            cameraController = Camera.main.GetComponent<CameraController>();
+
         playerInput.ToggleSelectionInputs(selectionOn);
         cameraController.ToggleCameraInputs(!selectionOn);
     }
@@ -70,10 +75,10 @@ public class HUD : MonoBehaviour
 
 
     //opens the pause menu
-    public void TogglePauseMenu(bool open)
+    public void ToggleInGameMenu(bool open)
     {
-        pauseMenuExpanded.SetActive(open);
-        pauseMenuMinimised.SetActive(!open);
+        ingameMenuExpanded.SetActive(open);
+        ingameMenuMinimised.SetActive(!open);
     }
 
 

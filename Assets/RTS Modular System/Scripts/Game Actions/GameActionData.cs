@@ -21,7 +21,6 @@ namespace RTSModularSystem
         public Sprite icon;
         [Range(1, 9)] [Tooltip("The value of interruption that is required to stop this action early. \nDefault interruption values: \n1: Starting a new action/ deselecting a player object \n3: The stop actions button \n8: 'Killing' the Player Object performing this action \n9: Destroying the Player Object script")]
         public int interruptionTolerance = 1;
-        //TBC// public int importance; //how much the utility AI will prioritise this action by default
 
         [Header("Action Effects")]
         [Tooltip("GameObjects that will be spawned at the start of this action")]

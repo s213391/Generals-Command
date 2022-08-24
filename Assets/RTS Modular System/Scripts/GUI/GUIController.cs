@@ -12,6 +12,8 @@ namespace RTSModularSystem
         private static GUIActionBar guiBuildings;
         private static GUISelected guiSelected;
 
+        private static GameObject deviceGUICanvas;
+
         //Ensure only one GUIController exists
         public void Init()
         {
@@ -28,17 +30,18 @@ namespace RTSModularSystem
             if (instance != null)
             {
                 //set gui active based on platform
-                if (SystemInfo.deviceType == DeviceType.Desktop)
-                    instance.transform.GetChild(0).gameObject.SetActive(true);
-                else
-                    instance.transform.GetChild(1).gameObject.SetActive(true);
+                //if (SystemInfo.deviceType == DeviceType.Desktop)
+                    //deviceGUICanvas = instance.transform.GetChild(0).gameObject;
+                //else
+                    deviceGUICanvas = instance.transform.GetChild(1).gameObject;
+                deviceGUICanvas.SetActive(true);
 
                 //initialise all components of the gui
-                guiResources = instance.GetComponentInChildren<GUIResources>();
+                guiResources = deviceGUICanvas.GetComponentInChildren<GUIResources>();
                 guiResources.Init();
-                guiBuildings = instance.GetComponentInChildren<GUIActionBar>();
+                guiBuildings = deviceGUICanvas.GetComponentInChildren<GUIActionBar>();
                 guiBuildings.Init();
-                guiSelected = instance.GetComponentInChildren<GUISelected>();
+                guiSelected = deviceGUICanvas.GetComponentInChildren<GUISelected>();
                 guiSelected.Init();
             }
         }

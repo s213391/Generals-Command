@@ -119,7 +119,8 @@ namespace RTSModularSystem
         private void ToggleMenu(bool open)
         {
             //show/hide the menu
-            panel.enabled = open;
+            if (panel)
+                panel.enabled = open;
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(open);
