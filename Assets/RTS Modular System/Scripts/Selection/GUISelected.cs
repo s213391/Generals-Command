@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace DS_Selection
 {
@@ -13,7 +14,7 @@ namespace DS_Selection
         [SerializeField]
         private GridLayoutGroup selectedObjects; //a layout group that displays all selected objects
 
-        private Image panel; //the image component of this GUI object
+        private UIBehaviour[] UIElements; //every ui element on this gameobject
         private bool panelOpen; //whether the selected GUI panel is open
 
 
@@ -30,8 +31,8 @@ namespace DS_Selection
         //set up and hide the panel
         public void Init()
         {
-            panel = GetComponent<Image>();
             selectedObjects = GetComponentInChildren<GridLayoutGroup>();
+            UIElements = GetComponents<UIBehaviour>();
 
             //clear all pre-existing children
             for (int i = selectedObjects.transform.childCount - 1; i >= 0; i--)
@@ -45,8 +46,8 @@ namespace DS_Selection
         private void TogglePanel(bool open)
         {
             panelOpen = open;
-            if (panel)
-                panel.enabled = open;
+            foreach (MonoBehaviour mb in UIElements)
+                mb.enabled = open;
 
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -58,7 +59,7 @@ namespace DS_Selection
         //add a new sprite to the selected panel
         public void AddSelectedIcon(Selectable selectable)
         {
-            if (!panelOpen)
+            if (!panelOpen && SelectionController.instance.selectedObjects.Count > 1)
                 TogglePanel(true);
 
             Instantiate(selectedIconPrefab, selectedObjects.transform).GetComponent<SelectedIcon>().Init(selectable);

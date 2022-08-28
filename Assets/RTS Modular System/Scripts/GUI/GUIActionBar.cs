@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 using DS_Selection;
 
@@ -15,7 +16,7 @@ namespace RTSModularSystem
         public GameObject actionButtonPrefab; //the button prefab that will be created for each action
 
         private GameObject actionsGridLayout; //the grid layout that holds all the action buttons
-        private Image panel; //this gameobject's image component
+        private UIBehaviour[] UIElements; //every ui element on this gameobject
 
         private bool menuOpen; //whether the menu is open or not
         private PlayerObject currentObject; //the currently selected object
@@ -24,7 +25,7 @@ namespace RTSModularSystem
         //create a button for each build action in the build manager
         public void Init()
         {
-            panel = GetComponent<Image>();
+            UIElements = GetComponents<UIBehaviour>();
             actionsGridLayout = GetComponentInChildren<GridLayoutGroup>().gameObject;
 
             //hide menu initially
@@ -119,8 +120,9 @@ namespace RTSModularSystem
         private void ToggleMenu(bool open)
         {
             //show/hide the menu
-            if (panel)
-                panel.enabled = open;
+            foreach (MonoBehaviour mb in UIElements)
+                mb.enabled = open;
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(open);
