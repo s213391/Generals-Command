@@ -133,9 +133,6 @@ namespace RTSModularSystem
         //handle the selection of player objects, either through single click or drag
         private void HandleSelectionInputs()
         {
-            if (!selectionEnabled)
-                return;
-
             //set false to allow movement orders if nothing is selected this frame
             selectedThisFrame = false;
 
@@ -209,6 +206,9 @@ namespace RTSModularSystem
                 //only check the box if the touch/click has been down for a set delay
                 if (downTime > dragDelay)
                 {
+                    if (!selectionEnabled)
+                        return;
+                    
                     selectedThisFrame = true;
 
                     //create a bounding box in screen space and select every owned player object in the world space of that box
@@ -281,10 +281,8 @@ namespace RTSModularSystem
             //check if an object is already at the clicked point and set it as the movement target
             if (objectUnderScreenPoint == null)
                 unitArrangement.AssignDestination(moveables, screenPointWorldSpace);
-            else if (RTSPlayer.Owns(objectUnderScreenPoint))
-                unitArrangement.AssignDestination(moveables, objectUnderScreenPoint.transform.position, false, objectUnderScreenPoint);
             else
-                unitArrangement.AssignDestination(moveables, objectUnderScreenPoint.transform.position, true, objectUnderScreenPoint);
+                unitArrangement.AssignDestination(moveables, objectUnderScreenPoint.transform.position, !RTSPlayer.Owns(objectUnderScreenPoint), objectUnderScreenPoint);
         }
 
 
