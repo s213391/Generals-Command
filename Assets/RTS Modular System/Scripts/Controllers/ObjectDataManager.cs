@@ -53,6 +53,9 @@ namespace RTSModularSystem
         [Tooltip("The resource income that each player will start with")]
         public List<ResourceQuantity> initialIncome;
 
+        //holds reference to every created player object separated into owning player and then data name
+        private Dictionary<uint, Dictionary<string, List<PlayerObject>>> allPlayerObjects = new Dictionary<uint, Dictionary<string, List<PlayerObject>>>();
+
 
         //Ensure only one ObjectDataManager exists, then convert objectData into dictionary
         void Awake()
@@ -148,6 +151,81 @@ namespace RTSModularSystem
         public static Vector3 ClientRotation()
         {
             return instance.clientRotation;
+        }
+
+
+        public static void CreateNewPlayerObjectDictionary(uint playerID)
+        {
+            if (instance.allPlayerObjects.ContainsKey(playerID))
+                return;
+
+            instance.allPlayerObjects.Add(playerID, new Dictionary<string, List<PlayerObject>>());
+            foreach (KeyValuePair<PlayerObjectType, List<PlayerObjectData>> kvPair in instance.objects)
+                foreach (PlayerObjectData poData in kvPair.Value)
+                    instance.allPlayerObjects[playerID].Add(poData.name, new List<PlayerObject>());
+
+            Debug.Log("ObjectDataManager: New player dictionary created: " + playerID.ToString());
+        }
+
+
+        public static void AddPlayerObject(uint playerID, PlayerObject po)
+        {
+            Debug.Log("ObjectDataManager: Adding new object: " + playerID.ToString() + ", " + po.data.name);
+
+            if (!instance.allPlayerObjects.ContainsKey(playerID))
+                CreateNewPlayerObjectDictionary(playerID);
+
+            if (instance.allPlayerObjects[playerID].ContainsKey(po.data.name))
+                instance.allPlayerObjects[playerID][po.data.name].Add(po);
+            else
+                Debug.Log("ObjectDataManager: Trying to create player object type that does not exist in dictionary: " + playerID.ToString() + ", " + po.data.name);
+        }
+
+
+        public static List<PlayerObject> GetPlayerObjectsOfType(string typeName, uint playerID = 0)
+        {
+            //return all objects of type, regardless of ownership
+            if (playerID == 0)
+            {
+                List<PlayerObject> objectsOfType = new List<PlayerObject>();
+                foreach (KeyValuePair<uint, Dictionary<string, List<PlayerObject>>> kvPair in instance.allPlayerObjects)
+                {
+                    if (kvPair.Value.ContainsKey(typeName))
+                        objectsOfType.AddRange(kvPair.Value[typeName]);
+                    else
+                        Debug.Log("ObjectDataManager: Trying to retrieve player object type that does not exist in dictionary: " + kvPair.Key.ToString() + ", " + typeName);
+
+                    return objectsOfType;
+                }
+            }
+            //return all objects of type that are owned by the given player
+            else if (instance.allPlayerObjects.ContainsKey(playerID))
+            {
+                if (instance.allPlayerObjects[playerID].ContainsKey(typeName))
+                    return instance.allPlayerObjects[playerID][typeName];
+                else
+                    Debug.Log("ObjectDataManager: Trying to retrieve player object type that does not exist in dictionary: " + playerID.ToString() + ", " + typeName);
+            }
+
+            //player doesn't exist, return null
+            Debug.Log("ObjectDataManager: Trying to retrieve player object from player not in dictionary: " + playerID.ToString());
+            return null;
+        }
+
+
+        public static void RemovePlayerObject(uint playerID, PlayerObject po)
+        {
+            Debug.Log("ObjectDataManager: Removing new object: " + playerID.ToString() + ", " + po.data.name);
+
+            if (instance.allPlayerObjects.ContainsKey(playerID))
+            {
+                if (instance.allPlayerObjects[playerID].ContainsKey(po.data.name))
+                    instance.allPlayerObjects[playerID][po.data.name].Remove(po);
+                else
+                    Debug.Log("ObjectDataManager: Trying to remove player object type that does not exist in dictionary");
+            }
+            else
+                Debug.Log("ObjectDataManager: Trying to remove player object from player not in dictionary");
         }
     }
 }

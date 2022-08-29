@@ -35,6 +35,7 @@ namespace RTSModularSystem
         private Vector3 nullState = new Vector3(-99999, -99999, -99999);
         private DeviceType device;
         private bool selectionEnabled = true;
+        private bool selectedThisFrame = false;
 
         public Vector3 screenPointWorldSpace { get; private set; }
         public PlayerObject objectUnderScreenPoint { get; private set; }
@@ -134,7 +135,10 @@ namespace RTSModularSystem
         {
             if (!selectionEnabled)
                 return;
-            
+
+            //set false to allow movement orders if nothing is selected this frame
+            selectedThisFrame = false;
+
             //track if the touch/click is up, down or being held
             bool down = false;
             bool held = false;
@@ -205,6 +209,8 @@ namespace RTSModularSystem
                 //only check the box if the touch/click has been down for a set delay
                 if (downTime > dragDelay)
                 {
+                    selectedThisFrame = true;
+
                     //create a bounding box in screen space and select every owned player object in the world space of that box
                     Bounds bounds = new Bounds(selectionBox.anchoredPosition, selectionBox.sizeDelta);
                     for (int i = 0; i < selectables.Count; i++)
@@ -227,6 +233,7 @@ namespace RTSModularSystem
                     if (objectUnderScreenPoint != null && RTSPlayer.Owns(objectUnderScreenPoint))
                     {
                         Selectable selectable = objectUnderScreenPoint.GetComponent<Selectable>();
+                        selectedThisFrame = true;
 
                         if (shift)
                         {
@@ -241,7 +248,7 @@ namespace RTSModularSystem
                             selectionController.Select(selectable);
                         }
                     }
-                    else if (!shift)
+                    else if (device == DeviceType.Desktop && !shift)
                         selectionController.DeselectAll();
                 }
 
@@ -257,7 +264,7 @@ namespace RTSModularSystem
         //check if any selected objects need to be given a navmesh destination
         private void HandleMovementInputs()
         {
-            if (!selectionEnabled || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState)
+            if (!selectionEnabled || selectedThisFrame || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState)
                 return;
             if (device == DeviceType.Desktop && !Input.GetKeyUp(KeyCode.Mouse1))
                 return;

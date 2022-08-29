@@ -6,6 +6,8 @@ namespace RTSModularSystem
 {
     public class CameraController : MonoBehaviour
     {
+        public static CameraController instance { get; private set; }
+        
         [Header("Position")]
         [Tooltip("Target object for the camera, and what the camera controller movement options actually move.\nCan be swapped to change the camera view between different positions and even follow moving objects")]
         public GameObject target;
@@ -33,6 +35,8 @@ namespace RTSModularSystem
         public bool moveWithMouse;
         [Tooltip("Uses touch screen inputs to move the camera. \nSingle finger to move, Double finger pinch to zoom.")]
         public bool moveWithTouch;
+        [Tooltip("How many pixels of movement must be detected before moving the camera")]
+        public float minTouchDragDistance = 0.05f;
 
         [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1f)] [Tooltip("The percentage width of the screen that moving the mouse in won't move the camera sideways. \nValue of 1 will only move camera if mouse is outside of window")]
         public float xSafeZone = 0.6f;
@@ -48,6 +52,17 @@ namespace RTSModularSystem
         private float currentDistance; //the current distance camera sits behind the target in unity units
         private bool movementEnabled = true; //whether the camera inputs are enabled
         public DeviceType device; //the type of device the game is running on
+
+
+        //set up singleton
+        void Awake()
+        {
+            if (instance != null && instance != this)
+                Destroy(this);
+            else
+                instance = this;
+        }
+
 
         //set the camera's initial position and angle
         public void Init(bool isHost)
@@ -166,7 +181,7 @@ namespace RTSModularSystem
                 if (moveWithTouch && Input.touchCount == 1)
                 {
                     Touch finger = Input.GetTouch(0);
-                    if (finger.phase == TouchPhase.Moved)
+                    if (finger.phase == TouchPhase.Moved && finger.deltaPosition.magnitude >= minTouchDragDistance)
                     {
                         dx -= finger.deltaPosition.x / finger.deltaTime;
                         dz -= finger.deltaPosition.y / finger.deltaTime;

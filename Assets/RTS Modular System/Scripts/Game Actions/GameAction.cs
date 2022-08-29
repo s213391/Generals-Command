@@ -242,7 +242,7 @@ namespace RTSModularSystem
                             if (oc.worldPosition)
                                 pos = oc.position;
                             else
-                                pos = gameObject.transform.position + oc.position;
+                                pos = gameObject.transform.position + gameObject.transform.rotation * oc.position;
 
                             Quaternion rot; 
                             if (oc.worldRotation)

@@ -1,5 +1,7 @@
 using UnityEngine;
+using System.Collections.Generic;
 using RTSModularSystem;
+using DS_Selection;
 
 public class HUD : MonoBehaviour
 {
@@ -7,10 +9,9 @@ public class HUD : MonoBehaviour
     public GameObject minimapMinimised;
     public GameObject groupsMenuExpanded;
     public GameObject groupsMenuMinimised;
-    public GameObject actionsMenuExpanded;
-    public GameObject actionsMenuMinimised;
     public GameObject selectionToggleExpanded;
     public GameObject selectionToggleMinimised;
+    public GameObject selectionCanvas;
     public GameObject selectedMenuExpanded;
     public GameObject selectedMenuMinimised;
     public GameObject ingameMenuExpanded;
@@ -38,19 +39,15 @@ public class HUD : MonoBehaviour
     }
 
 
-    //opens/closes the actions window while hiding/showing the button respectively
-    public void ToggleActionsMenu(bool open)
-    {
-        actionsMenuExpanded.SetActive(open);
-        actionsMenuMinimised.SetActive(!open);
-    }
-
-
     //switches single touch input between camera movement and dragging a selection box
     public void ToggleSelection(bool selectionOn)
     {
         selectionToggleExpanded.SetActive(selectionOn);
+        selectionCanvas.SetActive(selectionOn);
         selectionToggleMinimised.SetActive(!selectionOn);
+
+        if (!selectionOn)
+            SelectionController.instance.DeselectAll();
 
         if (!playerInput)
             playerInput = PlayerInput.instance;
@@ -87,5 +84,39 @@ public class HUD : MonoBehaviour
     {
         addToGroupMenuExpanded.SetActive(open);
         addToGroupMenuMinimised.SetActive(!open);
+    }
+
+
+    //finds and selects the closest engineer
+    public void FindAvailableEngineer()
+    { 
+        List<PlayerObject> engineers = ObjectDataManager.GetPlayerObjectsOfType("Engineer", RTSPlayer.GetID());
+        Vector3 camPos = CameraController.instance.target.transform.position;
+
+        float closestDist = 9999.9f;
+        PlayerObject closest = null;
+
+        foreach (PlayerObject engineer in engineers)
+        {
+            float dist = (engineer.transform.position - camPos).magnitude;
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closest = engineer;
+            }
+        }
+
+        if (closest != null)
+        {
+            SelectionController.instance.DeselectAll();
+            SelectionController.instance.Select(closest.GetComponent<Selectable>());
+        }
+    }
+
+
+    //quits the game
+    public void Quit()
+    { 
+        Application.Quit();
     }
 }

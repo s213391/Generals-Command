@@ -40,7 +40,7 @@ namespace Mirror.Discovery
 
         void DrawGUI()
         {
-            GUILayout.BeginArea(new Rect(10, 10, 300, 500));
+            GUILayout.BeginArea(new Rect(200, 100, 600, 1000));
             GUILayout.BeginHorizontal();
 
             if (GUILayout.Button("Find Servers"))
@@ -84,7 +84,7 @@ namespace Mirror.Discovery
 
         void StopButtons()
         {
-            GUILayout.BeginArea(new Rect(10, 40, 100, 25));
+            GUILayout.BeginArea(new Rect(100, 40, 200, 50));
 
             // stop host if host mode
             if (NetworkServer.active && NetworkClient.isConnected)

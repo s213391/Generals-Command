@@ -30,6 +30,18 @@ namespace RTSModularSystem
         //set up static reference to the local player, but keep non-local players for commands/clientRPCs 
         public void Start()
         {
+            //move player to starting position based on host status
+            if (isServer == isLocalPlayer)
+            {
+                transform.position = ObjectDataManager.HostPosition();
+                transform.eulerAngles = ObjectDataManager.HostRotation();
+            }
+            else
+            {
+                transform.position = ObjectDataManager.ClientPosition();
+                transform.eulerAngles = ObjectDataManager.ClientRotation();
+            }
+
             //only initialise if this is the local player, else disable
             if (isLocalPlayer)
             {
@@ -45,18 +57,6 @@ namespace RTSModularSystem
         private void Init()
         {
             localPlayer = this;
-
-            //move player to starting position based on host status
-            if (isServer == isLocalPlayer)
-            {
-                transform.position = ObjectDataManager.HostPosition();
-                transform.eulerAngles = ObjectDataManager.HostRotation();
-            }
-            else
-            {
-                transform.position = ObjectDataManager.ClientPosition();
-                transform.eulerAngles = ObjectDataManager.ClientRotation();
-            }
 
             identity = GetComponent<NetworkIdentity>();
             gameAction = GetComponent<GameAction>();

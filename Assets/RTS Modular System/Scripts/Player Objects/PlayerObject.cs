@@ -195,6 +195,9 @@ namespace RTSModularSystem
                 }*/
             }
 
+            //add to object data manager for quick reference
+            ObjectDataManager.AddPlayerObject(owningPlayer, this);
+
             //start any actions marked as auto start
             if (ownedByLocalPlayer)
                 foreach (StartingAction sa in data.actions)
@@ -251,6 +254,8 @@ namespace RTSModularSystem
         //stop rendering object, and prevent further interaction
         private void ZeroHealth()
         {
+            ObjectDataManager.RemovePlayerObject(owningPlayer, this);
+            
             //if object does not persist, destroy completely, else destroy as much as possible
             if (!data.persistAtZeroHealth)
             {
