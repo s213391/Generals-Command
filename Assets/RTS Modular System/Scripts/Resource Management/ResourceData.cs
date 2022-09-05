@@ -6,10 +6,11 @@ namespace DS_Resources
     //replace these with the names of every resource used in the game
     public enum ResourceType
     {
-        Food,
         Money,
         Scrap,
-        Oil
+        Oil,
+        MechanicalParts,
+        Uranium
     }
 
 
