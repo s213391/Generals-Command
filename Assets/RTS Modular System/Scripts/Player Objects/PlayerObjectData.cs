@@ -29,7 +29,7 @@ namespace RTSModularSystem
         [ConditionalHide("attacker", "true")] [Tooltip("What kind of attack this object does")]
         public AttackType attackType = AttackType.melee;
         [ConditionalHide("attacker", "true")] [Tooltip("What type of damage this attck does")]
-        public DamageType damageType = DamageType.damage1;
+        public DamageType damageType = DamageType.light;
         [ConditionalHide("attacker", "true")] [Tooltip("Which units this attacker targets")]
         public TargetType targetType = TargetType.enemy;
         [ConditionalHide("attacker", "true")] [Tooltip("How much damage this object does in a single attack")]

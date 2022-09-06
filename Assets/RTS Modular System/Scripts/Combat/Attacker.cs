@@ -8,10 +8,10 @@ namespace DS_BasicCombat
     //the different types of damage that each have different resistances
     public enum DamageType
     {
-        damage1,
-        damage2,
-        damage3,
-        damage4
+        light,
+        sustained,
+        heavy,
+        artillery
     }
 
 
@@ -40,7 +40,7 @@ namespace DS_BasicCombat
     {
         [Header("Attack settings")]
         public AttackType attackType = AttackType.melee;
-        public DamageType damageType = DamageType.damage1;
+        public DamageType damageType = DamageType.light;
         public TargetType targetType = TargetType.enemy;
         public int attackDamage = 5;
         public float attackRange = 0.5f;
