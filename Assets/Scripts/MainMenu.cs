@@ -4,17 +4,6 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public enum MenuState
-    {
-        Logos,
-        MainMenu,
-        HostGame,
-        JoinGame,
-        OptionsMenu,
-        Credits,
-        QuitGame
-    }
-
     public GameObject mainMenuScreen;
     public GameObject hostGameScreen;
     public GameObject joinGameScreen;
@@ -22,15 +11,10 @@ public class MainMenu : MonoBehaviour
     public GameObject creditsScreen;
     public GameObject quitGameScreen;
 
-    [SerializeField]
-    //currently active screen
-    private MenuState menuState;
-
 
     //start showing logo animation
     void Start()
     {
-        menuState = MenuState.Logos;
         CloseMenus();
         StartCoroutine(MainMenuWait());
     }
@@ -52,7 +36,6 @@ public class MainMenu : MonoBehaviour
     public void OpenMainMenu()
     { 
         CloseMenus();
-        menuState = MenuState.MainMenu;
         mainMenuScreen.SetActive(true);
     }
 
@@ -61,7 +44,6 @@ public class MainMenu : MonoBehaviour
     public void OpenHostGameMenu()
     {
         mainMenuScreen.SetActive(false);
-        menuState = MenuState.HostGame;
         hostGameScreen.SetActive(true);
     }
 
@@ -70,7 +52,6 @@ public class MainMenu : MonoBehaviour
     public void OpenJoinGameMenu()
     {
         mainMenuScreen.SetActive(false);
-        menuState = MenuState.JoinGame;
         joinGameScreen.SetActive(true);
     }
 
@@ -79,7 +60,7 @@ public class MainMenu : MonoBehaviour
     public void OpenOptionsMenu()
     {
         mainMenuScreen.SetActive(false);
-        menuState = MenuState.OptionsMenu;
+        Settings.Load();
         optionsMenuScreen.SetActive(true);
     }
 
@@ -88,7 +69,6 @@ public class MainMenu : MonoBehaviour
     public void OpenCreditsMenu()
     {
         mainMenuScreen.SetActive(false);
-        menuState = MenuState.Credits;
         creditsScreen.SetActive(true);
     }
 
@@ -97,7 +77,6 @@ public class MainMenu : MonoBehaviour
     public void OpenQuitGameMenu()
     {
         mainMenuScreen.SetActive(false);
-        menuState = MenuState.QuitGame;
         quitGameScreen.SetActive(true);
     }
 
