@@ -15,7 +15,15 @@ MonoBehaviour:
   objectType: 0
   attackable: 1
   maxHealth: 1000
-  resistances: []
+  resistances:
+  - damageType: 0
+    percentageResistance: 75
+  - damageType: 1
+    percentageResistance: 50
+  - damageType: 2
+    percentageResistance: 0
+  - damageType: 3
+    percentageResistance: 50
   xpOnDeath: 0
   persistAtZeroHealth: 0
   attacker: 0

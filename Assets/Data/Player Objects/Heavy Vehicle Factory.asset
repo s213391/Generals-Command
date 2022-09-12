@@ -10,37 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a783e4ada470300448b05d52e35aa215, type: 3}
-  m_Name: Rifleman
+  m_Name: Heavy Vehicle Factory
   m_EditorClassIdentifier: 
-  objectType: 1
+  objectType: 0
   attackable: 1
-  maxHealth: 100
+  maxHealth: 500
   resistances:
   - damageType: 0
-    percentageResistance: 15
+    percentageResistance: 70
   - damageType: 1
-    percentageResistance: 0
+    percentageResistance: 50
   - damageType: 2
     percentageResistance: 0
   - damageType: 3
-    percentageResistance: 0
+    percentageResistance: 25
   xpOnDeath: 0
   persistAtZeroHealth: 0
-  attacker: 1
-  attackType: 1
+  attacker: 0
+  attackType: 0
   damageType: 0
   targetType: 0
   attackDamage: 10
-  attackRange: 15
-  attackDuration: 0.4
+  attackRange: 20
+  attackDuration: 0.2
   canAutoTarget: 1
-  autoTargetRange: 5
+  autoTargetRange: 8
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
   xpRequirement: -1
-  moveable: 1
-  moveSpeed: 5
+  moveable: 0
+  moveSpeed: 10
   agentHeight: 2
   agentWidth: 0.5
   pathfingPriority: 50

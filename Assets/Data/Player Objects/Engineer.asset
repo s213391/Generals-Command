@@ -14,8 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 1
   attackable: 1
-  maxHealth: 250
-  resistances: []
+  maxHealth: 1
+  resistances:
+  - damageType: 0
+    percentageResistance: 0
+  - damageType: 1
+    percentageResistance: 0
+  - damageType: 2
+    percentageResistance: 0
+  - damageType: 3
+    percentageResistance: 0
   xpOnDeath: 0
   persistAtZeroHealth: 0
   attacker: 0
@@ -32,7 +40,7 @@ MonoBehaviour:
   nextLevel: {fileID: 0}
   xpRequirement: -1
   moveable: 1
-  moveSpeed: 5
+  moveSpeed: 10
   agentHeight: 2
   agentWidth: 0.5
   pathfingPriority: 50
