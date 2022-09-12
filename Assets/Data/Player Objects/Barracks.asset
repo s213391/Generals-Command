@@ -14,8 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 0
   attackable: 1
-  maxHealth: 1000
-  resistances: []
+  maxHealth: 500
+  resistances:
+  - damageType: 0
+    percentageResistance: 30
+  - damageType: 1
+    percentageResistance: 10
+  - damageType: 2
+    percentageResistance: 0
+  - damageType: 3
+    percentageResistance: 10
   xpOnDeath: 0
   persistAtZeroHealth: 0
   attacker: 0
