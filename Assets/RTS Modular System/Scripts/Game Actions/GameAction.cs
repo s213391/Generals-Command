@@ -19,11 +19,6 @@ namespace RTSModularSystem
 
             if (actionData.clientSide)
             {
-                //check if player needs a certain amount of resources
-                if (actionData.mustHaveTheseResources.Count > 0)
-                    if (!RTSPlayer.CanAffordCost(actionData.mustHaveTheseResources, functionCaller.owningPlayer))
-                        return;
-                
                 //use empty data, it won't be checked
                 NetworkInputData inputData = new NetworkInputData { mouseRay = new Ray() };
                 StartCoroutine(PerformAction(actionData, functionCaller.gameObject, inputData, owningPlayer));
@@ -54,11 +49,6 @@ namespace RTSModularSystem
         {
             GameActionData actionData = NetworkToData(networkData, functionCaller);
             PlayerObject playerObject = functionCaller.GetComponent<PlayerObject>();
-
-            //check if player needs a certain amount of resources
-            if (actionData.mustHaveTheseResources.Count > 0)
-                if (!RTSPlayer.CanAffordCost(actionData.mustHaveTheseResources, playerObject.owningPlayer, owningPlayer))
-                    return;
 
             StartCoroutine(PerformAction(actionData, functionCaller, inputData, owningPlayer));
             playerObject.SetInterrupt(1);
@@ -200,6 +190,14 @@ namespace RTSModularSystem
         }
 
 
+        [Command]
+        //command to spawn a clientside object on the server
+        private void CmdSpawnObject(GameObject gameObject, uint owningPlayer)
+        {
+            NetworkServer.Spawn(gameObject);
+            InitialiseNewPlayerObject(gameObject, owningPlayer);
+        }
+
 
         //run the action in a coroutine until interrupted or exit condition reached
         private IEnumerator PerformAction(GameActionData data, GameObject gameObject, NetworkInputData inputData, uint owningPlayer)
@@ -228,6 +226,7 @@ namespace RTSModularSystem
                 
                 List<MouseTrackingObject> objectsFollowingMouse = new List<MouseTrackingObject>();
                 List<GameObject> objectsToBeDestroyed = new List<GameObject>();
+                List<GameObject> objectsToBeSpawned = new List<GameObject>();
                 List<SnapPoint> snapPoints = new List<SnapPoint>();
 
                 //instantiate all objects immediately
@@ -292,6 +291,15 @@ namespace RTSModularSystem
 
                         case ObjectCreationLocation.atObject:
                             Transform spawn = gameObject.transform;
+                            foreach (Transform child in spawn)
+                            {
+                                if (child.tag == "Spawnpoint")
+                                {
+                                    spawn = child;
+                                    break;
+                                }
+                            }
+
                             prefab = Instantiate(oc.prefab, spawn.position, spawn.rotation);
                             break;
                     }
@@ -299,6 +307,8 @@ namespace RTSModularSystem
                     {
                         if (oc.destroyAfterAction)
                             objectsToBeDestroyed.Add(prefab);
+                        if (oc.spawnAfterAction)
+                            objectsToBeSpawned.Add(prefab);
                         if (!data.clientSide)
                         {
                             //objects created serverside need to be created on all clients
@@ -322,16 +332,62 @@ namespace RTSModularSystem
                 bool firstTime = true;
                 while (playerObject != null && playerObject.interrupt < data.interruptionTolerance)
                 {
+                    //for checking success state through the action
+                    bool success = true;
+
                     //exit conditions can be accidentally triggered by the input that started this action, delay exit checking for one frame
                     if (!firstTime)
                     {
                         duration += Time.deltaTime;
 
+                        //get the mouse's position and update any objects following it
+                        //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
+                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0)
+                        {
+                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                            //not every object will have the same LayerMask, so the raycast will need to be done for each
+                            foreach (MouseTrackingObject olm in objectsFollowingMouse)
+                            {
+                                RaycastHit hit;
+                                Physics.Raycast(ray, out hit, 250.0f, olm.layerMask);
+
+                                //reset rotation every frame
+                                olm.obj.transform.rotation = Quaternion.identity;
+
+                                if (hit.collider != null)
+                                {
+                                    olm.obj.transform.position = hit.point;
+
+                                    //if this uses snapping, check each snappoint to see if any are in range
+                                    if (olm.snapping)
+                                    {
+                                        bool snapped = false;
+                                        foreach (SnapPoint snapPoint in snapPoints)
+                                        {
+                                            Transform snapTrans = snapPoint.transform;
+                                            if ((snapTrans.position - hit.point).magnitude <= olm.snapDistance)
+                                            {
+                                                olm.obj.transform.position = snapTrans.position;
+                                                olm.obj.transform.rotation = snapTrans.rotation;
+                                                snapped = true;
+                                                break;
+                                            }
+                                        }
+                                        //only update success if a snapping object has not snapped
+                                        if (!snapped)
+                                            success = false;
+                                    }
+                                }
+                            }
+                        }
+
                         ActionEnd actionEnd = EndConditionActive(data.endConditions, duration);
                         if (actionEnd.type != ActionEndType.none)
                         {
                             //evaluate conditions to choose whether this action will end as a success or a failure
-                            bool success = actionEnd.successfulEnd;
+                            if (success)
+                                success = actionEnd.successfulEnd;
                             if (success)
                                 success = EvaluateSuccess(data);
 
@@ -340,8 +396,13 @@ namespace RTSModularSystem
                                 success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
 
                             if (success)
+                            {
                                 foreach (GameActionData action in data.nextActionsOnSuccess)
                                     StartAction(action, playerObject, owningPlayer);
+                                if (data.clientSide)
+                                    foreach (GameObject go in objectsToBeSpawned)
+                                        CmdSpawnObject(go, owningPlayer);
+                            }
                             else
                             {
                                 foreach (GameActionData action in data.nextActionsOnFailure)
@@ -353,44 +414,6 @@ namespace RTSModularSystem
                             break;
                         }
                     }
-
-                    //get the mouse's position and update any objects following it
-                    //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
-                    if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0)
-                    {
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                        //not every object will have the same LayerMask, so the raycast will need to be done for each
-                        foreach (MouseTrackingObject olm in objectsFollowingMouse)
-                        {
-                            RaycastHit hit;
-                            Physics.Raycast(ray, out hit, 250.0f, olm.layerMask);
-
-                            //reset rotation every frame
-                            olm.obj.transform.rotation = Quaternion.identity;
-
-                            if (hit.collider != null)
-                            {
-                                olm.obj.transform.position = hit.point;
-
-                                //if this uses snapping, check each snappoint to see if any are in range
-                                if (olm.snapping)
-                                {
-                                    foreach (SnapPoint snapPoint in snapPoints)
-                                    {
-                                        Transform snapTrans = snapPoint.transform;
-                                        if ((snapTrans.position - hit.point).magnitude <= olm.snapDistance)
-                                        {
-                                            olm.obj.transform.position = snapTrans.position;
-                                            olm.obj.transform.rotation = snapTrans.rotation;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     if (firstTime)
                         firstTime = false;
                     yield return null;

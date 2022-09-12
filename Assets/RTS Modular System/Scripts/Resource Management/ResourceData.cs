@@ -29,6 +29,7 @@ namespace DS_Resources
     public class ResourceData : ScriptableObject
     {
         public ResourceType resourceType;
+        public uint ticksPerIncome = 1;
         public Sprite guiSprite; 
     }
 }

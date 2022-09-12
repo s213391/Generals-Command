@@ -35,18 +35,18 @@ namespace RTSModularSystem
         public bool moveWithMouse;
         [Tooltip("Uses touch screen inputs to move the camera. \nSingle finger to move, Double finger pinch to zoom.")]
         public bool moveWithTouch;
-        [Tooltip("How many pixels of movement must be detected before moving the camera")]
+        [ConditionalHide("moveWithTouch", "true"), Tooltip("How many pixels of movement must be detected before moving the camera")]
         public float minTouchDragDistance = 0.05f;
 
-        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1f)] [Tooltip("The percentage width of the screen that moving the mouse in won't move the camera sideways. \nValue of 1 will only move camera if mouse is outside of window")]
+        [ConditionalHide("moveWithMouse", "true"), Range(0f, 1f), Tooltip("The percentage width of the screen that moving the mouse in won't move the camera sideways. \nValue of 1 will only move camera if mouse is outside of window")]
         public float xSafeZone = 0.6f;
-        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1f)] [Tooltip("The percentage height of the screen that moving the mouse in won't move the camera up or down. \nValue of 1 will only move camera if mouse is outside of window")]
+        [ConditionalHide("moveWithMouse", "true"), Range(0f, 1f), Tooltip("The percentage height of the screen that moving the mouse in won't move the camera up or down. \nValue of 1 will only move camera if mouse is outside of window")]
         public float ySafeZone = 0.8f;
-        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1.5f)] [Tooltip("The percentage of the screen width that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
+        [ConditionalHide("moveWithMouse", "true"), Range(0f, 1.5f), Tooltip("The percentage of the screen width that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
         public float xReadZone = 1.0f;
-        [ConditionalHide("moveWithMouse", "true")] [Range(0f, 1.5f)] [Tooltip("The percentage of the screen heigth that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
+        [ConditionalHide("moveWithMouse", "true"), Range(0f, 1.5f), Tooltip("The percentage of the screen heigth that the mouse position will be tracked in.\nValues above 1 allow tracking outside of window")]
         public float yReadZone = 1.0f;
-        [Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
+        [ConditionalHide("moveWithMouse", "true"), Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
         public bool moveWhenOutsideOfReadZone;
 
         private float currentDistance; //the current distance camera sits behind the target in unity units

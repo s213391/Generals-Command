@@ -25,10 +25,10 @@ namespace RTSModularSystem
         [Header("Action Effects")]
         [Tooltip("GameObjects that will be spawned at the start of this action")]
         public List<ObjectCreation> objectsToSpawn;
-        [Tooltip("This will not affect the players resources, but prevents the action starting until the player has more resources than this threshold")]
-        public List<ResourceQuantity> mustHaveTheseResources;
         [Tooltip("Any changes to player resources this action causes. \nPositive quantities for production or bonuses, Negative quantities for costs")]
         public List<ResourceQuantity> resourceChange;
+        [Tooltip("Any changes to player resource income this action causes. \nPositive quantities for income or production, Negative quantities for upkeep")]
+        public List<ResourceQuantity> incomeChange;
 
         [Header("Ending the Action")]
         [Tooltip("If this action will restart itself every time it ends with a success state")]

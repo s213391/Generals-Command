@@ -46,9 +46,6 @@ public class HUD : MonoBehaviour
         selectionCanvas.SetActive(selectionOn);
         selectionToggleMinimised.SetActive(!selectionOn);
 
-        if (!selectionOn)
-            SelectionController.instance.DeselectAll();
-
         if (!playerInput)
             playerInput = PlayerInput.instance;
         if (!cameraController)
