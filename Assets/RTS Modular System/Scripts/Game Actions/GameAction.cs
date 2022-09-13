@@ -415,7 +415,7 @@ namespace RTSModularSystem
                                 success = EvaluateSuccess(data);
 
                             //for server actions, the last check for success is always resources, which will be changed now if they can be
-                            if (success)
+                            if (success && data.resourceChange.Count > 0)
                             {
                                 if (!data.clientSide)
                                     success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
@@ -433,27 +433,32 @@ namespace RTSModularSystem
 
                                 if (data.clientSide)
                                 {
-                                    List<int> indices = new List<int>();
-                                    List<Vector3> positions = new List<Vector3>();
-                                    List<Quaternion> rotations = new List<Quaternion>();
-
-                                    for (int i = 0; i < objectsToBeSpawned.Count; i++)
+                                    if (objectsToBeSpawned.Count > 0)
                                     {
-                                        if (data.objectsToSpawn[i].spawnAfterAction)
-                                        {
-                                            indices.Add(i);
-                                            positions.Add(objectsToBeSpawned[i].transform.position);
-                                            rotations.Add(objectsToBeSpawned[i].transform.rotation);
-                                        }
-                                    }
-                                    NetworkActionData networkData = DataToNetwork(data, playerObject);
-                                    CmdSpawnObjects(networkData, functionCaller, owningPlayer, indices, positions, rotations);
+                                        List<int> indices = new List<int>();
+                                        List<Vector3> positions = new List<Vector3>();
+                                        List<Quaternion> rotations = new List<Quaternion>();
 
-                                    CmdIncomeChange(owningPlayer, data.incomeChange);
+                                        for (int i = 0; i < objectsToBeSpawned.Count; i++)
+                                        {
+                                            if (data.objectsToSpawn[i].spawnAfterAction)
+                                            {
+                                                indices.Add(i);
+                                                positions.Add(objectsToBeSpawned[i].transform.position);
+                                                rotations.Add(objectsToBeSpawned[i].transform.rotation);
+                                            }
+                                        }
+                                        NetworkActionData networkData = DataToNetwork(data, playerObject);
+                                        CmdSpawnObjects(networkData, functionCaller, owningPlayer, indices, positions, rotations);
+                                    }
+
+                                    if (data.incomeChange.Count > 0)
+                                        CmdIncomeChange(owningPlayer, data.incomeChange);
                                 }
                                 else
-                                { 
-                                    ResourceManager.instance.IncomeChange(playerObject.owningPlayer, owningPlayer, data.incomeChange);
+                                {
+                                    if (data.incomeChange.Count > 0)
+                                        ResourceManager.instance.IncomeChange(playerObject.owningPlayer, owningPlayer, data.incomeChange);
                                 }
                             }
                             else
