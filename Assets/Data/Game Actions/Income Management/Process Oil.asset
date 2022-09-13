@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
-  m_Name: Process Scrap 2
+  m_Name: Process Oil
   m_EditorClassIdentifier: 
   cooldown: 0
   clientSide: 0
@@ -21,8 +21,8 @@ MonoBehaviour:
   objectsToSpawn: []
   resourceChange: []
   incomeChange:
-  - resourceType: 1
-    quantity: 125
+  - resourceType: 2
+    quantity: 75
   loopOnSuccessfulEnd: 1
   endConditions:
   - successfulEnd: 1

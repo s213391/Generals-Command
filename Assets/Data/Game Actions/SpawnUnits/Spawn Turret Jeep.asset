@@ -32,7 +32,15 @@ MonoBehaviour:
     snapDistance: 0
     destroyAfterAction: 0
     spawnAfterAction: 0
-  resourceChange: []
+  resourceChange:
+  - resourceType: 0
+    quantity: -250
+  - resourceType: 1
+    quantity: -250
+  - resourceType: 2
+    quantity: -150
+  - resourceType: 3
+    quantity: -1
   incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
