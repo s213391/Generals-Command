@@ -192,20 +192,27 @@ namespace RTSModularSystem
 
         [Command]
         //command to spawn a clientside object on the server
-        private void CmdSpawnObject(GameObject gameObject, uint owningPlayer)
+        private void CmdSpawnObjects(NetworkActionData networkData, GameObject functionCaller, uint owningPlayer, List<int> indices, List<Vector3> positions, List<Quaternion> rotations)
         {
-            NetworkServer.Spawn(gameObject);
-            InitialiseNewPlayerObject(gameObject, owningPlayer);
+            GameActionData actionData = NetworkToData(networkData, functionCaller);
+            PlayerObject playerObject = functionCaller.GetComponent<PlayerObject>();
+
+            for (int i = 0; i < indices.Count; i++)
+            {
+                GameObject gameObject = Instantiate(actionData.objectsToSpawn[indices[i]].prefab, positions[i], rotations[i]);
+                NetworkServer.Spawn(gameObject);
+                InitialiseNewPlayerObject(gameObject, owningPlayer);
+            }
         }
 
 
         //run the action in a coroutine until interrupted or exit condition reached
-        private IEnumerator PerformAction(GameActionData data, GameObject gameObject, NetworkInputData inputData, uint owningPlayer)
+        private IEnumerator PerformAction(GameActionData data, GameObject functionCaller, NetworkInputData inputData, uint owningPlayer)
         {
-            if (data == null || gameObject == null)
+            if (data == null || functionCaller == null)
                 yield break;
             
-            PlayerObject playerObject = gameObject.GetComponent<PlayerObject>();
+            PlayerObject playerObject = functionCaller.GetComponent<PlayerObject>();
 
             //track duration regardless of endConditions
             float duration = 0.0f;
@@ -241,13 +248,13 @@ namespace RTSModularSystem
                             if (oc.worldPosition)
                                 pos = oc.position;
                             else
-                                pos = gameObject.transform.position + gameObject.transform.rotation * oc.position;
+                                pos = functionCaller.transform.position + functionCaller.transform.rotation * oc.position;
 
                             Quaternion rot; 
                             if (oc.worldRotation)
                                 rot = Quaternion.Euler(oc.rotation);
                             else
-                                rot = gameObject.transform.rotation * Quaternion.Euler(oc.rotation);
+                                rot = functionCaller.transform.rotation * Quaternion.Euler(oc.rotation);
 
                             prefab = Instantiate(oc.prefab, pos, rot);
                             break;
@@ -290,7 +297,7 @@ namespace RTSModularSystem
                             break;
 
                         case ObjectCreationLocation.atObject:
-                            Transform spawn = gameObject.transform;
+                            Transform spawn = functionCaller.transform;
                             foreach (Transform child in spawn)
                             {
                                 if (child.tag == "Spawnpoint")
@@ -400,8 +407,23 @@ namespace RTSModularSystem
                                 foreach (GameActionData action in data.nextActionsOnSuccess)
                                     StartAction(action, playerObject, owningPlayer);
                                 if (data.clientSide)
-                                    foreach (GameObject go in objectsToBeSpawned)
-                                        CmdSpawnObject(go, owningPlayer);
+                                {
+                                    List<int> indices = new List<int>();
+                                    List<Vector3> positions = new List<Vector3>();
+                                    List<Quaternion> rotations = new List<Quaternion>();
+
+                                    for (int i = 0; i < objectsToBeSpawned.Count; i++)
+                                    {
+                                        if (data.objectsToSpawn[i].spawnAfterAction)
+                                        {
+                                            indices.Add(i);
+                                            positions.Add(objectsToBeSpawned[i].transform.position);
+                                            rotations.Add(objectsToBeSpawned[i].transform.rotation);
+                                        }
+                                    }
+                                    NetworkActionData networkData = DataToNetwork(data, playerObject);
+                                    CmdSpawnObjects(networkData, functionCaller, owningPlayer, indices, positions, rotations);
+                                }
                             }
                             else
                             {

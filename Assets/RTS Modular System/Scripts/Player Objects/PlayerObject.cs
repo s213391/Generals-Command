@@ -210,7 +210,7 @@ namespace RTSModularSystem
         private void Update()
         {
             //calls init once the owning player ID has set
-            if (!initialised && owningPlayer != 9999)
+            if (!initialised && RTSPlayer.localPlayer && owningPlayer != 9999)
                 Init();
 
             //update components
