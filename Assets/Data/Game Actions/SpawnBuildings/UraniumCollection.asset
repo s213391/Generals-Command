@@ -10,34 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
-  m_Name: Light Tank
+  m_Name: UraniumCollection
   m_EditorClassIdentifier: 
   cooldown: 0
-  clientSide: 0
+  clientSide: 1
   lockInput: 0
   showOnActionBar: 1
   icon: {fileID: 0}
   interruptionTolerance: 1
   objectsToSpawn:
-  - prefab: {fileID: 4621937889023251508, guid: ad92146d0aede2c4cb7ec58292603f4c, type: 3}
-    location: 0
+  - prefab: {fileID: 1456422188585449799, guid: 88f05901fc2453a4894acb0f13b4e53b, type: 3}
+    location: 1
     worldPosition: 0
-    position: {x: 20, y: 0, z: 0}
+    position: {x: 0, y: 0, z: 0}
     worldRotation: 0
     rotation: {x: 0, y: 0, z: 0}
     mouseLayerMask:
       serializedVersion: 2
-      m_Bits: 0
-    snapToObject: 0
-    snapDistance: 0
-    destroyAfterAction: 0
-    spawnAfterAction: 0
+      m_Bits: 128
+    snapToObject: 1
+    snapDistance: 10
+    destroyAfterAction: 1
+    spawnAfterAction: 1
   resourceChange: []
   incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
-    type: 4
+    type: 0
+    seconds: 0
+  - successfulEnd: 0
+    type: 1
+    seconds: 0
+  - successfulEnd: 0
+    type: 2
     seconds: 0
   successConditions: []
   nextActionsOnSuccess: []

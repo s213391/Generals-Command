@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
-  m_Name: Scrap Yard
+  m_Name: OilCollection
   m_EditorClassIdentifier: 
   cooldown: 0
   clientSide: 1
@@ -19,7 +19,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   interruptionTolerance: 1
   objectsToSpawn:
-  - prefab: {fileID: 9136793333329025796, guid: 6c7d26b0cde1751419a00d14144c9c5c, type: 3}
+  - prefab: {fileID: 2944867985040915856, guid: 0c92f890accd2bd479f5878fbd3e73a5, type: 3}
     location: 1
     worldPosition: 0
     position: {x: 0, y: 0, z: 0}
@@ -31,7 +31,7 @@ MonoBehaviour:
     snapToObject: 1
     snapDistance: 10
     destroyAfterAction: 1
-    spawnAfterAction: 0
+    spawnAfterAction: 1
   resourceChange: []
   incomeChange: []
   loopOnSuccessfulEnd: 0
@@ -46,6 +46,5 @@ MonoBehaviour:
     type: 2
     seconds: 0
   successConditions: []
-  nextActionsOnSuccess:
-  - {fileID: 11400000, guid: 9bb3c4600811bc1498861e320920eee9, type: 2}
+  nextActionsOnSuccess: []
   nextActionsOnFailure: []

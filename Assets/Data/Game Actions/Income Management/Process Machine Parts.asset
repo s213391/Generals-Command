@@ -10,34 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
-  m_Name: Turret Jeep
+  m_Name: Process Scrap 2
   m_EditorClassIdentifier: 
   cooldown: 0
   clientSide: 0
   lockInput: 0
-  showOnActionBar: 1
+  showOnActionBar: 0
   icon: {fileID: 0}
   interruptionTolerance: 1
-  objectsToSpawn:
-  - prefab: {fileID: 1013203187297138121, guid: 653ae23d8049bf5458b7924468b0cb4c, type: 3}
-    location: 0
-    worldPosition: 0
-    position: {x: 20, y: 0, z: 0}
-    worldRotation: 0
-    rotation: {x: 0, y: 0, z: 0}
-    mouseLayerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    snapToObject: 0
-    snapDistance: 0
-    destroyAfterAction: 0
-  mustHaveTheseResources: []
+  objectsToSpawn: []
   resourceChange: []
-  loopOnSuccessfulEnd: 0
+  incomeChange:
+  - resourceType: 1
+    quantity: 125
+  loopOnSuccessfulEnd: 1
   endConditions:
   - successfulEnd: 1
-    type: 4
-    seconds: 0
+    type: 6
+    seconds: 5
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []

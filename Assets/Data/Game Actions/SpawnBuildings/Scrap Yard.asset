@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
-  m_Name: Barracks Pt2
+  m_Name: Scrap Yard
   m_EditorClassIdentifier: 
   cooldown: 0
-  clientSide: 0
+  clientSide: 1
   lockInput: 0
-  showOnActionBar: 0
+  showOnActionBar: 1
   icon: {fileID: 0}
   interruptionTolerance: 1
   objectsToSpawn:
-  - prefab: {fileID: 2172653949634308172, guid: 06abe4c61f059574da8fe48accddf950, type: 3}
+  - prefab: {fileID: 9136793333329025796, guid: 6c7d26b0cde1751419a00d14144c9c5c, type: 3}
     location: 1
     worldPosition: 0
     position: {x: 0, y: 0, z: 0}
@@ -28,15 +28,22 @@ MonoBehaviour:
     mouseLayerMask:
       serializedVersion: 2
       m_Bits: 128
-    snapToObject: 0
-    snapDistance: 0
-    destroyAfterAction: 0
-  mustHaveTheseResources: []
+    snapToObject: 1
+    snapDistance: 10
+    destroyAfterAction: 1
+    spawnAfterAction: 1
   resourceChange: []
+  incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
-    type: 4
+    type: 0
+    seconds: 0
+  - successfulEnd: 0
+    type: 1
+    seconds: 0
+  - successfulEnd: 0
+    type: 2
     seconds: 0
   successConditions: []
   nextActionsOnSuccess: []
