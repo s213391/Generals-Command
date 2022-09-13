@@ -60,7 +60,7 @@ public class MainMenu : MonoBehaviour
     public void OpenOptionsMenu()
     {
         mainMenuScreen.SetActive(false);
-        Settings.Load();
+        optionsMenuScreen.GetComponent<OptionsMenu>().Open();
         optionsMenuScreen.SetActive(true);
     }
 

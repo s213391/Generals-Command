@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Settings : MonoBehaviour
@@ -13,6 +11,8 @@ public class Settings : MonoBehaviour
     public static float sfxVolume;
     public static float panSpeed;
     public static float zoomSpeed;
+    public static float zoomMin;
+    public static float zoomMax;
     
 
     //set up singleton
@@ -46,7 +46,12 @@ public class Settings : MonoBehaviour
             PlayerPrefs.SetFloat("panSpeed", 5.0f); 
         if (!PlayerPrefs.HasKey("zoomSpeed"))
             PlayerPrefs.SetFloat("zoomSpeed", 2.0f);
+        if (!PlayerPrefs.HasKey("zoomMin"))
+            PlayerPrefs.SetFloat("zoomMin", 10.0f);
+        if (!PlayerPrefs.HasKey("zoomMax"))
+            PlayerPrefs.SetFloat("zoomMax", 70.0f);
 
+        Load();
         PlayerPrefs.Save();
     }
 
@@ -61,6 +66,8 @@ public class Settings : MonoBehaviour
         sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
         panSpeed = PlayerPrefs.GetFloat("panSpeed");
         zoomSpeed = PlayerPrefs.GetFloat("zoomSpeed");
+        zoomMin = PlayerPrefs.GetFloat("zoomMin");
+        zoomMax = PlayerPrefs.GetFloat("zoomMax");
     }
 
 
@@ -81,7 +88,25 @@ public class Settings : MonoBehaviour
             PlayerPrefs.SetFloat("panSpeed", panSpeed);
         if (!(PlayerPrefs.GetFloat("zoomSpeed") == zoomSpeed))
             PlayerPrefs.SetFloat("zoomSpeed", zoomSpeed);
+        if (!(PlayerPrefs.GetFloat("zoomMin") == zoomMin))
+            PlayerPrefs.SetFloat("zoomMin", zoomMin);
+        if (!(PlayerPrefs.GetFloat("zoomMax") == zoomMax))
+            PlayerPrefs.SetFloat("zoomMax", zoomMax);
 
+        ApplySettings();
         PlayerPrefs.Save();
+    }
+
+
+    //update the scripts that use these settings
+    public static void ApplySettings()
+    {
+        if (RTSModularSystem.CameraController.instance != null)
+        {
+            RTSModularSystem.CameraController.instance.movementSpeed = panSpeed;
+            RTSModularSystem.CameraController.instance.zoomSpeed = zoomSpeed;
+            RTSModularSystem.CameraController.instance.minZoom = zoomMin;
+            RTSModularSystem.CameraController.instance.maxZoom = zoomMax;
+        }
     }
 }

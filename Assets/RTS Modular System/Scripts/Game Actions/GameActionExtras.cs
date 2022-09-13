@@ -62,6 +62,8 @@ namespace RTSModularSystem
         public float snapDistance;
         [Tooltip("Whether this object will be destroyed when this action ends. \nUseful for clientside visual effects such as building placement")]
         public bool destroyAfterAction;
+        [Tooltip("Only useful if run on a clientside action. Whether this object will be spawned on the server at its current position when this action ends successfully.")]
+        public bool spawnAfterAction;
     }
 
 

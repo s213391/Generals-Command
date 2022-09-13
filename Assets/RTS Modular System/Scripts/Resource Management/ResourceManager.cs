@@ -22,11 +22,14 @@ namespace DS_Resources
         [Tooltip("If false, the resource manager will reject any attempt to see resources that do not belong to that player. \nBest left false, but can be useful for a spying mechanic that allows the players to see the resource counts of other players.")]
         public bool canSeeAllResources = false;
         [Tooltip("Every time this amount of seconds passes, the income values will be added to the total resource counts")]
-        public float incomeCycleDuration = 1.0f;
+        public float incomeTickLength = 1.0f;
 
         //keep the master dictionaries private to force controlled interaction through methods
         private readonly SyncDictionary<uint, List<ResourceQuantity>> masterResourceDictionary = new SyncDictionary<uint, List<ResourceQuantity>>();
         private readonly SyncDictionary<uint, List<ResourceQuantity>> masterIncomeDictionary = new SyncDictionary<uint, List<ResourceQuantity>>();
+
+        private Dictionary<ResourceType, uint> incomeTickValues;
+        private uint totalResourceTicks = 0;
 
 
         //set up singleton
@@ -45,6 +48,10 @@ namespace DS_Resources
             resources = resourceData;
             initialResources = initResources;
             initialIncome = initIncome;
+
+            incomeTickValues = new Dictionary<ResourceType, uint>();
+            foreach (ResourceData resource in resourceData)
+                incomeTickValues.Add(resource.resourceType, resource.ticksPerIncome);
         }
 
 
@@ -218,12 +225,19 @@ namespace DS_Resources
         {
             while (true)
             {
-                yield return new WaitForSeconds(incomeCycleDuration);
+                yield return new WaitForSeconds(incomeTickLength);
 
                 foreach (var pair in masterIncomeDictionary)
                 {
+                    List<ResourceQuantity> thisIncome = new List<ResourceQuantity>();
+
+                    //add any income value that gets added this tick
+                    foreach (ResourceQuantity resource in pair.Value)
+                        if (totalResourceTicks % incomeTickValues[resource.resourceType] == 0)
+                            thisIncome.Add(resource);
+                    
                     //process income and handle errors
-                    if (!OneOffResourceChange(pair.Key, pair.Key, pair.Value))
+                    if (!OneOffResourceChange(pair.Key, pair.Key, thisIncome))
                     {
                         //TBC// add events to handle negative resource count
                         Debug.LogWarning("Income could not be added to player ID: " + pair.Key.ToString() + ", at least one resource would become negative");

@@ -264,7 +264,7 @@ namespace RTSModularSystem
         //check if any selected objects need to be given a navmesh destination
         private void HandleMovementInputs()
         {
-            if (!selectionEnabled || selectedThisFrame || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState)
+            if (selectedThisFrame || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState)
                 return;
             if (device == DeviceType.Desktop && !Input.GetKeyUp(KeyCode.Mouse1))
                 return;
