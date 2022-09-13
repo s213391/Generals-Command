@@ -10,26 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
-  m_Name: Train Income
+  m_Name: Spawn APC
   m_EditorClassIdentifier: 
   cooldown: 0
   clientSide: 0
   lockInput: 0
-  showOnActionBar: 0
+  showOnActionBar: 1
   icon: {fileID: 0}
   interruptionTolerance: 1
-  objectsToSpawn: []
-  resourceChange: []
-  incomeChange:
+  objectsToSpawn:
+  - prefab: {fileID: 6169522998790028702, guid: 6edd02cbf3ec86a408a133540d1efa2b, type: 3}
+    location: 0
+    worldPosition: 0
+    position: {x: 20, y: 0, z: 0}
+    worldRotation: 0
+    rotation: {x: 0, y: 0, z: 0}
+    mouseLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    snapToObject: 0
+    snapDistance: 0
+    destroyAfterAction: 0
+    spawnAfterAction: 0
+  resourceChange:
   - resourceType: 0
-    quantity: 500
+    quantity: 850
   - resourceType: 1
-    quantity: 250
-  loopOnSuccessfulEnd: 1
+    quantity: 0
+  - resourceType: 2
+    quantity: 0
+  - resourceType: 3
+    quantity: 0
+  incomeChange: []
+  loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
-    type: 6
-    seconds: 10
+    type: 4
+    seconds: 0
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []

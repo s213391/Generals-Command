@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
-  m_Name: Heavy Tank
+  m_Name: Spawn Engineer
   m_EditorClassIdentifier: 
   cooldown: 0
   clientSide: 0
@@ -19,7 +19,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   interruptionTolerance: 1
   objectsToSpawn:
-  - prefab: {fileID: 1620937673621846186, guid: 2c65ad6519f111b44b2ffa235f173eb6, type: 3}
+  - prefab: {fileID: 7673862430685067604, guid: 3fa31ad2e235a8a419acefc1a38b591d, type: 3}
     location: 0
     worldPosition: 0
     position: {x: 20, y: 0, z: 0}
