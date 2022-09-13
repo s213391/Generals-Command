@@ -49,6 +49,8 @@ namespace DS_Resources
             initialResources = initResources;
             initialIncome = initIncome;
 
+            StartCoroutine(IncomeCycle());
+
             incomeTickValues = new Dictionary<ResourceType, uint>();
             foreach (ResourceData resource in resourceData)
                 incomeTickValues.Add(resource.resourceType, resource.ticksPerIncome);

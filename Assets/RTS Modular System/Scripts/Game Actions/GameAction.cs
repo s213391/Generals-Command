@@ -206,6 +206,22 @@ namespace RTSModularSystem
         }
 
 
+        [Command]
+        //command to change resources server-sider from the client
+        private void CmdOneOffResourceChange(uint ID, List<ResourceQuantity> resourceChanges)
+        {
+            ResourceManager.instance.OneOffResourceChange(ID, ID, resourceChanges);
+        }
+
+
+        [Command]
+        //command to change income server-side from the client
+        private void CmdIncomeChange(uint ID, List<ResourceQuantity> incomeChanges)
+        {
+            ResourceManager.instance.IncomeChange(ID, ID, incomeChanges);
+        }
+
+
         //run the action in a coroutine until interrupted or exit condition reached
         private IEnumerator PerformAction(GameActionData data, GameObject functionCaller, NetworkInputData inputData, uint owningPlayer)
         {
@@ -399,13 +415,22 @@ namespace RTSModularSystem
                                 success = EvaluateSuccess(data);
 
                             //for server actions, the last check for success is always resources, which will be changed now if they can be
-                            if (success && !data.clientSide)
-                                success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
+                            if (success)
+                            {
+                                if (!data.clientSide)
+                                    success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
+                                else if (ResourceManager.instance.IsResourceChangeValid(playerObject.owningPlayer, owningPlayer, data.resourceChange, false, true))
+                                    CmdOneOffResourceChange(owningPlayer, data.resourceChange);
+                                else
+                                    success = false;
+                            }
 
+                            //action was successful, start success actions and spawn any required buildings server-sider
                             if (success)
                             {
                                 foreach (GameActionData action in data.nextActionsOnSuccess)
                                     StartAction(action, playerObject, owningPlayer);
+
                                 if (data.clientSide)
                                 {
                                     List<int> indices = new List<int>();
@@ -423,6 +448,12 @@ namespace RTSModularSystem
                                     }
                                     NetworkActionData networkData = DataToNetwork(data, playerObject);
                                     CmdSpawnObjects(networkData, functionCaller, owningPlayer, indices, positions, rotations);
+
+                                    CmdIncomeChange(owningPlayer, data.incomeChange);
+                                }
+                                else
+                                { 
+                                    ResourceManager.instance.IncomeChange(playerObject.owningPlayer, owningPlayer, data.incomeChange);
                                 }
                             }
                             else
