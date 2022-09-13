@@ -243,11 +243,10 @@ namespace DS_Resources
                     if (thisIncome.Count == 0)
                     {
                         Debug.Log("No income to add");
-                        yield break;
                     }
 
                     //process income and handle errors
-                    if (!OneOffResourceChange(pair.Key, pair.Key, thisIncome))
+                    else if (!OneOffResourceChange(pair.Key, pair.Key, thisIncome))
                     {
                         //TBC// add events to handle negative resource count
                         Debug.LogWarning("Income could not be added to player ID: " + pair.Key.ToString() + ", at least one resource would become negative");
