@@ -49,6 +49,9 @@ namespace DS_Resources
             initialResources = initResources;
             initialIncome = initIncome;
 
+            if (isServer)
+                StartCoroutine(IncomeCycle());
+
             incomeTickValues = new Dictionary<ResourceType, uint>();
             foreach (ResourceData resource in resourceData)
                 incomeTickValues.Add(resource.resourceType, resource.ticksPerIncome);
@@ -184,14 +187,15 @@ namespace DS_Resources
 
             //the requested changes are valid, change the master dictionary
             List<ResourceQuantity> playerResources = masterResourceDictionary[requestedID];
-            foreach (ResourceQuantity resource in resourceChanges)
+            for (int i = 0;i < resourceChanges.Count; i++)
             {
-                int index = playerResources.FindIndex(x => x.resourceType == resource.resourceType);
+                int index = playerResources.FindIndex(x => x.resourceType == resourceChanges[i].resourceType);
                 ResourceQuantity newQuantity = playerResources[index];
-                newQuantity.quantity += resource.quantity;
+                newQuantity.quantity += resourceChanges[i].quantity;
                 playerResources[index] = newQuantity;
             }
             masterResourceDictionary[requestedID] = playerResources;
+            Debug.Log("Successful resource change");
             return true;
         }
 
@@ -202,19 +206,17 @@ namespace DS_Resources
         //there is no protection on income going negative
         public bool IncomeChange(uint requestedID, uint requesterID, List<ResourceQuantity> incomeChanges)
         {
-            if (!IsResourceChangeValid(requestedID, requesterID, incomeChanges))
-                return false;
-
             //the requested income change is valid, change the income dictionary
             List<ResourceQuantity> playerIncome = masterIncomeDictionary[requestedID];
-            foreach (ResourceQuantity resource in playerIncome)
+            for (int i = 0; i < incomeChanges.Count; i++)
             {
-                int index = playerIncome.FindIndex(x => x.resourceType == resource.resourceType);
+                int index = playerIncome.FindIndex(x => x.resourceType == incomeChanges[i].resourceType);
                 ResourceQuantity newCount = playerIncome[index];
-                newCount.quantity += resource.quantity;
+                newCount.quantity += incomeChanges[i].quantity;
                 playerIncome[index] = newCount;
             }
             masterIncomeDictionary[requestedID] = playerIncome;
+            Debug.Log("Successful income change");
             return true;
         }
 
@@ -235,12 +237,22 @@ namespace DS_Resources
                     foreach (ResourceQuantity resource in pair.Value)
                         if (totalResourceTicks % incomeTickValues[resource.resourceType] == 0)
                             thisIncome.Add(resource);
-                    
+
+                    if (thisIncome.Count == 0)
+                    {
+                        Debug.Log("No income to add");
+                        yield break;
+                    }
+
                     //process income and handle errors
                     if (!OneOffResourceChange(pair.Key, pair.Key, thisIncome))
                     {
                         //TBC// add events to handle negative resource count
                         Debug.LogWarning("Income could not be added to player ID: " + pair.Key.ToString() + ", at least one resource would become negative");
+                    }
+                    else
+                    {
+                        Debug.Log("Income added");
                     }
                 }
             }
