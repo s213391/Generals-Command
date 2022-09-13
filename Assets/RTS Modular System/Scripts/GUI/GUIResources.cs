@@ -56,6 +56,8 @@ namespace RTSModularSystem
                     count.text = currentResources[i].quantity.ToString();
                 }
             }
+            else
+                Debug.Log("GUI could not read resources");
         }
     }
 }

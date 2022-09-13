@@ -34,7 +34,7 @@ MonoBehaviour:
   attackRange: 20
   attackDuration: 0.2
   canAutoTarget: 1
-  autoTargetRange: 8
+  autoTargetRange: 0
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
@@ -49,4 +49,10 @@ MonoBehaviour:
   visibilityRanges: []
   sprite: {fileID: 0}
   selectable: 1
-  actions: []
+  actions:
+  - action: {fileID: 11400000, guid: 65688f98831d1d349896aa6edcdedd2c, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: 4798cddaa5b5a234782520c139c4cf67, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: b6695444f948c554d9a11fcbb0e3da9a, type: 2}
+    autoStart: 0
