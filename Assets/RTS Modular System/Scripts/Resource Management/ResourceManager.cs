@@ -229,6 +229,8 @@ namespace DS_Resources
             {
                 yield return new WaitForSeconds(incomeTickLength);
 
+                totalResourceTicks++;
+
                 foreach (var pair in masterIncomeDictionary)
                 {
                     List<ResourceQuantity> thisIncome = new List<ResourceQuantity>();
