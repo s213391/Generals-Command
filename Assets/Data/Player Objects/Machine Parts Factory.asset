@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a783e4ada470300448b05d52e35aa215, type: 3}
   m_Name: Machine Parts Factory
   m_EditorClassIdentifier: 
-  objectType: 1
+  objectType: 0
   attackable: 1
   maxHealth: 500
   resistances:
@@ -49,4 +49,6 @@ MonoBehaviour:
   visibilityRanges: []
   sprite: {fileID: 0}
   selectable: 1
-  actions: []
+  actions:
+  - action: {fileID: 11400000, guid: 7ccb633f3c86e3c40bb2f25bf8f00fcd, type: 2}
+    autoStart: 1

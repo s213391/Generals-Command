@@ -23,10 +23,10 @@ MonoBehaviour:
   incomeChange:
   - resourceType: 2
     quantity: 75
-  loopOnSuccessfulEnd: 1
+  loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
-    type: 6
+    type: 4
     seconds: 5
   successConditions: []
   nextActionsOnSuccess: []
