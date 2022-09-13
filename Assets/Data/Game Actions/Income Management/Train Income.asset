@@ -25,10 +25,10 @@ MonoBehaviour:
     quantity: 500
   - resourceType: 1
     quantity: 125
-  loopOnSuccessfulEnd: 1
+  loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
-    type: 6
+    type: 4
     seconds: 10
   successConditions: []
   nextActionsOnSuccess: []
