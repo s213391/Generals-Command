@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class TeamOwnership : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public uint playerID;
+    
+    //set up collision layers and colours
+    void Init(Color colour, LayerMask mask)
     {
-        
-    }
+        Transform[] transforms = transform.GetComponentsInChildren<Transform>();
+        foreach (Transform trans in transforms)
+        {
+            if (trans.gameObject.layer == 0)
+                trans.gameObject.layer = mask;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            Renderer renderer = trans.GetComponent<Renderer>();
+            if (renderer != null)
+            { 
+                Material mat = renderer.material;
+                mat.SetColor("Team Colour", colour);
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ public class GameData : MonoBehaviour
     public bool isHost { get; private set; }
     public int playerNumber { get; private set; }
     public int teamNumber { get; private set; }
-    public int colourIndex { get; private set; }
+    public Color colour { get; private set; }
     public float productionMultiplier { get; private set; }
     public float resourceMultiplier { get; private set; }
 
@@ -43,12 +43,12 @@ public class GameData : MonoBehaviour
 
 
     //sets game values in server lobby when game is ready to start
-    public void SetGameValues(int team, int colour, float production, float resource)
+    public void SetGameValues(int team, Color col, float production, float resource)
     {
         if (SceneManager.GetActiveScene().name == "ServerLobby")
         {
             teamNumber = team;
-            colourIndex = colour;
+            colour = col;
             productionMultiplier = production;
             resourceMultiplier = resource;
         }
