@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class OptionsMenu : MonoBehaviour
     public Slider sfxVolumeSlider;
     public Slider panSpeedSlider;
     public Slider zoomSpeedSlider;
-    
-    
+
+    //save button
+    public Button saveButton;
+    TextMeshProUGUI textMeshProUGUI;
+
+
     //load settings and set slider values
     public void Open()
     {
@@ -25,18 +30,43 @@ public class OptionsMenu : MonoBehaviour
         sfxVolumeSlider.value = Settings.sfxVolume;
         panSpeedSlider.value = Settings.panSpeed;
         zoomSpeedSlider.value = Settings.zoomSpeed;
+
+        saveButton.interactable = false;
+        if (!textMeshProUGUI)
+            textMeshProUGUI = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        textMeshProUGUI.text = "Save";
     }
 
 
     //set values based on slider
     void Update()
     {
-         Settings.brightness = brightnessSlider.value;
-         //Settings.shadowsPreset = shadowsSlider.value;
-         Settings.masterVolume = masterVolumeSlider.value;
-         Settings.musicVolume = musicVolumeSlider.value;
-         Settings.sfxVolume = sfxVolumeSlider.value;
-         Settings.panSpeed = panSpeedSlider.value;
-         Settings.zoomSpeed = zoomSpeedSlider.value;
+        Settings.brightness = brightnessSlider.value;
+        //Settings.shadowsPreset = shadowsSlider.value;
+        Settings.masterVolume = masterVolumeSlider.value;
+        Settings.musicVolume = musicVolumeSlider.value;
+        Settings.sfxVolume = sfxVolumeSlider.value;
+        Settings.panSpeed = panSpeedSlider.value;
+        Settings.zoomSpeed = zoomSpeedSlider.value;
+    }
+
+
+    //enable save button
+    public void EnableSave()
+    {
+        saveButton.interactable = true;
+        if (!textMeshProUGUI)
+            textMeshProUGUI = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        textMeshProUGUI.text = "Save";
+    }
+
+
+    //save options
+    public void SaveChanges()
+    {
+        saveButton.interactable = false;
+        if (!textMeshProUGUI)
+            textMeshProUGUI = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        textMeshProUGUI.text = "Saved";
     }
 }
