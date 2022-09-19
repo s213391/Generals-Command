@@ -123,10 +123,11 @@ namespace Mirror.Discovery
             NetworkManager.singleton.StartClient(info.uri);
         }
 
+
         public void OnDiscoveredServer(ServerResponse info)
         {
             // Note that you can check the versioning to decide if you can connect to the server or not using this method
-            discoveredServers[info.serverId] = info;
+            discoveredServers.Add(info.serverId, info);
         }
     }
 }
