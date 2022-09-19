@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,10 +6,16 @@ public class GameData : MonoBehaviour
 {
     public static GameData instance { get; private set; }
 
+    public struct PlayerInfo
+    {
+        public string name;
+        public int team;
+        public Color colour;
+    }
+
     public bool isHost { get; private set; }
     public int playerNumber { get; private set; }
-    public int teamNumber { get; private set; }
-    public Color colour { get; private set; }
+    public List<PlayerInfo> playerInfo { get; private set; }
     public float productionMultiplier { get; private set; }
     public float resourceMultiplier { get; private set; }
 
@@ -43,12 +50,11 @@ public class GameData : MonoBehaviour
 
 
     //sets game values in server lobby when game is ready to start
-    public void SetGameValues(int team, Color col, float production, float resource)
+    public void SetGameValues(List<PlayerInfo> info, float production, float resource)
     {
         if (SceneManager.GetActiveScene().name == "ServerLobby")
         {
-            teamNumber = team;
-            colour = col;
+            playerInfo = info;
             productionMultiplier = production;
             resourceMultiplier = resource;
         }

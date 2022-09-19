@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class TeamOwnership : MonoBehaviour
 {
-    public uint playerID;
+    public int playerID { get; private set; }
     
     //set up collision layers and colours
-    void Init(Color colour, LayerMask mask)
+    void Init(int playerNumber)
     {
+        playerID = playerNumber;
+
+        LayerMask mask = LayerMask.NameToLayer("Team " + playerID.ToString());
+        Color colour = GameData.instance.playerInfo[playerID].colour;
+        
         Transform[] transforms = transform.GetComponentsInChildren<Transform>();
         foreach (Transform trans in transforms)
         {

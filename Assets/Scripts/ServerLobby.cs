@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,14 +5,15 @@ using Mirror;
 using Mirror.Discovery;
 using TMPro;
 
-public class ServerLobby : MonoBehaviour
+public class ServerLobby : NetworkBehaviour
 {
     public NetworkDiscovery networkDiscovery;
 
     public GameObject startGameButton;
     public TextMeshProUGUI textMeshProUGUI;
 
-    public int connections = 2;
+    [SyncVar]
+    public int connections;
     
     // Start is called before the first frame update
     void Start()
@@ -26,9 +26,9 @@ public class ServerLobby : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameData.instance.isHost)
+        if (GameData.instance.isHost && connections != NetworkServer.connections.Count)
             connections = NetworkServer.connections.Count;
-        textMeshProUGUI.text = "Players (" + NetworkServer.connections.Count + "/2";
+        textMeshProUGUI.text = "Players (" + NetworkServer.connections.Count + "/2)";
     }
 
 
