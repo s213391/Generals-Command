@@ -20,7 +20,7 @@ MonoBehaviour:
   interruptionTolerance: 1
   objectsToSpawn:
   - prefab: {fileID: 8904034498900065490, guid: dde0f9bc96916ce4b90a52181f5c6ab6, type: 3}
-    location: 0
+    location: 2
     worldPosition: 0
     position: {x: -1.5, y: 0, z: 30}
     worldRotation: 0
@@ -31,8 +31,9 @@ MonoBehaviour:
     snapToObject: 0
     snapDistance: 0
     destroyAfterAction: 0
-  mustHaveTheseResources: []
+    spawnAfterAction: 0
   resourceChange: []
+  incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
