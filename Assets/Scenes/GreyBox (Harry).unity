@@ -7564,6 +7564,7 @@ MonoBehaviour:
   target: {fileID: 1059252176}
   canMoveTarget: 1
   defaultDistance: 10
+  currentDistance: 0
   xAngle: 70
   zoomSpeed: 5
   minZoom: 10
@@ -7579,7 +7580,6 @@ MonoBehaviour:
   xReadZone: 1
   yReadZone: 1
   moveWhenOutsideOfReadZone: 0
-  device: 0
 --- !u!1001 &563341979
 PrefabInstance:
   m_ObjectHideFlags: 0
