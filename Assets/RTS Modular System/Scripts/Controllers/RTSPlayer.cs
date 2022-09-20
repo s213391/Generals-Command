@@ -89,8 +89,8 @@ namespace RTSModularSystem
             if (!isLocalPlayer)
                 return;
 
-            camController.OnUpdate();
             playerInput.OnUpdate();
+            camController.OnUpdate();
             GUIController.OnUpdate();
         }
 

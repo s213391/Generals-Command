@@ -228,7 +228,7 @@ namespace RTSModularSystem
                     }
                 }
                 //else treat as a single click unless over UI
-                else if (screenPointWorldSpace != null)
+                else if (screenPointWorldSpace != nullState)
                 {
                     if (objectUnderScreenPoint != null && RTSPlayer.Owns(objectUnderScreenPoint))
                     {

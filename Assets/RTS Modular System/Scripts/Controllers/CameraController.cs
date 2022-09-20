@@ -194,7 +194,7 @@ namespace RTSModularSystem
                     switch (finger.phase)
                     { 
                         case TouchPhase.Began:
-                            if (EventSystem.current.IsPointerOverGameObject(finger.touchId))
+                            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                                 touchStartedOverUI = true;
                             break;
 
