@@ -30,9 +30,11 @@ namespace RTSModularSystem
             if (instance != null)
             {
                 //set gui active based on platform
-                if (SystemInfo.deviceType == DeviceType.Desktop)
+                /*if (SystemInfo.deviceType == DeviceType.Desktop)
                     deviceGUICanvas = instance.transform.GetChild(0).gameObject;
-                else
+                else*/
+
+                //only mobile supported right now
                     deviceGUICanvas = instance.transform.GetChild(1).gameObject;
                 deviceGUICanvas.SetActive(true);
 

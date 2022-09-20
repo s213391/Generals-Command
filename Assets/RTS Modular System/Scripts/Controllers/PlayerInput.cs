@@ -156,7 +156,7 @@ namespace RTSModularSystem
             }
             
             //if the touch/click began this frame and is not over UI, turn on selection box
-            if (down && screenPointWorldSpace != nullState)
+            if (selectionEnabled && down && screenPointWorldSpace != nullState)
             {
                 selectionBox.sizeDelta = Vector2.zero;
                 selectionImage.enabled = true;
@@ -193,7 +193,7 @@ namespace RTSModularSystem
                 }
             }
             //if the touch/click ended this frame, check if anything has been selected
-            else if (up && selectionImage.enabled == true)
+            else if (up)
             {
                 //only check the shift key mechanic on desktop
                 bool shift = false;
@@ -204,7 +204,7 @@ namespace RTSModularSystem
                 List<Selectable> selectables = selectionController.availableObjects;
 
                 //only check the box if the touch/click has been down for a set delay
-                if (downTime > dragDelay)
+                if (selectionEnabled && downTime > dragDelay)
                 {
                     if (!selectionEnabled)
                         return;
@@ -227,8 +227,8 @@ namespace RTSModularSystem
                             selectionController.Deselect(selectables[i]);
                     }
                 }
-                //else treat as a single click
-                else 
+                //else treat as a single click unless over UI
+                else if (screenPointWorldSpace != null)
                 {
                     if (objectUnderScreenPoint != null && RTSPlayer.Owns(objectUnderScreenPoint))
                     {

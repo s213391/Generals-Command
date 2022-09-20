@@ -68,5 +68,7 @@ public class OptionsMenu : MonoBehaviour
         if (!textMeshProUGUI)
             textMeshProUGUI = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         textMeshProUGUI.text = "Saved";
+
+        Settings.Save();
     }
 }

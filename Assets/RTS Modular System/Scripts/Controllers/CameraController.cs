@@ -1,6 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace RTSModularSystem
 {
@@ -53,6 +59,7 @@ namespace RTSModularSystem
 
         private bool movementEnabled = true; //whether the camera inputs are enabled
         private DeviceType device; //the type of device the game is running on
+        private bool touchStartedOverUI = false; //whether this touch started on a UI element
 
 
         //set up singleton
@@ -76,6 +83,7 @@ namespace RTSModularSystem
                 moveWithAxes = false;
                 moveWithMouse = false;
                 movementEnabled = true;
+                EnhancedTouchSupport.Enable();
             }
             
             currentDistance = defaultDistance;
@@ -178,14 +186,29 @@ namespace RTSModularSystem
                     dz += Input.GetAxisRaw("Vertical");
                 }
 
-                //get camera movement using single finger touch inputs
-                if (moveWithTouch && Input.touchCount == 1)
+                //get camera movement using single finger touch inputs when not over UI
+                if (moveWithTouch && Touch.activeTouches.Count == 1)
                 {
-                    Touch finger = Input.GetTouch(0);
-                    if (finger.phase == TouchPhase.Moved && finger.deltaPosition.magnitude >= minTouchDragDistance)
-                    {
-                        dx -= finger.deltaPosition.x / finger.deltaTime;
-                        dz -= finger.deltaPosition.y / finger.deltaTime;
+                    Touch finger = Touch.activeTouches[0];
+
+                    switch (finger.phase)
+                    { 
+                        case TouchPhase.Began:
+                            if (EventSystem.current.IsPointerOverGameObject(finger.touchId))
+                                touchStartedOverUI = true;
+                            break;
+
+                        case TouchPhase.Ended:
+                            touchStartedOverUI = false;
+                            break;
+
+                        case TouchPhase.Moved:
+                            if (!touchStartedOverUI && finger.delta.magnitude >= minTouchDragDistance)
+                            {
+                                dx -= finger.delta.x;
+                                dz -= finger.delta.y;
+                            }
+                            break;
                     }
                 }
 
@@ -204,16 +227,16 @@ namespace RTSModularSystem
             // zoom in/out with mouse wheel or double finger pinching
             if (device == DeviceType.Desktop)
                 currentDistance = Mathf.Clamp(currentDistance - Input.GetAxis("Mouse ScrollWheel") * zoomSpeed, minZoom, maxZoom);
-            else if (moveWithTouch && Input.touchCount == 2)
+            else if (moveWithTouch && Touch.activeTouches.Count == 2)
             {
-                Touch finger1 = Input.GetTouch(0);
-                Touch finger2 = Input.GetTouch(1);
+                Touch finger1 = Touch.activeTouches[0];
+                Touch finger2 = Touch.activeTouches[1];
 
                 //if two fingers are touching the screen and moving
                 if (finger1.phase == TouchPhase.Moved || finger2.phase == TouchPhase.Moved)
                 {
-                    float fingerDistance = (finger1.position - finger2.position).magnitude;
-                    float previousDistance = ((finger1.position - finger1.deltaPosition) - (finger2.position - finger2.deltaPosition)).magnitude;
+                    float fingerDistance = (finger1.screenPosition - finger2.screenPosition).magnitude;
+                    float previousDistance = (finger1.startScreenPosition - finger2.startScreenPosition).magnitude;
                     float distanceChange = fingerDistance - previousDistance;
 
                     //if fingers are closer together, zoom out, else if further apart, zoom in
