@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 using Mirror.Discovery;
 using TMPro;
@@ -31,6 +31,7 @@ public class JoinGameMenu : MonoBehaviour
 #endif
 
 
+    private GameObject currentButton;
     //update the list of local servers
     private void Update()
     {
@@ -45,11 +46,18 @@ public class JoinGameMenu : MonoBehaviour
         { 
             serverCountText.text = "Servers found: " + discoveredServers.Count.ToString();
 
-            for (int i = 0; i < discoveredServers.Count; i++)
+            int i = 0;
+            foreach (ServerResponse info in discoveredServers.Values)
             {
-                serverList.transform.GetChild(i).gameObject.SetActive(true);
+                currentButton = serverList.transform.GetChild(i).gameObject;
+                currentButton.SetActive(true);
+                currentButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = info.EndPoint.Address.ToString();
+                currentButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                currentButton.GetComponent<Button>().onClick.AddListener(delegate { Connect(info); });
+                i++;
             }
-            for (int i = discoveredServers.Count; i < serverList.transform.childCount; i++)
+
+            for (i = discoveredServers.Count; i < serverList.transform.childCount; i++)
                 serverList.transform.GetChild(i).gameObject.SetActive(false);
 
         }

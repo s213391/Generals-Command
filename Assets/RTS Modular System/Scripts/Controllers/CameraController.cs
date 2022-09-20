@@ -15,6 +15,8 @@ namespace RTSModularSystem
         public bool canMoveTarget = true;
         [Tooltip("Default distance camera sits behind the target in metres")]
         public float defaultDistance = 5.0f;
+        [Tooltip("The current distance the camera is sitting behind the target in unity units")]
+        public float currentDistance = 5.0f;
         [Tooltip("The X-axis angle the camera faces down at, recommended between 30 and 90")]
         public float xAngle = 45.0f;
 
@@ -49,9 +51,8 @@ namespace RTSModularSystem
         [ConditionalHide("moveWithMouse", "true"), Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
         public bool moveWhenOutsideOfReadZone;
 
-        private float currentDistance; //the current distance camera sits behind the target in unity units
         private bool movementEnabled = true; //whether the camera inputs are enabled
-        public DeviceType device; //the type of device the game is running on
+        private DeviceType device; //the type of device the game is running on
 
 
         //set up singleton

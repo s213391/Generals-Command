@@ -206,6 +206,22 @@ namespace RTSModularSystem
         }
 
 
+        [Command]
+        //command to change resources server-sider from the client
+        private void CmdOneOffResourceChange(uint ID, List<ResourceQuantity> resourceChanges)
+        {
+            ResourceManager.instance.OneOffResourceChange(ID, ID, resourceChanges);
+        }
+
+
+        [Command]
+        //command to change income server-side from the client
+        private void CmdIncomeChange(uint ID, List<ResourceQuantity> incomeChanges)
+        {
+            ResourceManager.instance.IncomeChange(ID, ID, incomeChanges);
+        }
+
+
         //run the action in a coroutine until interrupted or exit condition reached
         private IEnumerator PerformAction(GameActionData data, GameObject functionCaller, NetworkInputData inputData, uint owningPlayer)
         {
@@ -399,30 +415,50 @@ namespace RTSModularSystem
                                 success = EvaluateSuccess(data);
 
                             //for server actions, the last check for success is always resources, which will be changed now if they can be
-                            if (success && !data.clientSide)
-                                success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
+                            if (success && data.resourceChange.Count > 0)
+                            {
+                                if (!data.clientSide)
+                                    success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
+                                else if (ResourceManager.instance.IsResourceChangeValid(playerObject.owningPlayer, owningPlayer, data.resourceChange, false, true))
+                                    CmdOneOffResourceChange(owningPlayer, data.resourceChange);
+                                else
+                                    success = false;
+                            }
 
+                            //action was successful, start success actions and spawn any required buildings server-sider
                             if (success)
                             {
                                 foreach (GameActionData action in data.nextActionsOnSuccess)
                                     StartAction(action, playerObject, owningPlayer);
+
                                 if (data.clientSide)
                                 {
-                                    List<int> indices = new List<int>();
-                                    List<Vector3> positions = new List<Vector3>();
-                                    List<Quaternion> rotations = new List<Quaternion>();
-
-                                    for (int i = 0; i < objectsToBeSpawned.Count; i++)
+                                    if (objectsToBeSpawned.Count > 0)
                                     {
-                                        if (data.objectsToSpawn[i].spawnAfterAction)
+                                        List<int> indices = new List<int>();
+                                        List<Vector3> positions = new List<Vector3>();
+                                        List<Quaternion> rotations = new List<Quaternion>();
+
+                                        for (int i = 0; i < objectsToBeSpawned.Count; i++)
                                         {
-                                            indices.Add(i);
-                                            positions.Add(objectsToBeSpawned[i].transform.position);
-                                            rotations.Add(objectsToBeSpawned[i].transform.rotation);
+                                            if (data.objectsToSpawn[i].spawnAfterAction)
+                                            {
+                                                indices.Add(i);
+                                                positions.Add(objectsToBeSpawned[i].transform.position);
+                                                rotations.Add(objectsToBeSpawned[i].transform.rotation);
+                                            }
                                         }
+                                        NetworkActionData networkData = DataToNetwork(data, playerObject);
+                                        CmdSpawnObjects(networkData, functionCaller, owningPlayer, indices, positions, rotations);
                                     }
-                                    NetworkActionData networkData = DataToNetwork(data, playerObject);
-                                    CmdSpawnObjects(networkData, functionCaller, owningPlayer, indices, positions, rotations);
+
+                                    if (data.incomeChange.Count > 0)
+                                        CmdIncomeChange(owningPlayer, data.incomeChange);
+                                }
+                                else
+                                {
+                                    if (data.incomeChange.Count > 0)
+                                        ResourceManager.instance.IncomeChange(playerObject.owningPlayer, owningPlayer, data.incomeChange);
                                 }
                             }
                             else

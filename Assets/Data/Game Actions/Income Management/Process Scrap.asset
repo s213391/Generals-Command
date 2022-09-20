@@ -19,14 +19,14 @@ MonoBehaviour:
   icon: {fileID: 0}
   interruptionTolerance: 1
   objectsToSpawn: []
-  mustHaveTheseResources: []
-  resourceChange:
-  - resourceType: 2
-    quantity: 25
-  loopOnSuccessfulEnd: 1
+  resourceChange: []
+  incomeChange:
+  - resourceType: 1
+    quantity: 125
+  loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
-    type: 5
+    type: 4
     seconds: 5
   successConditions: []
   nextActionsOnSuccess: []

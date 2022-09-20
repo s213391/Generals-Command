@@ -100,8 +100,8 @@ namespace RTSModularSystem
 
                 //set name and sprite from action data
                 icon.sprite = actionData.icon;
-                if (actionData.name.Substring(0,5) == "Spawn")
-                    textMesh.text = actionData.name.Substring(5);
+                if (actionData.name.Length > 5 && actionData.name.Substring(0,5) == "Spawn")
+                    textMesh.text = actionData.name.Substring(6);
                 else
                     textMesh.text = actionData.name;
 
