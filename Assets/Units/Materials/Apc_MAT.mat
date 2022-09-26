@@ -8,18 +8,37 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Apc_MAT
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0d3c609de5906674a957a099b0851da9, type: 3}
   m_ShaderKeywords: _EMISSION _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_0797205c86274b5b9e39e9d78cde5f2c:
+        m_Texture: {fileID: 2800000, guid: 4fd7b4d251b04cb4e9d2a760bf7da8a9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_2cc4a9b229b3416ca479151531248eb8:
+        m_Texture: {fileID: 2800000, guid: 6a56928e3ac43064493e6794a1695cb3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_6c30a2c6bfdd4b7b996e41c3215b786a:
+        m_Texture: {fileID: 2800000, guid: 51187435ccb2b6f48b58a0e7bc74808e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_a40e678e03ac4fe7a70296f6796c6ae5:
+        m_Texture: {fileID: 2800000, guid: bacdaec5cf8d30c4ab1158afa733b84b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_cf7b6b444c2f4e389ca99f18d0a54dcd:
+        m_Texture: {fileID: 2800000, guid: 92ef8e8987172ff4582a3362510c5edf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 6a56928e3ac43064493e6794a1695cb3, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -104,6 +123,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_13a043599dd14a1d982a6372fe44e860: {r: 1, g: 0.627451, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
