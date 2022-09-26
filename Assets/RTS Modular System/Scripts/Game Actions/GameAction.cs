@@ -184,9 +184,10 @@ namespace RTSModularSystem
 
 
         //evaluates all success conditions and returns whether all conditions passed
-        private bool EvaluateSuccess(List<ActionCondition> conditions, PlayerObject functionCaller, List<GameObject> objectsSpawned)
+        private bool EvaluateSuccess(GameActionData data, PlayerObject functionCaller, GameObject firstObjectSpawned)
         {
             bool success = true;
+            List<ActionCondition> conditions = data.successConditions;
 
             for (int i = 0; i < conditions.Count; i++)
             {
@@ -197,14 +198,13 @@ namespace RTSModularSystem
                 if (ac.objectToBeChecked == ObjectToBeChecked.self)
                     objectToCheck = functionCaller.gameObject;
                 else
-                    objectToCheck = objectsSpawned[ac.spawnedObjectsIndex];
+                    objectToCheck = firstObjectSpawned;
 
                 switch (conditions[i].type)
                 {
                     case ActionConditionType.proximityToObjects:
-                        List<PlayerObject> objectsToBeCheckedForProximity = new List<PlayerObject>();
-                        foreach (PlayerObjectData pod in conditions[i].objects)
-                            objectsToBeCheckedForProximity.AddRange(ObjectDataManager.GetPlayerObjectsOfType(pod.name));
+                        List<PlayerObject> objectsToBeCheckedForProximity = ObjectDataManager.GetPlayerObjectsOfType(conditions[i].objectsType.name);
+
                         foreach (PlayerObject po in objectsToBeCheckedForProximity)
                         {
                             if (po.owningPlayer == functionCaller.owningPlayer)
@@ -225,10 +225,23 @@ namespace RTSModularSystem
 
                     case ActionConditionType.onTerrain:
                         bounds = objectToCheck.GetComponentInChildren<Renderer>().bounds;
+
+                        List<Vector3> corners = new List<Vector3>();
+                        corners.Add(new Vector3(bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z + bounds.extents.z));
+                        corners.Add(new Vector3(bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z - bounds.extents.z));
+                        corners.Add(new Vector3(bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z + bounds.extents.z));
+                        corners.Add(new Vector3(bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z - bounds.extents.z));
+
+                        int counter = 0;
                         for (int j = 0; j < 4; j++)
-                        { 
-                            
+                        {
+                            if (Physics.Raycast(corners[j], Vector3.down, ac.maximumHeightAllowed, PlayerInput.instance.terrainLayers))
+                                counter++;
+                            else
+                                break;
                         }
+                        if (counter == 4)
+                            ac.conditionMet = true;
                         break;
                 }
 
@@ -237,8 +250,13 @@ namespace RTSModularSystem
                     success = false;
                 conditions[i] = ac;
             }
+            ConditionEventData conditionEventData = new ConditionEventData();
+            conditionEventData.functionCaller = functionCaller.gameObject;
+            conditionEventData.firstSpawnedObject = firstObjectSpawned;
+            conditionEventData.conditions = conditions;
+            conditionEventData.success = success;
 
-
+            data.onConditionEvaluate.Invoke(conditionEventData);
             return success;
         }
 
@@ -482,7 +500,7 @@ namespace RTSModularSystem
                             if (success)
                                 success = actionEnd.successfulEnd;
                             if (success && data.successConditions.Count > 0)
-                                success = EvaluateSuccess(data.successConditions);
+                                success = EvaluateSuccess(data, playerObject, objectsCreated[0]);
 
                             //for server actions, the last check for success is always resources, which will be changed now if they can be
                             if (success && data.resourceChange.Count > 0)
@@ -533,6 +551,11 @@ namespace RTSModularSystem
                             }
                             else
                             {
+                                //action failed, destroy everything created by it
+                                foreach (GameObject go in objectsCreated)
+                                    Destroy(go);
+                                objectsToBeDestroyed.Clear();
+                                
                                 foreach (GameActionData action in data.nextActionsOnFailure)
                                     StartAction(action, playerObject, owningPlayer);
                                 loop = false;
@@ -541,6 +564,8 @@ namespace RTSModularSystem
                             //an exit condition has been reached, end this action
                             break;
                         }
+                        else if (data.successConditions.Count > 0)
+                            EvaluateSuccess(data, playerObject, objectsCreated[0]);
                     }
                     if (firstTime)
                         firstTime = false;

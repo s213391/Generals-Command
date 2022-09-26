@@ -76,6 +76,7 @@ namespace RTSModularSystem
         //set the camera's initial position and angle
         public void Init(bool isHost)
         {
+            movementEnabled = true;
             //set default inputs based on device type
             device = SystemInfo.deviceType;
             if (device == DeviceType.Handheld)

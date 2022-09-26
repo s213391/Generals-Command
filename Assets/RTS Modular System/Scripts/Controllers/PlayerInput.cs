@@ -17,12 +17,9 @@ namespace RTSModularSystem
         
         [SerializeField]
         private RectTransform selectionBox;
-        [SerializeField]
-        private LayerMask objectLayers;
-        [SerializeField]
-        private LayerMask terrainLayers;
-        [SerializeField]
-        private LayerMask uiLayers;
+        public LayerMask objectLayers;
+        public LayerMask terrainLayers;
+        public LayerMask uiLayers;
         [SerializeField]
         private float dragDelay = 0.1f;
 

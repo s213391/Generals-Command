@@ -22,11 +22,14 @@ namespace RTSModularSystem
         private PlayerObject currentObject; //the currently selected object
         private PlayerObject previousObject; //the previously selected object
 
+        private List<GUIActionButton> buttons; //the action buttons currently on screen
+
         //create a button for each build action in the build manager
         public void Init()
         {
             UIElements = GetComponents<UIBehaviour>();
             actionsGridLayout = GetComponentInChildren<GridLayoutGroup>().gameObject;
+            buttons = new List<GUIActionButton>();
 
             //hide menu initially
             currentObject = null;
@@ -47,6 +50,8 @@ namespace RTSModularSystem
 
                 //replace actions if necessary
                 ReplaceActions();
+                foreach (GUIActionButton button in buttons)
+                    button.OnUpdate();
             }
             else
             {
@@ -85,6 +90,8 @@ namespace RTSModularSystem
             for (int i = actionsGridLayout.transform.childCount - 1; i >= 0; i--)
                 DestroyImmediate(actionsGridLayout.transform.GetChild(i).gameObject);
 
+            buttons.Clear();
+
             //create a button and set its name, sprite and delegate action
             bool hasVisibleAction = false;
             for (int i = 0; i < actionCount; i++)
@@ -97,6 +104,11 @@ namespace RTSModularSystem
                 GameObject button = Instantiate(actionButtonPrefab, actionsGridLayout.transform);
                 Image icon = button.GetComponentInChildren<Image>();
                 TextMeshProUGUI textMesh = button.GetComponentInChildren<TextMeshProUGUI>();
+                GUIActionButton guiActionButton = button.GetComponent<GUIActionButton>();
+
+                //initialise button to check resource values
+                buttons.Add(guiActionButton);
+                guiActionButton.Init(actionData.resourceChange);
 
                 //set name and sprite from action data
                 icon.sprite = actionData.icon;

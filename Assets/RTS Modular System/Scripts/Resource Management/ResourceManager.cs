@@ -165,7 +165,6 @@ namespace DS_Resources
                     float currentValue = playerResources.Find(x => x.resourceType == resource.resourceType).quantity;
                     if (currentValue < invert * resource.quantity)
                     {
-                        Debug.LogWarning("Negative count protection: Player does not have enough resources for requested change");
                         return false;
                     }
                 }

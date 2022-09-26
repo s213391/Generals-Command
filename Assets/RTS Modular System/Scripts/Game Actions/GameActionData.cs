@@ -40,11 +40,11 @@ namespace RTSModularSystem
         public List<ActionEnd> endConditions;
         [Tooltip("Conditions that will not end the action when they are true, but must all be true when an end condition occurs for the action to end as a success")]
         public List<ActionCondition> successConditions;
-        [Tooltip("The event that will be called once a frame when success conditions are evaluated. \nUsed to give feedback to whether an action would be successful or not.")]
-        public UnityEvent<List<ActionCondition>> onConditionEvaluate;
         [Tooltip("Actions that will start when this action ends with a success state")]
         public List<GameActionData> nextActionsOnSuccess;
         [Tooltip("Actions that will start when this action ends with a failure state")]
         public List<GameActionData> nextActionsOnFailure;
+        [Tooltip("The event that will be called once a frame when success conditions are evaluated. \nUsed to give feedback to whether an action would be successful or not.")]
+        public UnityEvent<ConditionEventData> onConditionEvaluate;
     }
 }

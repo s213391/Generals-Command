@@ -38,14 +38,6 @@ namespace RTSModularSystem
     }
 
 
-    public enum TeamRelationship
-    {
-        enemy,
-        friendly,
-        everyone
-    }
-
-
     public enum ObjectToBeChecked
     { 
         self,
@@ -61,18 +53,25 @@ namespace RTSModularSystem
         public bool successIfConditionMet; //whether meeting this condition is considered a success or failure
         public ActionConditionType type;
         public ObjectToBeChecked objectToBeChecked;
-        [ConditionalHide("objectToBeChecked", "objectSpawnedByThisAction")]
-        public int spawnedObjectsIndex;
         [ConditionalHide("type", "proximityToObjects")]
         public float distance;
         [ConditionalHide("type", "proximityToObjects")]
-        public List<PlayerObjectData> objects;
+        public PlayerObjectData objectsType;
         [ConditionalHide("type", "proximityToObjects")]
-        public TeamRelationship teamsToCheck;
+        public DS_BasicCombat.TargetType teamsToCheck;
         [ConditionalHide("type", "collidingWithLayers")]
         public LayerMask layers;
         [ConditionalHide("type", "onTerrain")]
         public float maximumHeightAllowed;
+    }
+
+
+    public struct ConditionEventData
+    {
+        public GameObject functionCaller;
+        public GameObject firstSpawnedObject;
+        public List<ActionCondition> conditions;
+        public bool success;
     }
 
 

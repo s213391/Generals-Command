@@ -6,16 +6,10 @@ public class GameData : MonoBehaviour
 {
     public static GameData instance { get; private set; }
 
-    public struct PlayerInfo
-    {
-        public string name;
-        public int team;
-        public Color colour;
-    }
 
     public bool isHost { get; private set; }
     public int playerNumber { get; private set; }
-    public List<PlayerInfo> playerInfo { get; private set; }
+    public List<LobbyPlayer> playerInfo { get; private set; }
     public float productionMultiplier { get; private set; }
     public float resourceMultiplier { get; private set; }
 
@@ -50,7 +44,7 @@ public class GameData : MonoBehaviour
 
 
     //sets game values in server lobby when game is ready to start
-    public void SetGameValues(List<PlayerInfo> info, float production, float resource)
+    public void SetGameValues(List<LobbyPlayer> info, float production, float resource)
     {
         if (SceneManager.GetActiveScene().name == "ServerLobby")
         {
