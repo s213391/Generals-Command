@@ -38,11 +38,21 @@ public class ServerLobby : NetworkBehaviour
     }
 
 
-
     // Update is called once per frame
     void Update()
     {
         playersText.text = "Players (" + playerData.Count + "/2)";
+
+        for (int i = 0; i < playerData.Count; i++)
+        {
+            if (playerData[i].connectionID == NetworkClient.connection.connectionId)
+            {
+                if (GameData.instance.playerNumber != i)
+                {
+                    GameData.instance.SetPlayerNumber(i);
+                }
+            }
+        }
     }
 
 
