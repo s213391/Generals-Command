@@ -57,7 +57,8 @@ namespace RTSModularSystem
         [ConditionalHide("moveWithMouse", "true"), Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
         public bool moveWhenOutsideOfReadZone;
 
-        private bool movementEnabled = true; //whether the camera inputs are enabled
+        public bool movementEnabled { get; private set; } //whether the camera inputs are enabled
+
         private DeviceType device; //the type of device the game is running on
         private bool touchStartedOverUI = false; //whether this touch started on a UI element
 

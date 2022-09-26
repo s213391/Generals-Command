@@ -62,7 +62,7 @@ namespace DS_BasicCombat
         private bool targetCheckedRecently = false;
         private bool currentlyAttacking = false;
 
-        private UnityEvent onAttackEvents;
+        private UnityEvent onAttack;
 
 
         // Start is called before the first frame update
@@ -87,7 +87,7 @@ namespace DS_BasicCombat
             autoTargetRange = targetRange;
             secondsBetweenTargetChecks = CombatManager.instance.secondsBetweenTargetChecks;
 
-            onAttackEvents = new UnityEvent();
+            onAttack = new UnityEvent();
             StartCoroutine(TargettingCooldownDuration());
         }
 
@@ -121,7 +121,7 @@ namespace DS_BasicCombat
                 StartCoroutine(AttackDuration());
                 transform.LookAt(target.transform);
 
-                onAttackEvents.Invoke();
+                onAttack.Invoke();
             }
         }
 
@@ -187,14 +187,14 @@ namespace DS_BasicCombat
         //adds an event to be called when attacking starts
         public void AddOnAttackEvent(UnityAction attackEvent)
         {
-            onAttackEvents.AddListener(attackEvent);
+            onAttack.AddListener(attackEvent);
         }
 
 
         //removes an event from playing when attacking starts
         public void RemoveOnAttackEvent(UnityAction attackEvent)
         {
-            onAttackEvents.RemoveListener(attackEvent);
+            onAttack.RemoveListener(attackEvent);
         }
 
 

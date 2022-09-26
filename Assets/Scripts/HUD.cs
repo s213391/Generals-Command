@@ -18,7 +18,6 @@ public class HUD : MonoBehaviour
     [Header("Selection Box")]
     public GameObject selectionToggleExpanded;
     public GameObject selectionToggleMinimised;
-    public GameObject selectionCanvas;
     [Header("Selected Menu")]
     public GameObject selectedMenuExpanded;
     public GameObject selectedMenuMinimised;
@@ -57,7 +56,6 @@ public class HUD : MonoBehaviour
     public void ToggleSelection(bool selectionOn)
     {
         selectionToggleExpanded.SetActive(selectionOn);
-        selectionCanvas.SetActive(selectionOn);
         selectionToggleMinimised.SetActive(!selectionOn);
 
         if (!playerInput)
@@ -65,7 +63,7 @@ public class HUD : MonoBehaviour
         if (!cameraController)
             cameraController = Camera.main.GetComponent<CameraController>();
 
-        playerInput.ToggleSelectionInputs(selectionOn);
+        playerInput.ToggleDragSelectionInputs(selectionOn);
         cameraController.ToggleCameraInputs(!selectionOn);
     }
 

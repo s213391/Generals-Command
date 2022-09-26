@@ -10,21 +10,29 @@ namespace RTSModularSystem
     {
         [SerializeField]
         private PlayerObjectData[] data;
+        [HideInInspector]
+        public Vector3 rendererCentre;
 
         public static List<SnapPoint> snapPoints { get; private set; }
 
 
         //adds self to the list of snap points
-        private void Awake()
+        private void Start()
         {
             if (snapPoints == null)
                 snapPoints = new List<SnapPoint>();
             snapPoints.Add(this);
+
+            Renderer renderer = GetComponentInChildren<Renderer>();
+            if (renderer)
+                rendererCentre = renderer.bounds.center;
+            else
+                rendererCentre = transform.position;
         }
 
 
         //returns an array of all the names of stored data
-        public List<string> getData()
+        public List<string> GetData()
         {
             List<string> dataNames = new List<string>();
             for (int i = 0; i < data.Length; i++)
@@ -41,7 +49,7 @@ namespace RTSModularSystem
             for (int i = 0; i < snapPoints.Count; i++)
             {
                 //add relevant snappoints
-                List<string> snapPointData = snapPoints[i].getData();
+                List<string> snapPointData = snapPoints[i].GetData();
                 if (snapPointData.Contains(dataName))
                     compatibleSnapPoints.Add(snapPoints[i]);
             }

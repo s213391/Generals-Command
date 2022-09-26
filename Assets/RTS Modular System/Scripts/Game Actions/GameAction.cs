@@ -184,9 +184,62 @@ namespace RTSModularSystem
 
 
         //evaluates all success conditions and returns whether all conditions passed
-        private bool EvaluateSuccess(GameActionData data)
+        private bool EvaluateSuccess(List<ActionCondition> conditions, PlayerObject functionCaller, List<GameObject> objectsSpawned)
         {
-            return true;
+            bool success = true;
+
+            for (int i = 0; i < conditions.Count; i++)
+            {
+                ActionCondition ac = conditions[i];
+                ac.conditionMet = false;
+
+                GameObject objectToCheck;
+                if (ac.objectToBeChecked == ObjectToBeChecked.self)
+                    objectToCheck = functionCaller.gameObject;
+                else
+                    objectToCheck = objectsSpawned[ac.spawnedObjectsIndex];
+
+                switch (conditions[i].type)
+                {
+                    case ActionConditionType.proximityToObjects:
+                        List<PlayerObject> objectsToBeCheckedForProximity = new List<PlayerObject>();
+                        foreach (PlayerObjectData pod in conditions[i].objects)
+                            objectsToBeCheckedForProximity.AddRange(ObjectDataManager.GetPlayerObjectsOfType(pod.name));
+                        foreach (PlayerObject po in objectsToBeCheckedForProximity)
+                        {
+                            if (po.owningPlayer == functionCaller.owningPlayer)
+                            {
+                                if ((po.transform.position - objectToCheck.transform.position).magnitude <= ac.distance)
+                                {
+                                    ac.conditionMet = true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case ActionConditionType.collidingWithLayers:
+                        Bounds bounds = objectToCheck.GetComponentInChildren<Renderer>().bounds;
+                        ac.conditionMet = Physics.OverlapBox(bounds.center, bounds.extents, Quaternion.identity, ac.layers).Length > 0;
+                        break;
+
+                    case ActionConditionType.onTerrain:
+                        bounds = objectToCheck.GetComponentInChildren<Renderer>().bounds;
+                        for (int j = 0; j < 4; j++)
+                        { 
+                            
+                        }
+                        break;
+                }
+
+                //check if this counts as a success
+                if (ac.successIfConditionMet && !ac.conditionMet || !ac.successIfConditionMet && ac.conditionMet)
+                    success = false;
+                conditions[i] = ac;
+            }
+
+
+            return success;
         }
 
 
@@ -234,6 +287,21 @@ namespace RTSModularSystem
             float duration = 0.0f;
             int durationIndex = data.endConditions.FindIndex(x => x.type == ActionEndType.duration && x.successfulEnd);
 
+            bool previousCameraState = CameraController.instance.movementEnabled;
+            bool previousDragSelectionState = PlayerInput.instance.dragSelectionEnabled;
+            bool previousSingleSelectionState = PlayerInput.instance.singleSelectionEnabled;
+            bool previousMovementState = PlayerInput.instance.movementEnabled;
+
+            //prevent camera movement and selection during this action
+            if (data.lockCamera)
+                CameraController.instance.ToggleCameraInputs(false);
+            if (data.lockInput)
+            {
+                PlayerInput.instance.ToggleDragSelectionInputs(false);
+                PlayerInput.instance.ToggleSingleSelectionInputs(false);
+                PlayerInput.instance.ToggleMovementInputs(false);
+            }
+
             //allow for looping an action
             bool loop = data.loopOnSuccessfulEnd;
             do
@@ -247,6 +315,7 @@ namespace RTSModularSystem
                         duration = 0.0f;
                 }
                 
+                List<GameObject> objectsCreated = new List<GameObject>();
                 List<MouseTrackingObject> objectsFollowingMouse = new List<MouseTrackingObject>();
                 List<GameObject> objectsToBeDestroyed = new List<GameObject>();
                 List<GameObject> objectsToBeSpawned = new List<GameObject>();
@@ -328,6 +397,7 @@ namespace RTSModularSystem
                     }
                     if (prefab != null)
                     {
+                        objectsCreated.Add(prefab);
                         if (oc.destroyAfterAction)
                             objectsToBeDestroyed.Add(prefab);
                         if (oc.spawnAfterAction)
@@ -411,8 +481,8 @@ namespace RTSModularSystem
                             //evaluate conditions to choose whether this action will end as a success or a failure
                             if (success)
                                 success = actionEnd.successfulEnd;
-                            if (success)
-                                success = EvaluateSuccess(data);
+                            if (success && data.successConditions.Count > 0)
+                                success = EvaluateSuccess(data.successConditions);
 
                             //for server actions, the last check for success is always resources, which will be changed now if they can be
                             if (success && data.resourceChange.Count > 0)
@@ -479,8 +549,15 @@ namespace RTSModularSystem
 
                 //cleanup
                 foreach (GameObject go in objectsToBeDestroyed)
-                {
                     Destroy(go);
+
+                if (data.lockCamera)
+                    CameraController.instance.ToggleCameraInputs(previousCameraState);
+                if (data.lockInput)
+                {
+                    PlayerInput.instance.ToggleSingleSelectionInputs(previousSingleSelectionState);
+                    PlayerInput.instance.ToggleDragSelectionInputs(previousDragSelectionState);
+                    PlayerInput.instance.ToggleMovementInputs(previousMovementState);
                 }
 
             } while (loop);

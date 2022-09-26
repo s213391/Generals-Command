@@ -29,6 +29,53 @@ namespace RTSModularSystem
     }
 
 
+    //conditions that decide whether an action is successful or not
+    public enum ActionConditionType
+    { 
+        proximityToObjects,
+        collidingWithLayers,
+        onTerrain
+    }
+
+
+    public enum TeamRelationship
+    {
+        enemy,
+        friendly,
+        everyone
+    }
+
+
+    public enum ObjectToBeChecked
+    { 
+        self,
+        objectSpawnedByThisAction
+    }
+
+
+    [System.Serializable]
+    public struct ActionCondition
+    {
+        [HideInInspector]
+        public bool conditionMet; //whether this condition is currently being met
+        public bool successIfConditionMet; //whether meeting this condition is considered a success or failure
+        public ActionConditionType type;
+        public ObjectToBeChecked objectToBeChecked;
+        [ConditionalHide("objectToBeChecked", "objectSpawnedByThisAction")]
+        public int spawnedObjectsIndex;
+        [ConditionalHide("type", "proximityToObjects")]
+        public float distance;
+        [ConditionalHide("type", "proximityToObjects")]
+        public List<PlayerObjectData> objects;
+        [ConditionalHide("type", "proximityToObjects")]
+        public TeamRelationship teamsToCheck;
+        [ConditionalHide("type", "collidingWithLayers")]
+        public LayerMask layers;
+        [ConditionalHide("type", "onTerrain")]
+        public float maximumHeightAllowed;
+    }
+
+
     //options for how to set the spawn location for a prefab during an action
     public enum ObjectCreationLocation
     {

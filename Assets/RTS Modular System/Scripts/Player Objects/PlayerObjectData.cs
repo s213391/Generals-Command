@@ -31,7 +31,7 @@ namespace RTSModularSystem
         [ConditionalHide("attacker", "true")] [Tooltip("What type of damage this attck does")]
         public DamageType damageType = DamageType.light;
         [ConditionalHide("attacker", "true")] [Tooltip("Which units this attacker targets")]
-        public TargetType targetType = TargetType.enemy;
+        public TeamRelationship targetType = TeamRelationship.enemy;
         [ConditionalHide("attacker", "true")] [Tooltip("How much damage this object does in a single attack")]
         public int attackDamage = 5;
         [ConditionalHide("attacker", "true")] [Tooltip("The maximum distance away this object can hit an enemy. \nStill useful to set a range for melee to hit objects that are moving or running away")]
