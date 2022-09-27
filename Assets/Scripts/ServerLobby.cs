@@ -43,13 +43,17 @@ public class ServerLobby : NetworkBehaviour
     {
         playersText.text = "Players (" + playerData.Count + "/2)";
 
-        for (int i = 0; i < playerData.Count; i++)
+        //the host does not change player number, they will always be player 0
+        if (!GameData.instance.isHost)
         {
-            if (playerData[i].connectionID == NetworkClient.connection.connectionId)
+            for (int i = 1; i < playerData.Count; i++)
             {
-                if (GameData.instance.playerNumber != i)
+                if (playerData[i].connectionID == NetworkClient.connection.connectionId)
                 {
-                    GameData.instance.SetPlayerNumber(i);
+                    if (GameData.instance.playerNumber != i)
+                    {
+                        GameData.instance.SetPlayerNumber(i);
+                    }
                 }
             }
         }
