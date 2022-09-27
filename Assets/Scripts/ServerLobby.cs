@@ -14,7 +14,13 @@ public class ServerLobby : NetworkBehaviour
     public GameObject startGameButton;
     public TextMeshProUGUI playersText;
 
-    public readonly SyncList<LobbyPlayer> playerData = new SyncList<LobbyPlayer>();
+    [SerializeField]
+    private List<LobbyPlayer> playerData = new List<LobbyPlayer>();
+    [SerializeField]
+    private List<NetworkConnection> playerIDs;
+    private bool clientsNeedUpdating = false;
+    private float productionMultiplier = 1.0f;
+    private float resourceMultiplier = 1.0f;
     
     //set up the singleton
     void Start()
@@ -35,6 +41,8 @@ public class ServerLobby : NetworkBehaviour
 
         if (!GameData.instance.isHost)
             startGameButton.SetActive(false);
+        else
+            playerIDs = new List<NetworkConnection>();
     }
 
 
@@ -43,23 +51,22 @@ public class ServerLobby : NetworkBehaviour
     {
         playersText.text = "Players (" + playerData.Count + "/2)";
 
-        //the host does not change player number, they will always be player 0
-        if (!GameData.instance.isHost)
-        {
-            for (int i = 1; i < playerData.Count; i++)
-            {
-                if (playerData[i].connectionID == NetworkClient.connection.connectionId)
-                {
-                    if (GameData.instance.playerNumber != i)
-                    {
-                        GameData.instance.SetPlayerNumber(i);
-                    }
-                }
-            }
-        }
+        
     }
 
 
+    //if there have been any changes to the player data this frame, update all clients
+    private void LateUpdate()
+    {
+        if (!isServer)
+            return;
+
+        //if (clientsNeedUpdating)
+
+    }
+
+
+    [Server]
     //move players to greybox map
     public void ChangeScene()
     {
@@ -90,47 +97,61 @@ public class ServerLobby : NetworkBehaviour
 
     [Server]
     //creates new data for the joining player
-    public void PlayerConnect(int connectionID)
+    public void PlayerConnect(NetworkConnection connection)
     { 
         LobbyPlayer player = new LobbyPlayer();
-        playerData.Add(player);
+        playerIDs.Add(connection);
 
-        player.connectionID = connectionID;
         player.team = NetworkServer.connections.Count;
         player.name = "Player " + player.team.ToString();
         player.colour = Color.black;
         player.ready = false;
+        playerData.Add(player);
     }
 
 
     [Server]
-    //removes the data for the disconnecting player
+    //removes the data for the disconnecting player from the host
     public void PlayerDisconnect(int connectionID)
     {
-        foreach (LobbyPlayer player in playerData)
-            if (player.connectionID == connectionID)
-                playerData.Remove(player);
+        for (int i = 0; i < playerIDs.Count; i++)
+        {
+            if (playerIDs[i].connectionId == connectionID)
+            {
+                playerData.RemoveAt(i);
+                playerIDs.RemoveAt(i);
+                clientsNeedUpdating = true;
+                break;
+            }
+        }
+    }
+
+
+    [TargetRpc]
+    //updates data on the client
+    private void UpdatePlayerData(NetworkConnection connection, int number, List<LobbyPlayer> lobbyPlayer, float production, float resource)
+    {
+        GameData.instance.SetPlayerNumber(number);
+        GameData.instance.SetGameValues(lobbyPlayer, production, resource);
+
     }
 
 
     public void Ready()
     {
-        CmdReady(NetworkClient.connection.connectionId);
+        CmdReady(NetworkClient.connection.connectionId, GameData.instance.playerNumber);
     }
 
 
     [Command(requiresAuthority = false)]
     //tells the host that this player is ready to start the game
-    private void CmdReady(int connectionID)
+    private void CmdReady(int connectionID, int playerNumber)
     {
-        for (int i = 0; i < playerData.Count; i++)
+        if (connectionID == playerIDs[playerNumber].connectionId)
         {
-            if (playerData[i].connectionID == connectionID)
-            {
-                LobbyPlayer temp = playerData[i];
-                temp.ready = true;
-                playerData[i] = temp;
-            }
+            LobbyPlayer temp = playerData[playerNumber];
+            temp.ready = true;
+            playerData[playerNumber] = temp;
         }
     }
 }

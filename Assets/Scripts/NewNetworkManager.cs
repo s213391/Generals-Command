@@ -134,7 +134,7 @@ public class NewNetworkManager : NetworkManager
     public override void OnServerConnect(NetworkConnectionToClient conn) 
     {
         if (SceneManager.GetActiveScene().name == "ServerLobby")
-            ServerLobby.instance.PlayerConnect(conn.connectionId);
+            ServerLobby.instance.PlayerConnect(conn);
     }
 
     /// <summary>
