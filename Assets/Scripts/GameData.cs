@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour
 
     public bool isHost { get; private set; }
     public int playerNumber { get; private set; }
+    public string playerName { get; private set; }
     public List<LobbyPlayer> playerInfo { get; private set; }
     public float productionMultiplier { get; private set; }
     public float resourceMultiplier { get; private set; }
@@ -32,6 +33,14 @@ public class GameData : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
             isHost = host;
+    }
+
+
+    //sets player name in main menu
+    public void SetPlayerName(string name)
+    {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            playerName = name;
     }
 
 

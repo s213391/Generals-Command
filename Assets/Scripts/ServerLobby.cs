@@ -17,11 +17,12 @@ public class ServerLobby : NetworkBehaviour
     [SerializeField]
     private List<LobbyPlayer> playerData = new List<LobbyPlayer>();
     [SerializeField]
-    private List<NetworkConnection> playerIDs;
+    private List<NetworkConnection> playerConnections;
     private bool clientsNeedUpdating = false;
     private float productionMultiplier = 1.0f;
     private float resourceMultiplier = 1.0f;
     
+
     //set up the singleton
     void Start()
     {
@@ -42,40 +43,35 @@ public class ServerLobby : NetworkBehaviour
         if (!GameData.instance.isHost)
             startGameButton.SetActive(false);
         else
-            playerIDs = new List<NetworkConnection>();
+        {
+            playerConnections = new List<NetworkConnection>();
+            playerConnections.Add(NetworkClient.connection);
+        }
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        playersText.text = "Players (" + playerData.Count + "/2)";
-
-        
-    }
-
-
+    //only runs on the server
     //if there have been any changes to the player data this frame, update all clients
     private void LateUpdate()
     {
         if (!isServer)
             return;
 
-        //if (clientsNeedUpdating)
+        if (clientsNeedUpdating)
+        { 
+            for (int i = 1; i < playerConnections.Count; i++)
+            {
+                RpcUpdatePlayerData(playerConnections[i], i, playerData, productionMultiplier, resourceMultiplier);
+            }
 
-    }
-
-
-    [Server]
-    //move players to greybox map
-    public void ChangeScene()
-    {
-        NetworkManager.singleton.ServerChangeScene("GreyBox (Harry)");
+            clientsNeedUpdating = false;
+            UpdateMenu();
+        }
     }
 
 
     //returns to menu
-    public void Back()
+    public void BackButton()
     {
         if (GameData.instance)
         {
@@ -94,16 +90,17 @@ public class ServerLobby : NetworkBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    #region PlayerConnection
 
     [Server]
     //creates new data for the joining player
     public void PlayerConnect(NetworkConnection connection)
     { 
         LobbyPlayer player = new LobbyPlayer();
-        playerIDs.Add(connection);
+        playerConnections.Add(connection);
 
-        player.team = NetworkServer.connections.Count;
-        player.name = "Player " + player.team.ToString();
+        player.team = playerConnections.Count;
+        player.name = "Player joining";
         player.colour = Color.black;
         player.ready = false;
         playerData.Add(player);
@@ -114,44 +111,116 @@ public class ServerLobby : NetworkBehaviour
     //removes the data for the disconnecting player from the host
     public void PlayerDisconnect(int connectionID)
     {
-        for (int i = 0; i < playerIDs.Count; i++)
+        for (int i = 0; i < playerConnections.Count; i++)
         {
-            if (playerIDs[i].connectionId == connectionID)
+            if (playerConnections[i].connectionId == connectionID)
             {
                 playerData.RemoveAt(i);
-                playerIDs.RemoveAt(i);
+                playerConnections.RemoveAt(i);
                 clientsNeedUpdating = true;
                 break;
             }
         }
     }
 
+    #endregion
+
+    #region UpdatingVisuals
 
     [TargetRpc]
     //updates data on the client
-    private void UpdatePlayerData(NetworkConnection connection, int number, List<LobbyPlayer> lobbyPlayer, float production, float resource)
+    private void RpcUpdatePlayerData(NetworkConnection connection, int number, List<LobbyPlayer> lobbyPlayer, float production, float resource)
     {
         GameData.instance.SetPlayerNumber(number);
         GameData.instance.SetGameValues(lobbyPlayer, production, resource);
-
+        UpdateMenu();
     }
 
 
-    public void Ready()
+    //updates all ui elements based on the new data on the server
+    private void UpdateMenu()
+    { 
+        
+    }
+
+    #endregion
+
+    #region PlayerColour
+
+    //tell the server this player has selected a new colour
+    public void SetPlayerColour(Color colour)
     {
-        CmdReady(NetworkClient.connection.connectionId, GameData.instance.playerNumber);
+        CmdSetPlayerColour(NetworkClient.connection.connectionId, GameData.instance.playerNumber, colour);
+    }
+
+
+    [Command(requiresAuthority = false)]
+    //set the player's new colour and update all clients
+    private void CmdSetPlayerColour(int connectionID, int playerNumber, Color colour)
+    {
+        if (connectionID == playerConnections[playerNumber].connectionId)
+        {
+            LobbyPlayer temp = playerData[playerNumber];
+            temp.colour = colour;
+            playerData[playerNumber] = temp;
+        }
+        clientsNeedUpdating = true;
+    }
+
+    #endregion
+
+    #region TeamNumber
+
+    //tell the server this player has selected a new team
+    public void SetTeamNumber(int team)
+    {
+        CmdSetTeamNumber(NetworkClient.connection.connectionId, GameData.instance.playerNumber, team);
+    }
+
+
+    [Command(requiresAuthority = false)]
+    //set the player's new team number and update all clients
+    private void CmdSetTeamNumber(int connectionID, int playerNumber, int team)
+    {
+        if (connectionID == playerConnections[playerNumber].connectionId)
+        {
+            LobbyPlayer temp = playerData[playerNumber];
+            temp.team = team;
+            playerData[playerNumber] = temp;
+        }
+        clientsNeedUpdating = true;
+    }
+
+    #endregion
+
+    #region ReadyStatus
+
+    public void ReadyStatus(bool ready)
+    {
+        CmdReadyStatus(NetworkClient.connection.connectionId, GameData.instance.playerNumber, ready);
     }
 
 
     [Command(requiresAuthority = false)]
     //tells the host that this player is ready to start the game
-    private void CmdReady(int connectionID, int playerNumber)
+    private void CmdReadyStatus(int connectionID, int playerNumber, bool ready)
     {
-        if (connectionID == playerIDs[playerNumber].connectionId)
+        if (connectionID == playerConnections[playerNumber].connectionId)
         {
             LobbyPlayer temp = playerData[playerNumber];
-            temp.ready = true;
+            temp.ready = ready;
             playerData[playerNumber] = temp;
         }
+        clientsNeedUpdating = true;
+    }
+
+    #endregion
+
+
+    [Server]
+    //move players to the map scene
+    public void StartGame()
+    {
+        NetworkManager.singleton.ServerChangeScene("GreyBox (Harry)");
     }
 }
