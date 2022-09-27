@@ -67,10 +67,10 @@ namespace DS_Selection
 
 
         //remove a sprite from the selected panel
-        public void RemoveSelectedIcon(Selectable selectable, int count)
+        public void RemoveSelectedIcon(Selectable selectable)
         {
-            if (count == 0)
-                TogglePanel(false);
+            if (!selectedObjects)
+                return;
 
             for (int i = 0; i < selectedObjects.transform.childCount; i++)
             {
@@ -80,6 +80,22 @@ namespace DS_Selection
                     return;
                 }
             }
+
+            if (selectedObjects.transform.childCount == 0)
+                TogglePanel(false);
+        }
+
+
+        //remove all sprites from the selected panel
+        public void ClearSelectedIcons()
+        {
+            if (!selectedObjects)
+                return;
+
+            for (int i = selectedObjects.transform.childCount - 1; i >= 0; i--)
+                DestroyImmediate(selectedObjects.transform.GetChild(i).gameObject);
+
+            TogglePanel(false);
         }
     }
 }

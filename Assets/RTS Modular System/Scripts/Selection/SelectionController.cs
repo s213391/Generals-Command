@@ -47,7 +47,7 @@ namespace DS_Selection
             if (selectedObjects.Remove(selectable))
             {
                 selectable.OnDeselected();
-                GUISelected.instance.RemoveSelectedIcon(selectable, selectedObjects.Count);
+                GUISelected.instance.RemoveSelectedIcon(selectable);
             }
         }
 
@@ -56,10 +56,9 @@ namespace DS_Selection
         public void DeselectAll()
         {
             foreach (Selectable selectable in selectedObjects)
-            {
                 selectable.OnDeselected();
-                GUISelected.instance.RemoveSelectedIcon(selectable, 0);
-            }
+
+            GUISelected.instance.ClearSelectedIcons();
             selectedObjects.Clear();
         }
 

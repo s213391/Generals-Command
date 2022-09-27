@@ -15,6 +15,7 @@ MonoBehaviour:
   cooldown: 0
   clientSide: 1
   lockInput: 0
+  lockCamera: 0
   showOnActionBar: 1
   icon: {fileID: 0}
   interruptionTolerance: 1
@@ -49,6 +50,54 @@ MonoBehaviour:
   - successfulEnd: 0
     type: 2
     seconds: 0
-  successConditions: []
+  successConditions:
+  - conditionMet: 1
+    successIfConditionMet: 1
+    type: 0
+    objectToBeChecked: 1
+    distance: 100
+    objectsType: {fileID: 11400000, guid: 559e72dc2dfdcbb498041bc58da9d5a2, type: 2}
+    teamsToCheck: 1
+    layers:
+      serializedVersion: 2
+      m_Bits: 0
+    maximumHeightAllowed: 0
+  - conditionMet: 0
+    successIfConditionMet: 0
+    type: 1
+    objectToBeChecked: 1
+    distance: 25
+    objectsType: {fileID: 11400000, guid: 559e72dc2dfdcbb498041bc58da9d5a2, type: 2}
+    teamsToCheck: 1
+    layers:
+      serializedVersion: 2
+      m_Bits: 25165824
+    maximumHeightAllowed: 0
+  - conditionMet: 1
+    successIfConditionMet: 1
+    type: 2
+    objectToBeChecked: 1
+    distance: 25
+    objectsType: {fileID: 11400000, guid: 559e72dc2dfdcbb498041bc58da9d5a2, type: 2}
+    teamsToCheck: 1
+    layers:
+      serializedVersion: 2
+      m_Bits: 25165824
+    maximumHeightAllowed: 0.1
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onConditionEvaluate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3244260398583424558, guid: f9a5fadf63b28e54fbd4f857a0144ba8, type: 3}
+        m_TargetAssemblyTypeName: GreenRedPlacement, Assembly-CSharp
+        m_MethodName: ConditionalColour
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

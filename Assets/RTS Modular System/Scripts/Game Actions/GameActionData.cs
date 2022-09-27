@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using DS_Resources;
 
 namespace RTSModularSystem
@@ -15,6 +16,8 @@ namespace RTSModularSystem
         public bool clientSide; 
         [Tooltip("If this action prevents other actions from tracking inputs until it ends")]
         public bool lockInput;
+        [Tooltip("If this action prevents the camera from tracking inputs until it ends")]
+        public bool lockCamera;
         [Tooltip("If this action will appear as a button on the action bar when its player object is selected")]
         public bool showOnActionBar;
         [Tooltip("The image that will be displayed in the GUI representing this action")]
@@ -36,10 +39,12 @@ namespace RTSModularSystem
         [Tooltip("The conditions that will immediately end this action. \nEach condition is treated as either a success or a failure")]
         public List<ActionEnd> endConditions;
         [Tooltip("Conditions that will not end the action when they are true, but must all be true when an end condition occurs for the action to end as a success")]
-        public List<ActionEnd> successConditions;
+        public List<ActionCondition> successConditions;
         [Tooltip("Actions that will start when this action ends with a success state")]
         public List<GameActionData> nextActionsOnSuccess;
         [Tooltip("Actions that will start when this action ends with a failure state")]
         public List<GameActionData> nextActionsOnFailure;
+        [Tooltip("The event that will be called once a frame when success conditions are evaluated. \nUsed to give feedback to whether an action would be successful or not.")]
+        public UnityEvent<ConditionEventData> onConditionEvaluate;
     }
 }

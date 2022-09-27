@@ -184,9 +184,80 @@ namespace RTSModularSystem
 
 
         //evaluates all success conditions and returns whether all conditions passed
-        private bool EvaluateSuccess(GameActionData data)
+        private bool EvaluateSuccess(GameActionData data, PlayerObject functionCaller, GameObject firstObjectSpawned)
         {
-            return true;
+            bool success = true;
+            List<ActionCondition> conditions = data.successConditions;
+
+            for (int i = 0; i < conditions.Count; i++)
+            {
+                ActionCondition ac = conditions[i];
+                ac.conditionMet = false;
+
+                GameObject objectToCheck;
+                if (ac.objectToBeChecked == ObjectToBeChecked.self)
+                    objectToCheck = functionCaller.gameObject;
+                else
+                    objectToCheck = firstObjectSpawned;
+
+                switch (conditions[i].type)
+                {
+                    case ActionConditionType.proximityToObjects:
+                        List<PlayerObject> objectsToBeCheckedForProximity = ObjectDataManager.GetPlayerObjectsOfType(conditions[i].objectsType.name);
+
+                        foreach (PlayerObject po in objectsToBeCheckedForProximity)
+                        {
+                            if (po.owningPlayer == functionCaller.owningPlayer)
+                            {
+                                if ((po.transform.position - objectToCheck.transform.position).magnitude <= ac.distance)
+                                {
+                                    ac.conditionMet = true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case ActionConditionType.collidingWithLayers:
+                        Bounds bounds = objectToCheck.GetComponentInChildren<Renderer>().bounds;
+                        ac.conditionMet = Physics.OverlapBox(bounds.center, bounds.extents, Quaternion.identity, ac.layers).Length > 0;
+                        break;
+
+                    case ActionConditionType.onTerrain:
+                        bounds = objectToCheck.GetComponentInChildren<Renderer>().bounds;
+
+                        List<Vector3> corners = new List<Vector3>();
+                        corners.Add(new Vector3(bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z + bounds.extents.z));
+                        corners.Add(new Vector3(bounds.center.x + bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z - bounds.extents.z));
+                        corners.Add(new Vector3(bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z + bounds.extents.z));
+                        corners.Add(new Vector3(bounds.center.x - bounds.extents.x, bounds.center.y - bounds.extents.y + 0.01f, bounds.center.z - bounds.extents.z));
+
+                        int counter = 0;
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (Physics.Raycast(corners[j], Vector3.down, ac.maximumHeightAllowed, PlayerInput.instance.terrainLayers))
+                                counter++;
+                            else
+                                break;
+                        }
+                        if (counter == 4)
+                            ac.conditionMet = true;
+                        break;
+                }
+
+                //check if this counts as a success
+                if (ac.successIfConditionMet && !ac.conditionMet || !ac.successIfConditionMet && ac.conditionMet)
+                    success = false;
+                conditions[i] = ac;
+            }
+            ConditionEventData conditionEventData = new ConditionEventData();
+            conditionEventData.functionCaller = functionCaller.gameObject;
+            conditionEventData.firstSpawnedObject = firstObjectSpawned;
+            conditionEventData.conditions = conditions;
+            conditionEventData.success = success;
+
+            data.onConditionEvaluate.Invoke(conditionEventData);
+            return success;
         }
 
 
@@ -234,6 +305,21 @@ namespace RTSModularSystem
             float duration = 0.0f;
             int durationIndex = data.endConditions.FindIndex(x => x.type == ActionEndType.duration && x.successfulEnd);
 
+            bool previousCameraState = CameraController.instance.movementEnabled;
+            bool previousDragSelectionState = PlayerInput.instance.dragSelectionEnabled;
+            bool previousSingleSelectionState = PlayerInput.instance.singleSelectionEnabled;
+            bool previousMovementState = PlayerInput.instance.movementEnabled;
+
+            //prevent camera movement and selection during this action
+            if (data.lockCamera)
+                CameraController.instance.ToggleCameraInputs(false);
+            if (data.lockInput)
+            {
+                PlayerInput.instance.ToggleDragSelectionInputs(false);
+                PlayerInput.instance.ToggleSingleSelectionInputs(false);
+                PlayerInput.instance.ToggleMovementInputs(false);
+            }
+
             //allow for looping an action
             bool loop = data.loopOnSuccessfulEnd;
             do
@@ -247,6 +333,7 @@ namespace RTSModularSystem
                         duration = 0.0f;
                 }
                 
+                List<GameObject> objectsCreated = new List<GameObject>();
                 List<MouseTrackingObject> objectsFollowingMouse = new List<MouseTrackingObject>();
                 List<GameObject> objectsToBeDestroyed = new List<GameObject>();
                 List<GameObject> objectsToBeSpawned = new List<GameObject>();
@@ -328,6 +415,7 @@ namespace RTSModularSystem
                     }
                     if (prefab != null)
                     {
+                        objectsCreated.Add(prefab);
                         if (oc.destroyAfterAction)
                             objectsToBeDestroyed.Add(prefab);
                         if (oc.spawnAfterAction)
@@ -411,8 +499,8 @@ namespace RTSModularSystem
                             //evaluate conditions to choose whether this action will end as a success or a failure
                             if (success)
                                 success = actionEnd.successfulEnd;
-                            if (success)
-                                success = EvaluateSuccess(data);
+                            if (success && data.successConditions.Count > 0)
+                                success = EvaluateSuccess(data, playerObject, objectsCreated[0]);
 
                             //for server actions, the last check for success is always resources, which will be changed now if they can be
                             if (success && data.resourceChange.Count > 0)
@@ -463,6 +551,11 @@ namespace RTSModularSystem
                             }
                             else
                             {
+                                //action failed, destroy everything created by it
+                                foreach (GameObject go in objectsCreated)
+                                    Destroy(go);
+                                objectsToBeDestroyed.Clear();
+                                
                                 foreach (GameActionData action in data.nextActionsOnFailure)
                                     StartAction(action, playerObject, owningPlayer);
                                 loop = false;
@@ -471,6 +564,8 @@ namespace RTSModularSystem
                             //an exit condition has been reached, end this action
                             break;
                         }
+                        else if (data.successConditions.Count > 0)
+                            EvaluateSuccess(data, playerObject, objectsCreated[0]);
                     }
                     if (firstTime)
                         firstTime = false;
@@ -479,8 +574,15 @@ namespace RTSModularSystem
 
                 //cleanup
                 foreach (GameObject go in objectsToBeDestroyed)
-                {
                     Destroy(go);
+
+                if (data.lockCamera)
+                    CameraController.instance.ToggleCameraInputs(previousCameraState);
+                if (data.lockInput)
+                {
+                    PlayerInput.instance.ToggleSingleSelectionInputs(previousSingleSelectionState);
+                    PlayerInput.instance.ToggleDragSelectionInputs(previousDragSelectionState);
+                    PlayerInput.instance.ToggleMovementInputs(previousMovementState);
                 }
 
             } while (loop);

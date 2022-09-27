@@ -57,7 +57,8 @@ namespace RTSModularSystem
         [ConditionalHide("moveWithMouse", "true"), Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
         public bool moveWhenOutsideOfReadZone;
 
-        private bool movementEnabled = true; //whether the camera inputs are enabled
+        public bool movementEnabled { get; private set; } //whether the camera inputs are enabled
+
         private DeviceType device; //the type of device the game is running on
         private bool touchStartedOverUI = false; //whether this touch started on a UI element
 
@@ -75,6 +76,7 @@ namespace RTSModularSystem
         //set the camera's initial position and angle
         public void Init(bool isHost)
         {
+            movementEnabled = true;
             //set default inputs based on device type
             device = SystemInfo.deviceType;
             if (device == DeviceType.Handheld)
@@ -194,7 +196,7 @@ namespace RTSModularSystem
                     switch (finger.phase)
                     { 
                         case TouchPhase.Began:
-                            if (EventSystem.current.IsPointerOverGameObject(finger.touchId))
+                            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                                 touchStartedOverUI = true;
                             break;
 

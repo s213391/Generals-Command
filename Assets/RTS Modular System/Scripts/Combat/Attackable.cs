@@ -21,9 +21,9 @@ namespace DS_BasicCombat
         Resistances resistances;
         HealthBar healthBar;
 
-        private UnityEvent onDamageEvents;
-        private UnityEvent onHealEvents;
-        private UnityEvent onDeathEvents;
+        public UnityEvent onDamage = new UnityEvent();
+        public UnityEvent onHeal = new UnityEvent();
+        public UnityEvent onDeath = new UnityEvent();
 
 
         //set up using inspector values
@@ -74,7 +74,8 @@ namespace DS_BasicCombat
         //delete health bar
         private void OnDestroy()
         {
-            Destroy(healthBar);
+            if (healthBar)
+                Destroy(healthBar);
         }
 
 
@@ -92,6 +93,8 @@ namespace DS_BasicCombat
                     currentHealth = maxHealth;
                 else
                     currentHealth -= damage;
+
+                onHeal.Invoke();
             }
             //damage is rounded down after relevant resistance is removed
             else
@@ -100,14 +103,18 @@ namespace DS_BasicCombat
                 if (currentHealth - finalDamage <= 0)
                 {
                     currentHealth = 0;
-                    isVisible = false;
-                    healthBar.UpdateMeter();
-                    gameObject.SetActive(false);
+                    CombatManager.instance.MarkForDestruction(this);
                     if (attacker != null)
                         attacker.XPChange(xpOnDeath);
+
+                    onDeath.Invoke();
                 }
                 else
+                {
                     currentHealth -= finalDamage;
+
+                    onDamage.Invoke();
+                }
             }
         }
 
@@ -116,6 +123,14 @@ namespace DS_BasicCombat
         //update health using value from the server
         public void SetHealth(int newHealth)
         {
+            if (newHealth > currentHealth)
+                onHeal.Invoke();
+            else if (newHealth > 0)
+                onDamage.Invoke();
+            else
+                onDeath.Invoke();
+            
+            
             if (currentHealth > 0)
                 currentHealth = newHealth;
         }

@@ -7,28 +7,56 @@ using TMPro;
 
 public class ServerLobby : NetworkBehaviour
 {
+    public static ServerLobby instance;
+    
     public NetworkDiscovery networkDiscovery;
 
     public GameObject startGameButton;
-    public TextMeshProUGUI textMeshProUGUI;
+    public TextMeshProUGUI playersText;
 
-    [SyncVar]
-    public int connections;
+    public readonly SyncList<LobbyPlayer> playerData = new SyncList<LobbyPlayer>();
     
-    // Start is called before the first frame update
+    //set up the singleton
     void Start()
     {
+        if (instance != null && instance != this)
+            Destroy(this);
+        else
+            Init();
+    }
+
+
+    //set up visual elements
+    void Init()
+    {
+        instance = this;
         networkDiscovery = FindObjectOfType<NetworkDiscovery>();
+
+
         if (!GameData.instance.isHost)
             startGameButton.SetActive(false);
     }
 
+
     // Update is called once per frame
     void Update()
     {
-        if (GameData.instance.isHost && connections != NetworkServer.connections.Count)
-            connections = NetworkServer.connections.Count;
-        textMeshProUGUI.text = "Players (" + NetworkServer.connections.Count + "/2)";
+        playersText.text = "Players (" + playerData.Count + "/2)";
+
+        //the host does not change player number, they will always be player 0
+        if (!GameData.instance.isHost)
+        {
+            for (int i = 1; i < playerData.Count; i++)
+            {
+                if (playerData[i].connectionID == NetworkClient.connection.connectionId)
+                {
+                    if (GameData.instance.playerNumber != i)
+                    {
+                        GameData.instance.SetPlayerNumber(i);
+                    }
+                }
+            }
+        }
     }
 
 
@@ -57,5 +85,52 @@ public class ServerLobby : NetworkBehaviour
         }
 
         SceneManager.LoadScene("MainMenu");
+    }
+
+
+    [Server]
+    //creates new data for the joining player
+    public void PlayerConnect(int connectionID)
+    { 
+        LobbyPlayer player = new LobbyPlayer();
+        playerData.Add(player);
+
+        player.connectionID = connectionID;
+        player.team = NetworkServer.connections.Count;
+        player.name = "Player " + player.team.ToString();
+        player.colour = Color.black;
+        player.ready = false;
+    }
+
+
+    [Server]
+    //removes the data for the disconnecting player
+    public void PlayerDisconnect(int connectionID)
+    {
+        foreach (LobbyPlayer player in playerData)
+            if (player.connectionID == connectionID)
+                playerData.Remove(player);
+    }
+
+
+    public void Ready()
+    {
+        CmdReady(NetworkClient.connection.connectionId);
+    }
+
+
+    [Command(requiresAuthority = false)]
+    //tells the host that this player is ready to start the game
+    private void CmdReady(int connectionID)
+    {
+        for (int i = 0; i < playerData.Count; i++)
+        {
+            if (playerData[i].connectionID == connectionID)
+            {
+                LobbyPlayer temp = playerData[i];
+                temp.ready = true;
+                playerData[i] = temp;
+            }
+        }
     }
 }
