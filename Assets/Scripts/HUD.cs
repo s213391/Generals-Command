@@ -27,6 +27,8 @@ public class HUD : MonoBehaviour
     public GameObject optionsMenuExpanded;
     public Slider panSpeedSlider;
     public Slider zoomSpeedSlider;
+    public Slider minZoomSlider;
+    public Slider maxZoomSlider;
 
     private CameraController cameraController;
     private PlayerInput playerInput;
@@ -141,6 +143,8 @@ public class HUD : MonoBehaviour
 
             panSpeedSlider.value = Settings.panSpeed;
             zoomSpeedSlider.value = Settings.zoomSpeed;
+            minZoomSlider.value = Settings.zoomMin;
+            maxZoomSlider.value = Settings.zoomMax;
 
             saveButton.interactable = false;
             if (!saveButtonText)
