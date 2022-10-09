@@ -1,9 +1,11 @@
 using UnityEngine;
 
+[System.Serializable]
 public struct LobbyPlayer
 {
     public string name;
-    public int team;
-    public Color colour;
+    public int playerNumber;
+    public int teamIndex;
+    public int colourIndex;
     public bool ready;
 }

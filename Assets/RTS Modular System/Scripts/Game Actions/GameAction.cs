@@ -555,7 +555,7 @@ namespace RTSModularSystem
                                 foreach (GameObject go in objectsCreated)
                                     Destroy(go);
                                 objectsToBeDestroyed.Clear();
-                                
+
                                 foreach (GameActionData action in data.nextActionsOnFailure)
                                     StartAction(action, playerObject, owningPlayer);
                                 loop = false;
@@ -565,7 +565,17 @@ namespace RTSModularSystem
                             break;
                         }
                         else if (data.successConditions.Count > 0)
-                            EvaluateSuccess(data, playerObject, objectsCreated[0]);
+                        {
+                            if (success)
+                                EvaluateSuccess(data, playerObject, objectsCreated[0]);
+                            else
+                            {
+                                ConditionEventData conditionEventData = new ConditionEventData();
+                                conditionEventData.success = false;
+                                conditionEventData.firstSpawnedObject = objectsCreated[0];
+                                data.onConditionEvaluate.Invoke(conditionEventData);
+                            }
+                        }
                     }
                     if (firstTime)
                         firstTime = false;

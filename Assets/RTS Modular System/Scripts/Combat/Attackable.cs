@@ -16,6 +16,7 @@ namespace DS_BasicCombat
         public int maxHealth = 1;
         public int xpOnDeath = 0;
         public float objectHeight = 1.0f;
+        public float objectWidth = 100.0f;
         public bool isVisible = true;
 
         Resistances resistances;
@@ -37,23 +38,24 @@ namespace DS_BasicCombat
             }
 
             healthBar = HealthBarManager.instance.AddHealthBar(this);
-            healthBar.Init(objectHeight);
+            healthBar.Init(objectHeight, objectWidth);
         }
 
 
         //set up values externally
-        public void Init(float height, int health, List<DamageResistance> resists, int xp = 0)
+        public void Init(float height, float width, int health, List<DamageResistance> resists, int xp = 0)
         {
             currentHealth = health;
             maxHealth = health;
             xpOnDeath = xp;
             objectHeight = height;
+            objectWidth = width;
 
             resistances = gameObject.AddComponent<Resistances>();
             resistances.Init(resists);
 
             healthBar = HealthBarManager.instance.AddHealthBar(this);
-            healthBar.Init(objectHeight);
+            healthBar.Init(objectHeight, objectWidth);
         }
 
 

@@ -38,6 +38,18 @@ public class HUD : MonoBehaviour
     TextMeshProUGUI saveButtonText;
 
 
+    //sets the HUD to default state on GUI initialise
+    public void Init()
+    {
+        ToggleMinimap(false);
+        ToggleGroupsMenu(false);
+        ToggleSelectedMenu(false);
+        ToggleInGameMenu(false);
+        //ToggleAddToGroupMenu(false);
+        ToggleOptionsMenu(false);
+    }
+
+
     //opens/closes the minimap window while hiding/showing the button respectively
     public void ToggleMinimap(bool open)
     {
@@ -65,8 +77,8 @@ public class HUD : MonoBehaviour
         if (!cameraController)
             cameraController = Camera.main.GetComponent<CameraController>();
 
-        playerInput.ToggleDragSelectionInputs(selectionOn);
-        cameraController.ToggleCameraInputs(!selectionOn);
+        playerInput?.ToggleDragSelectionInputs(selectionOn);
+        cameraController?.ToggleCameraInputs(!selectionOn);
     }
 
 
@@ -77,8 +89,8 @@ public class HUD : MonoBehaviour
         selectedMenuMinimised.SetActive(!open);
 
         //make sure the sub menu is closed when this menu is closed
-        if (!open)
-            ToggleAddToGroupMenu(false);
+        //if (!open)
+            //ToggleAddToGroupMenu(false);
     }
 
 
@@ -103,14 +115,13 @@ public class HUD : MonoBehaviour
     public void FindAvailableEngineer()
     { 
         List<PlayerObject> engineers = ObjectDataManager.GetPlayerObjectsOfType("Engineer", RTSPlayer.GetID());
-        Vector3 camPos = CameraController.instance.target.transform.position;
 
         float closestDist = 9999.9f;
         PlayerObject closest = null;
 
         foreach (PlayerObject engineer in engineers)
         {
-            float dist = (engineer.transform.position - camPos).magnitude;
+            float dist = (engineer.transform.position - CameraController.instance.target.transform.position).magnitude;
             if (dist < closestDist)
             {
                 closestDist = dist;
@@ -132,6 +143,7 @@ public class HUD : MonoBehaviour
         Application.Quit();
     }
 
+    #region optionsMenu
 
     //opens the options sub menu
     public void ToggleOptionsMenu(bool open)
@@ -185,4 +197,23 @@ public class HUD : MonoBehaviour
 
         Settings.Save();
     }
+
+
+    //reset settings to default values
+    public void ResetToDefaults()
+    {
+        Settings.ResetPrefs();
+
+        panSpeedSlider.value = Settings.panSpeed;
+        zoomSpeedSlider.value = Settings.zoomSpeed;
+        minZoomSlider.value = Settings.zoomMin;
+        maxZoomSlider.value = Settings.zoomMax;
+
+        saveButton.interactable = false;
+        if (!saveButtonText)
+            saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        saveButtonText.text = "Settings Applied";
+    }
+
+    #endregion
 }

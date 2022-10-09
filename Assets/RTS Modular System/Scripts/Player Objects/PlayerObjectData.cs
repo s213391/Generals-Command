@@ -19,6 +19,10 @@ namespace RTSModularSystem
         public int maxHealth = 1;
         /*[ConditionalHide("attackable", "true")] Array ignores attribute*/[Tooltip("The percentage of damage that is removed before it affects health, for the given damage types")]
         public List<DamageResistance> resistances;
+        [ConditionalHide("attackable", "true"), Tooltip("The height above the ground that this attackable's health bar appears")]
+        public float healthBarHeight = 1.0f;
+        [ConditionalHide("attackable", "true"), Tooltip("The pixel width of this attackable's health bar")]
+        public int healthBarWidth = 100;
         [ConditionalHide("attackable", "true")] [Tooltip("The amount of xp given to whatever kills this unit. \nCan be negative to disincentivise killing this object")]
         public int xpOnDeath = 0;
         [ConditionalHide("attackable", "true")] [Tooltip("Whether unity destroys this object when it reaches 0 health. \nAll children gameobjects, navmesh components, renderers and colliders will still be destroyed regardless. \nSet to true if this object has an action that you want to continue performing even after it is killed")]

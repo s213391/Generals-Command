@@ -9,7 +9,7 @@ namespace RTSModularSystem
     [RequireComponent(typeof(NetworkTransform))]
     public class PlayerObject : NetworkBehaviour
     {
-        [SyncVar(hook = nameof(OnIDChange))] [SerializeField] [Tooltip("The Network Identity of the LocalPlayer that owns this object")]
+        [SyncVar(hook = nameof(OnIDChange))] [SerializeField] [Tooltip("The Player Number of the LocalPlayer that owns this object")]
         public uint owningPlayer = 9999;
         [SerializeField] [Tooltip("The PlayerObjectData that dictates how this object behaves")]
         public PlayerObjectData data;
@@ -132,14 +132,8 @@ namespace RTSModularSystem
             //attackable player objects must have a collider
             if (data.attackable && GetComponent<Collider>() != null)
             {
-                float height = 0.0f;
-                if (data.moveable)
-                    height = agent.height;
-                else
-                    height = GetComponent<NavMeshObstacle>().height;
-
                 attackable = gameObject.AddComponent<Attackable>();
-                attackable.Init(height, data.maxHealth, data.resistances, data.xpOnDeath);
+                attackable.Init(data.healthBarHeight, data.healthBarWidth, data.maxHealth, data.resistances, data.xpOnDeath);
             }
 
             if (data.attacker)
@@ -154,16 +148,14 @@ namespace RTSModularSystem
 
             //set up layers and colours
             Transform[] transforms = gameObject.GetComponentsInChildren<Transform>();
-            Color colour;
+            Color colour = GameData.instance.playerData[(int)owningPlayer - 1].colour;
             LayerMask mask;
             if (ownedByLocalPlayer)
             {
-                colour = Color.blue;
                 mask = LayerMask.NameToLayer("Friendly");
             }
             else
             {
-                colour = Color.red;
                 mask = LayerMask.NameToLayer("Enemy");
             }
 
@@ -178,14 +170,7 @@ namespace RTSModularSystem
 
                 //set the Replaceable material to team colour
                 Material material = renderer.material;
-                for (int i = 0; i < renderer.materials.Length; i++)
-                {
-                    if (renderer.materials[i].name == "Replaceable (Instance)")
-                    {
-                        renderer.materials[i].color = colour;
-                        break;
-                    }
-                }
+                material.SetColor("_TeamColour", colour);
 
                 //hide mobile enemy units
                 /*if (!ownedByLocalPlayer && data.moveable)
@@ -212,15 +197,17 @@ namespace RTSModularSystem
             //calls init once the owning player ID has set
             if (!initialised && RTSPlayer.localPlayer && owningPlayer != 9999)
                 Init();
+            else
+                return;
 
             //update components
             attackable?.OnUpdate();
 
             //only update visibilty on initialised moveable enemy objects
-            if (owningPlayer == 9999 || !data.moveable || (RTSPlayer.localPlayer && RTSPlayer.Owns(this)))
+            /*if (owningPlayer == 9999 || !data.moveable || (RTSPlayer.localPlayer && RTSPlayer.Owns(this)))
                 return;
 
-            /*bool visible = RTSPlayer.fogSampler.IsVisible(transform.position);
+            bool visible = RTSPlayer.fogSampler.IsVisible(transform.position);
 
             if (visible != isHidden)
                 return;

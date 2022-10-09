@@ -12,7 +12,7 @@ public class PlayerOwnership : MonoBehaviour
         owningPlayer = playerNumber;
 
         LayerMask mask = LayerMask.NameToLayer("Team " + owningPlayer.ToString());
-        Color colour = GameData.instance.playerInfo[owningPlayer].colour;
+        Color colour = GameData.instance.playerData[owningPlayer].colour;
         
         Transform[] transforms = transform.GetComponentsInChildren<Transform>();
         foreach (Transform trans in transforms)
