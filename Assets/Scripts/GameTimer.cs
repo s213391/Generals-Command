@@ -24,7 +24,11 @@ public class GameTimer : MonoBehaviour
         if (secondsLeft > 0)
         {
             secondsLeft -= Time.deltaTime;
-            timerText.text = ((int)secondsLeft / 60).ToString() + ":" + ((int)secondsLeft % 60).ToString();
+            if ((int)secondsLeft % 60 < 10)
+                timerText.text = ((int)secondsLeft / 60).ToString() + ":0" + ((int)secondsLeft % 60).ToString();
+            else
+                timerText.text = ((int)secondsLeft / 60).ToString() + ":" + ((int)secondsLeft % 60).ToString();
+
             return;
         }
 
