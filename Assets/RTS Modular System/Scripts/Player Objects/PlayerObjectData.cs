@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 using DS_BasicCombat;
 
 namespace RTSModularSystem
@@ -12,7 +12,7 @@ namespace RTSModularSystem
         [Tooltip("Used to set up a designer-defined categorisation.\nThis data will also need to be placed in the matching array in the Object Data Manager")]
         public PlayerObjectType objectType;
 
-        [Header("Combat")]
+        [Header("Combat - Attackable")]
         [Tooltip("Whether this object can be attacked by other objects")]
         public bool attackable = false;
         [ConditionalHide("attackable", "true")] [Min(1)] [Tooltip("The amount of damage required to destroy this object")]
@@ -27,7 +27,14 @@ namespace RTSModularSystem
         public int xpOnDeath = 0;
         [ConditionalHide("attackable", "true")] [Tooltip("Whether unity destroys this object when it reaches 0 health. \nAll children gameobjects, navmesh components, renderers and colliders will still be destroyed regardless. \nSet to true if this object has an action that you want to continue performing even after it is killed")]
         public bool persistAtZeroHealth = false;
+        [ConditionalHide("attackable", "true")]
+        public UnityEvent onDamage;
+        [ConditionalHide("attackable", "true")]
+        public UnityEvent onHeal;
+        [ConditionalHide("attackable", "true")]
+        public UnityEvent onDeath;
 
+        [Header("Combat - Attacker")]
         [Tooltip("Whether this object can attack other objects")]
         public bool attacker = false;
         [ConditionalHide("attacker", "true")] [Tooltip("What kind of attack this object does")]
@@ -46,6 +53,8 @@ namespace RTSModularSystem
         public bool canAutoTarget = false;
         [ConditionalHide("canAutoTarget", "true")] [Tooltip("The range that this unit will automatically target any attackable enemy object. \nThis object will only check for targets if it is neither moving, nor targeting another object")]
         public float autoTargetRange = 1.0f;
+        [ConditionalHide("canAutoTarget", "true")]
+        public UnityEvent onAttack;
 
         [Header("Leveling")]
         [Tooltip("Whether this object can level up or improve. \nIf this data is the maximum level, set it to false")]
@@ -70,8 +79,14 @@ namespace RTSModularSystem
         public int pathfingPriority = 50;
         [ConditionalHide("moveable", "true")] [Tooltip("Whether this object will walk through other moving objects or push around them. \nIf true, navmesh obstacles will need to be set to carve, or this object will not path around them")]
         public bool passThroughOtherAgents = true;
+        [ConditionalHide("moveable", "true")]
+        public UnityEvent onMoveBegin;
+        [ConditionalHide("moveable", "true")]
+        public UnityEvent onMoveEnd;
 
         [Header("Required Settings")]
+        [Tooltip("A brief summary of what this object is and what it does")]
+        public string description;
         [Tooltip("The maximum amount of this object allowed to exist at once, per team. -1 for infinite")]
         public int unitCap = -1; 
         [Tooltip("The range in metres that this unit can see around itself at different heights. \nEach vector is read as (horizontal range, vertical offset from ground) \nUsed to allow different vision over areas of the map that are lower or higher than this object")]
