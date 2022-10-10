@@ -28,6 +28,15 @@ MonoBehaviour:
   healthBarWidth: 1
   xpOnDeath: 0
   persistAtZeroHealth: 0
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onHeal:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
   attacker: 1
   attackType: 2
   damageType: 3
@@ -37,16 +46,26 @@ MonoBehaviour:
   attackDuration: 0.2
   canAutoTarget: 1
   autoTargetRange: 8
+  onAttack:
+    m_PersistentCalls:
+      m_Calls: []
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
   xpRequirement: -1
   moveable: 1
-  moveSpeed: 10
+  moveSpeed: 5
   agentHeight: 2
   agentWidth: 0.5
   pathfingPriority: 50
   passThroughOtherAgents: 1
+  onMoveBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  description: 
   unitCap: -1
   visibilityRanges: []
   sprite: {fileID: 0}
