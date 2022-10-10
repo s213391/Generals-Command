@@ -19,6 +19,9 @@ public class CommandCentreEvents : MonoBehaviour
 
     public void Death(GameObject commandCentre)
     {
-
+        if (commandCentre.GetComponent<PlayerObject>().owningPlayer == GameData.instance.localPlayerNumber)
+            GameOver.instance.TriggerGameOver(false);
+        else
+            GameOver.instance.TriggerGameOver(true);
     }
 }

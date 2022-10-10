@@ -27,12 +27,12 @@ namespace RTSModularSystem
         public int xpOnDeath = 0;
         [ConditionalHide("attackable", "true")] [Tooltip("Whether unity destroys this object when it reaches 0 health. \nAll children gameobjects, navmesh components, renderers and colliders will still be destroyed regardless. \nSet to true if this object has an action that you want to continue performing even after it is killed")]
         public bool persistAtZeroHealth = false;
-        [ConditionalHide("attackable", "true")]
-        public UnityEvent onDamage;
-        [ConditionalHide("attackable", "true")]
-        public UnityEvent onHeal;
-        [ConditionalHide("attackable", "true")]
-        public UnityEvent onDeath;
+        [ConditionalHide("attackable", "true"), SerializeField]
+        public UnityAction<GameObject, int, int> onDamage;
+        [ConditionalHide("attackable", "true"), SerializeField]
+        public UnityAction<GameObject, int, int> onHeal;
+        [ConditionalHide("attackable", "true"), SerializeField]
+        public UnityAction<GameObject> onDeath;
 
         [Header("Combat - Attacker")]
         [Tooltip("Whether this object can attack other objects")]

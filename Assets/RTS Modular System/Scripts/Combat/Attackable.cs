@@ -60,23 +60,23 @@ namespace DS_BasicCombat
 
 
         //sets event called when damage is taken
-        public void SetOnDamage(UnityEvent<GameObject, int, int> damageEvent)
-        { 
-            onDamage = damageEvent;
+        public void SetOnDamage(UnityAction<GameObject, int, int> damageEvent)
+        {
+            onDamage.AddListener(damageEvent);
         }
 
 
         //sets event called when damage is taken
-        public void SetOnHeal(UnityEvent<GameObject, int, int> healEvent)
+        public void SetOnHeal(UnityAction<GameObject, int, int> healEvent)
         {
-            onHeal = healEvent;
+            onHeal.AddListener(healEvent);
         }
 
 
         //sets event called when damage is taken
-        public void SetOnDeath(UnityEvent<GameObject> deathEvent)
+        public void SetOnDeath(UnityAction<GameObject> deathEvent)
         {
-            onDeath = deathEvent;
+            onDeath.AddListener(deathEvent);
         }
 
 

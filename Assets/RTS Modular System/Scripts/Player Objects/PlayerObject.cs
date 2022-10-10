@@ -134,6 +134,12 @@ namespace RTSModularSystem
             {
                 attackable = gameObject.AddComponent<Attackable>();
                 attackable.Init(data.healthBarHeight, data.healthBarWidth, data.maxHealth, data.resistances, data.xpOnDeath);
+                if (data.onDamage != null)
+                    attackable.SetOnDamage(data.onDamage);
+                if (data.onHeal != null)
+                    attackable.SetOnHeal(data.onHeal);
+                if (data.onDeath != null)
+                    attackable.SetOnDeath(data.onDeath);
             }
 
             if (data.attacker)
