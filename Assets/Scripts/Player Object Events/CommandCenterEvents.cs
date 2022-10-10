@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RTSModularSystem;
 
-public class CommandCentreEvents : MonoBehaviour
+public class CommandCenterEvents : MonoBehaviour
 {
     public void Damage(GameObject commandCentre, int newHealth, int oldHealth)
     {
-        GUIPlayerScore.instance.UpdateHealth((int)(commandCentre.GetComponent<PlayerObject>().owningPlayer), (newHealth / 10));
+        GUIPlayerScore.instance.UpdateHealth((int)(commandCentre.GetComponent<PlayerObject>().owningPlayer - 1), (newHealth / 10));
     }
 
 
@@ -19,7 +17,7 @@ public class CommandCentreEvents : MonoBehaviour
 
     public void Death(GameObject commandCentre)
     {
-        if (commandCentre.GetComponent<PlayerObject>().owningPlayer == GameData.instance.localPlayerNumber)
+        if (commandCentre.GetComponent<PlayerObject>().owningPlayer == GameData.instance.localPlayerNumber + 1)
             GameOver.instance.TriggerGameOver(false);
         else
             GameOver.instance.TriggerGameOver(true);

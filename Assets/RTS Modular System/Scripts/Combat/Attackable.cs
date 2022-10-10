@@ -59,27 +59,6 @@ namespace DS_BasicCombat
         }
 
 
-        //sets event called when damage is taken
-        public void SetOnDamage(UnityAction<GameObject, int, int> damageEvent)
-        {
-            onDamage.AddListener(damageEvent);
-        }
-
-
-        //sets event called when damage is taken
-        public void SetOnHeal(UnityAction<GameObject, int, int> healEvent)
-        {
-            onHeal.AddListener(healEvent);
-        }
-
-
-        //sets event called when damage is taken
-        public void SetOnDeath(UnityAction<GameObject> deathEvent)
-        {
-            onDeath.AddListener(deathEvent);
-        }
-
-
         //update health bar position automatically
         private void Update()
         {
@@ -149,11 +128,11 @@ namespace DS_BasicCombat
         public void SetHealth(int newHealth)
         {
             if (newHealth > currentHealth)
-                onHeal.Invoke(gameObject, newHealth, currentHealth);
+                onHeal?.Invoke(gameObject, newHealth, currentHealth);
             else if (newHealth > 0)
-                onDamage.Invoke(gameObject, newHealth, currentHealth);
+                onDamage?.Invoke(gameObject, newHealth, currentHealth);
             else
-                onDeath.Invoke(gameObject);
+                onDeath?.Invoke(gameObject);
             
             
             if (currentHealth >= 0)
@@ -167,6 +146,13 @@ namespace DS_BasicCombat
         {
             if (visible != isVisible)
                 isVisible = visible;
+        }
+
+
+        //returns the attackables resistance values
+        public List<int> GetResistances()
+        {
+            return resistances.GetResistanceValues();
         }
     }
 }

@@ -483,7 +483,8 @@ public class ServerLobby : NetworkBehaviour
                 yield return null;
         }
         
-        NetworkManager.singleton.ServerChangeScene("GreyBox (Harry)");
+        //NetworkManager.singleton.ServerChangeScene("GreyBox (Harry)");
+        NetworkManager.singleton.ServerChangeScene("Nuclear wastefield map");
     }
 
 

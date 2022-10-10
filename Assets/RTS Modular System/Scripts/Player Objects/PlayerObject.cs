@@ -134,18 +134,28 @@ namespace RTSModularSystem
             {
                 attackable = gameObject.AddComponent<Attackable>();
                 attackable.Init(data.healthBarHeight, data.healthBarWidth, data.maxHealth, data.resistances, data.xpOnDeath);
-                if (data.onDamage != null)
-                    attackable.SetOnDamage(data.onDamage);
-                if (data.onHeal != null)
-                    attackable.SetOnHeal(data.onHeal);
-                if (data.onDeath != null)
-                    attackable.SetOnDeath(data.onDeath);
+
+                if (data.attackableEvents)
+                { 
+                    if (data.attackableEvents.onDamage != null)
+                        attackable.onDamage = data.attackableEvents.onDamage;
+                    if (data.attackableEvents.onHeal != null)
+                        attackable.onHeal = data.attackableEvents.onHeal;
+                    if (data.attackableEvents.onDeath != null)
+                        attackable.onDeath = data.attackableEvents.onDeath;
+                }
             }
 
             if (data.attacker)
             {
                 attacker = gameObject.AddComponent<Attacker>();
                 attacker.Init(data.attackType, data.damageType, data.targetType, data.attackDamage, data.attackRange, data.attackDuration, data.xpRequirement != -1, data.canAutoTarget, data.autoTargetRange);
+
+                if (data.attackerEvents)
+                { 
+                    if (data.attackerEvents.onAttack != null)
+                        attacker.onAttack = data.attackerEvents.onAttack;
+                }
             }
 
             //add gameobject to combat manager
@@ -206,6 +216,15 @@ namespace RTSModularSystem
 
             //update components
             attackable?.OnUpdate();
+
+            NavMeshAgent nva = GetComponent<NavMeshAgent>();
+            if (nva)
+            {
+                if (nva.velocity.magnitude > 0.2f)
+                    data.movableEvents.onMoveBegin.Invoke(gameObject);
+                else
+                    data.movableEvents.onMoveEnd.Invoke(gameObject);
+            }
 
             //only update visibilty on initialised moveable enemy objects
             /*if (owningPlayer == 9999 || !data.moveable || (RTSPlayer.localPlayer && RTSPlayer.Owns(this)))

@@ -42,7 +42,7 @@ public class HUD : MonoBehaviour
     public void Init()
     {
         ToggleMinimap(false);
-        ToggleGroupsMenu(false);
+        //ToggleGroupsMenu(false);
         ToggleSelectedMenu(false);
         ToggleSelection(false);
         ToggleInGameMenu(false);

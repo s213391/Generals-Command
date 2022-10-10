@@ -27,12 +27,8 @@ namespace RTSModularSystem
         public int xpOnDeath = 0;
         [ConditionalHide("attackable", "true")] [Tooltip("Whether unity destroys this object when it reaches 0 health. \nAll children gameobjects, navmesh components, renderers and colliders will still be destroyed regardless. \nSet to true if this object has an action that you want to continue performing even after it is killed")]
         public bool persistAtZeroHealth = false;
-        [ConditionalHide("attackable", "true"), SerializeField]
-        public UnityAction<GameObject, int, int> onDamage;
-        [ConditionalHide("attackable", "true"), SerializeField]
-        public UnityAction<GameObject, int, int> onHeal;
-        [ConditionalHide("attackable", "true"), SerializeField]
-        public UnityAction<GameObject> onDeath;
+        [ConditionalHide("attackable", "true")]
+        public AttackableEvents attackableEvents;
 
         [Header("Combat - Attacker")]
         [Tooltip("Whether this object can attack other objects")]
@@ -53,8 +49,8 @@ namespace RTSModularSystem
         public bool canAutoTarget = false;
         [ConditionalHide("canAutoTarget", "true")] [Tooltip("The range that this unit will automatically target any attackable enemy object. \nThis object will only check for targets if it is neither moving, nor targeting another object")]
         public float autoTargetRange = 1.0f;
-        [ConditionalHide("canAutoTarget", "true")]
-        public UnityEvent onAttack;
+        [ConditionalHide("attacker", "true")]
+        public AttackerEvents attackerEvents;
 
         [Header("Leveling")]
         [Tooltip("Whether this object can level up or improve. \nIf this data is the maximum level, set it to false")]
@@ -80,9 +76,7 @@ namespace RTSModularSystem
         [ConditionalHide("moveable", "true")] [Tooltip("Whether this object will walk through other moving objects or push around them. \nIf true, navmesh obstacles will need to be set to carve, or this object will not path around them")]
         public bool passThroughOtherAgents = true;
         [ConditionalHide("moveable", "true")]
-        public UnityEvent onMoveBegin;
-        [ConditionalHide("moveable", "true")]
-        public UnityEvent onMoveEnd;
+        public MovableEvents movableEvents;
 
         [Header("Required Settings")]
         [Tooltip("A brief summary of what this object is and what it does")]
