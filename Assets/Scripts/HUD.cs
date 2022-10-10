@@ -6,7 +6,7 @@ using DS_Selection;
 using TMPro;
 
 public class HUD : MonoBehaviour
-{
+{   
     [Header("Minimap")]
     public GameObject minimapExpanded;
     public GameObject minimapMinimised;
@@ -44,6 +44,7 @@ public class HUD : MonoBehaviour
         ToggleMinimap(false);
         ToggleGroupsMenu(false);
         ToggleSelectedMenu(false);
+        ToggleSelection(false);
         ToggleInGameMenu(false);
         //ToggleAddToGroupMenu(false);
         ToggleOptionsMenu(false);

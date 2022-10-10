@@ -197,8 +197,6 @@ namespace RTSModularSystem
             //calls init once the owning player ID has set
             if (!initialised && RTSPlayer.localPlayer && owningPlayer != 9999)
                 Init();
-            else
-                return;
 
             //update components
             attackable?.OnUpdate();
