@@ -134,7 +134,6 @@ namespace RTSModularSystem
         void InitialiseNewPlayerObject(GameObject newObject, uint owningPlayer)
         {
             newObject.GetComponent<PlayerObject>().SetID(owningPlayer);
-
         }
 
 
