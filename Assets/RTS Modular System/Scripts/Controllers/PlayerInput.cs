@@ -17,12 +17,9 @@ namespace RTSModularSystem
         
         [SerializeField]
         private RectTransform selectionBox;
-        [SerializeField]
-        private LayerMask objectLayers;
-        [SerializeField]
-        private LayerMask terrainLayers;
-        [SerializeField]
-        private LayerMask uiLayers;
+        public LayerMask objectLayers;
+        public LayerMask terrainLayers;
+        public LayerMask uiLayers;
         [SerializeField]
         private float dragDelay = 0.1f;
 
@@ -34,8 +31,12 @@ namespace RTSModularSystem
         private Vector2 originalPos;
         private Vector3 nullState = new Vector3(-99999, -99999, -99999);
         private DeviceType device;
-        private bool selectionEnabled = true;
         private bool selectedThisFrame = false;
+        private bool touchStartedOverUI = false;
+
+        public bool singleSelectionEnabled { get; private set; }
+        public bool dragSelectionEnabled { get; private set; }
+        public bool movementEnabled { get; private set; }
 
         public Vector3 screenPointWorldSpace { get; private set; }
         public PlayerObject objectUnderScreenPoint { get; private set; }
@@ -66,8 +67,11 @@ namespace RTSModularSystem
             unitArrangement = GetComponent<UnitArrangement>();
 
             device = SystemInfo.deviceType;
-            if (device == DeviceType.Handheld)
-                selectionEnabled = false;
+            singleSelectionEnabled = true;
+            movementEnabled = true;
+            dragSelectionEnabled = true;
+            //if (device == DeviceType.Handheld)
+                ToggleDragSelectionInputs(false);
         }
 
 
@@ -108,11 +112,19 @@ namespace RTSModularSystem
             {
                 screenRay = mainCam.ScreenPointToRay(Input.GetTouch(0).position);
 
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
                 {
-                    screenPointWorldSpace = nullState;
-                    objectUnderScreenPoint = null;
-                    return;
+                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                    {
+                        screenPointWorldSpace = nullState;
+                        objectUnderScreenPoint = null;
+                        touchStartedOverUI = true;
+                        return;
+                    }
+                    else
+                    {
+                        touchStartedOverUI = false;
+                    }
                 }
             }
 
@@ -136,6 +148,10 @@ namespace RTSModularSystem
             //set false to allow movement orders if nothing is selected this frame
             selectedThisFrame = false;
 
+            //if neither selection is enabled return immediately
+            if (!singleSelectionEnabled && !dragSelectionEnabled)
+                return;
+
             //track if the touch/click is up, down or being held
             bool down = false;
             bool held = false;
@@ -156,7 +172,7 @@ namespace RTSModularSystem
             }
             
             //if the touch/click began this frame and is not over UI, turn on selection box
-            if (selectionEnabled && down && screenPointWorldSpace != nullState)
+            if (dragSelectionEnabled && down && !touchStartedOverUI)
             {
                 selectionBox.sizeDelta = Vector2.zero;
                 selectionImage.enabled = true;
@@ -193,7 +209,7 @@ namespace RTSModularSystem
                 }
             }
             //if the touch/click ended this frame, check if anything has been selected
-            else if (up)
+            else if (up && !touchStartedOverUI)
             {
                 //only check the shift key mechanic on desktop
                 bool shift = false;
@@ -204,9 +220,9 @@ namespace RTSModularSystem
                 List<Selectable> selectables = selectionController.availableObjects;
 
                 //only check the box if the touch/click has been down for a set delay
-                if (selectionEnabled && downTime > dragDelay)
+                if (dragSelectionEnabled && downTime > dragDelay)
                 {
-                    if (!selectionEnabled)
+                    if (!dragSelectionEnabled)
                         return;
                     
                     selectedThisFrame = true;
@@ -228,7 +244,7 @@ namespace RTSModularSystem
                     }
                 }
                 //else treat as a single click unless over UI
-                else if (screenPointWorldSpace != null)
+                else if (singleSelectionEnabled && screenPointWorldSpace != nullState)
                 {
                     if (objectUnderScreenPoint != null && RTSPlayer.Owns(objectUnderScreenPoint))
                     {
@@ -264,7 +280,7 @@ namespace RTSModularSystem
         //check if any selected objects need to be given a navmesh destination
         private void HandleMovementInputs()
         {
-            if (selectedThisFrame || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState)
+            if (!movementEnabled || selectedThisFrame || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState)
                 return;
             if (device == DeviceType.Desktop && !Input.GetKeyUp(KeyCode.Mouse1))
                 return;
@@ -296,10 +312,25 @@ namespace RTSModularSystem
         }
 
 
-        //enables/disables selection and movement
-        public void ToggleSelectionInputs(bool enabled)
+        //enables/disables single selection
+        public void ToggleSingleSelectionInputs(bool enabled)
+        { 
+            singleSelectionEnabled = enabled;
+        }
+
+
+        //enables/disables drag selection
+        public void ToggleDragSelectionInputs(bool enabled)
         {
-            selectionEnabled = enabled;
+            dragSelectionEnabled = enabled;
+            selectionBox.parent.gameObject.SetActive(enabled);
+        }
+
+
+        //enables/disables movement inputs
+        public void ToggleMovementInputs(bool enabled)
+        {
+            movementEnabled = enabled;
         }
     }
 }

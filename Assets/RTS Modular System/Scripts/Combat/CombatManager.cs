@@ -19,6 +19,8 @@ namespace DS_BasicCombat
         public List<Attacker> attackers = new List<Attacker>();
         public List<Attackable> attackables = new List<Attackable>();
 
+        private List<Attackable> attackablesToBeDestroyed = new List<Attackable>();
+
         //set up singleton and create all lists automatically
         void Start()
         {
@@ -105,6 +107,10 @@ namespace DS_BasicCombat
                 //try to attack target
                 attacker.TryAttack();
             }
+
+            foreach (Attackable attackable in attackablesToBeDestroyed)
+                RemoveCombatObject(attackable.gameObject);
+            attackablesToBeDestroyed.Clear();
         }
 
 
@@ -168,6 +174,14 @@ namespace DS_BasicCombat
                 attackers.Remove(attacker);
             if (go.TryGetComponent<Attackable>(out Attackable attackable))
                 attackables.Remove(attackable);
+        }
+
+
+        //sets an attackable to be destroyed after every attacker has attacked
+        public void MarkForDestruction(Attackable attackable)
+        {
+            if (!attackablesToBeDestroyed.Contains(attackable))
+                attackablesToBeDestroyed.Add(attackable);
         }
     }
 }

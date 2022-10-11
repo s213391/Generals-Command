@@ -6,7 +6,7 @@ using DS_Selection;
 using TMPro;
 
 public class HUD : MonoBehaviour
-{
+{   
     [Header("Minimap")]
     public GameObject minimapExpanded;
     public GameObject minimapMinimised;
@@ -18,7 +18,6 @@ public class HUD : MonoBehaviour
     [Header("Selection Box")]
     public GameObject selectionToggleExpanded;
     public GameObject selectionToggleMinimised;
-    public GameObject selectionCanvas;
     [Header("Selected Menu")]
     public GameObject selectedMenuExpanded;
     public GameObject selectedMenuMinimised;
@@ -28,6 +27,8 @@ public class HUD : MonoBehaviour
     public GameObject optionsMenuExpanded;
     public Slider panSpeedSlider;
     public Slider zoomSpeedSlider;
+    public Slider minZoomSlider;
+    public Slider maxZoomSlider;
 
     private CameraController cameraController;
     private PlayerInput playerInput;
@@ -35,6 +36,19 @@ public class HUD : MonoBehaviour
     //save button visual effects
     public Button saveButton;
     TextMeshProUGUI saveButtonText;
+
+
+    //sets the HUD to default state on GUI initialise
+    public void Init()
+    {
+        ToggleMinimap(false);
+        //ToggleGroupsMenu(false);
+        ToggleSelectedMenu(false);
+        ToggleSelection(false);
+        ToggleInGameMenu(false);
+        //ToggleAddToGroupMenu(false);
+        ToggleOptionsMenu(false);
+    }
 
 
     //opens/closes the minimap window while hiding/showing the button respectively
@@ -57,7 +71,6 @@ public class HUD : MonoBehaviour
     public void ToggleSelection(bool selectionOn)
     {
         selectionToggleExpanded.SetActive(selectionOn);
-        selectionCanvas.SetActive(selectionOn);
         selectionToggleMinimised.SetActive(!selectionOn);
 
         if (!playerInput)
@@ -65,8 +78,8 @@ public class HUD : MonoBehaviour
         if (!cameraController)
             cameraController = Camera.main.GetComponent<CameraController>();
 
-        playerInput.ToggleSelectionInputs(selectionOn);
-        cameraController.ToggleCameraInputs(!selectionOn);
+        playerInput?.ToggleDragSelectionInputs(selectionOn);
+        cameraController?.ToggleCameraInputs(!selectionOn);
     }
 
 
@@ -77,8 +90,8 @@ public class HUD : MonoBehaviour
         selectedMenuMinimised.SetActive(!open);
 
         //make sure the sub menu is closed when this menu is closed
-        if (!open)
-            ToggleAddToGroupMenu(false);
+        //if (!open)
+            //ToggleAddToGroupMenu(false);
     }
 
 
@@ -103,14 +116,13 @@ public class HUD : MonoBehaviour
     public void FindAvailableEngineer()
     { 
         List<PlayerObject> engineers = ObjectDataManager.GetPlayerObjectsOfType("Engineer", RTSPlayer.GetID());
-        Vector3 camPos = CameraController.instance.target.transform.position;
 
         float closestDist = 9999.9f;
         PlayerObject closest = null;
 
         foreach (PlayerObject engineer in engineers)
         {
-            float dist = (engineer.transform.position - camPos).magnitude;
+            float dist = (engineer.transform.position - CameraController.instance.target.transform.position).magnitude;
             if (dist < closestDist)
             {
                 closestDist = dist;
@@ -132,6 +144,7 @@ public class HUD : MonoBehaviour
         Application.Quit();
     }
 
+    #region optionsMenu
 
     //opens the options sub menu
     public void ToggleOptionsMenu(bool open)
@@ -143,6 +156,8 @@ public class HUD : MonoBehaviour
 
             panSpeedSlider.value = Settings.panSpeed;
             zoomSpeedSlider.value = Settings.zoomSpeed;
+            minZoomSlider.value = Settings.zoomMin;
+            maxZoomSlider.value = Settings.zoomMax;
 
             saveButton.interactable = false;
             if (!saveButtonText)
@@ -183,4 +198,23 @@ public class HUD : MonoBehaviour
 
         Settings.Save();
     }
+
+
+    //reset settings to default values
+    public void ResetToDefaults()
+    {
+        Settings.ResetPrefs();
+
+        panSpeedSlider.value = Settings.panSpeed;
+        zoomSpeedSlider.value = Settings.zoomSpeed;
+        minZoomSlider.value = Settings.zoomMin;
+        maxZoomSlider.value = Settings.zoomMax;
+
+        saveButton.interactable = false;
+        if (!saveButtonText)
+            saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        saveButtonText.text = "Settings Applied";
+    }
+
+    #endregion
 }

@@ -22,11 +22,14 @@ namespace RTSModularSystem
         private PlayerObject currentObject; //the currently selected object
         private PlayerObject previousObject; //the previously selected object
 
+        private List<GUIActionButton> buttons; //the action buttons currently on screen
+
         //create a button for each build action in the build manager
         public void Init()
         {
             UIElements = GetComponents<UIBehaviour>();
             actionsGridLayout = GetComponentInChildren<GridLayoutGroup>().gameObject;
+            buttons = new List<GUIActionButton>();
 
             //hide menu initially
             currentObject = null;
@@ -47,6 +50,8 @@ namespace RTSModularSystem
 
                 //replace actions if necessary
                 ReplaceActions();
+                foreach (GUIActionButton button in buttons)
+                    button.OnUpdate();
             }
             else
             {
@@ -72,18 +77,21 @@ namespace RTSModularSystem
             if (currentObject == previousObject)
                 return;
             
-            //if theres no actions, don't open the menu
             int actionCount = currentObject.data.actions.Count;
-            if (actionCount == 0)
+
+            //if theres no actions, don't open the menu
+            /*if (actionCount == 0)
             {
                 previousObject = currentObject;
                 ToggleMenu(false);
                 return;
-            }
+            }*/
 
             //clear all pre-existing children
             for (int i = actionsGridLayout.transform.childCount - 1; i >= 0; i--)
                 DestroyImmediate(actionsGridLayout.transform.GetChild(i).gameObject);
+
+            buttons.Clear();
 
             //create a button and set its name, sprite and delegate action
             bool hasVisibleAction = false;
@@ -97,6 +105,11 @@ namespace RTSModularSystem
                 GameObject button = Instantiate(actionButtonPrefab, actionsGridLayout.transform);
                 Image icon = button.GetComponentInChildren<Image>();
                 TextMeshProUGUI textMesh = button.GetComponentInChildren<TextMeshProUGUI>();
+                GUIActionButton guiActionButton = button.GetComponent<GUIActionButton>();
+
+                //initialise button to check resource values
+                buttons.Add(guiActionButton);
+                guiActionButton.Init(actionData.resourceChange);
 
                 //set name and sprite from action data
                 icon.sprite = actionData.icon;
@@ -114,7 +127,8 @@ namespace RTSModularSystem
             }
 
             //show menu if this object has an action that appears on the action bar
-            ToggleMenu(hasVisibleAction);
+            //ToggleMenu(hasVisibleAction);
+            ToggleMenu(true);
             previousObject = currentObject;
         }
 
@@ -122,6 +136,9 @@ namespace RTSModularSystem
         //open or close the action menu
         private void ToggleMenu(bool open)
         {
+            if (UIElements == null)
+                return;
+
             //show/hide the menu
             foreach (MonoBehaviour mb in UIElements)
                 mb.enabled = open;

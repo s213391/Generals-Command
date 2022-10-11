@@ -57,7 +57,19 @@ namespace RTSModularSystem
         [ConditionalHide("moveWithMouse", "true"), Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
         public bool moveWhenOutsideOfReadZone;
 
-        private bool movementEnabled = true; //whether the camera inputs are enabled
+        [Header("Camera Movement Restriction")]
+        public bool keepCameraWithinBoundaries = true;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform xMin;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform xMax;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform zMin;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform zMax;
+
+        public bool movementEnabled { get; private set; } //whether the camera inputs are enabled
+
         private DeviceType device; //the type of device the game is running on
         private bool touchStartedOverUI = false; //whether this touch started on a UI element
 
@@ -75,6 +87,7 @@ namespace RTSModularSystem
         //set the camera's initial position and angle
         public void Init(bool isHost)
         {
+            movementEnabled = true;
             //set default inputs based on device type
             device = SystemInfo.deviceType;
             if (device == DeviceType.Handheld)
@@ -194,7 +207,7 @@ namespace RTSModularSystem
                     switch (finger.phase)
                     { 
                         case TouchPhase.Began:
-                            if (EventSystem.current.IsPointerOverGameObject(finger.touchId))
+                            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                                 touchStartedOverUI = true;
                             break;
 
@@ -222,6 +235,20 @@ namespace RTSModularSystem
                     targetTrans.position += new Vector3(dx, 0.0f, dz) * movementSpeed * Time.deltaTime * currentDistance * speedUpOnZoomOut;
                 else
                     targetTrans.position += new Vector3(dx, 0.0f, dz) * movementSpeed * Time.deltaTime;
+
+                //keep within bounds
+                if (keepCameraWithinBoundaries)
+                {
+                    if (targetTrans.position.x < xMin.position.x)
+                        targetTrans.position = new Vector3(xMin.position.x, targetTrans.position.y, targetTrans.position.z);
+                    else if (targetTrans.position.x > xMax.position.x)
+                        targetTrans.position = new Vector3(xMax.position.x, targetTrans.position.y, targetTrans.position.z);
+
+                    if (targetTrans.position.z < zMin.position.z)
+                        targetTrans.position = new Vector3(targetTrans.position.x, targetTrans.position.y, zMin.position.z);
+                    else if (targetTrans.position.z > zMax.position.z)
+                        targetTrans.position = new Vector3(targetTrans.position.x, targetTrans.position.y, zMax.position.z);
+                }
             }
 
             // zoom in/out with mouse wheel or double finger pinching

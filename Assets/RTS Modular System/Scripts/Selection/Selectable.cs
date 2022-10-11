@@ -63,6 +63,7 @@ namespace DS_Selection
         {
             Destroy(outline);
             SelectionController.instance.RemoveFromAvailable(this);
+            GUISelected.instance.RemoveSelectedIcon(this);
         }
     }
 }

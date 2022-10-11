@@ -179,6 +179,11 @@ namespace RTSModularSystem
                 instance.allPlayerObjects[playerID][po.data.name].Add(po);
             else
                 Debug.Log("ObjectDataManager: Trying to create player object type that does not exist in dictionary: " + playerID.ToString() + ", " + po.data.name);
+
+            if (instance.allPlayerObjects[playerID].ContainsKey(po.data.name) && instance.allPlayerObjects[playerID][po.data.name].Contains(po))
+                Debug.Log("ObjectDataManager: Successfully added new object: " + playerID.ToString() + ", " + po.data.name);
+            else
+                Debug.Log("ObjectDataManager: Error, object not added to dictionary");
         }
 
 
@@ -194,9 +199,8 @@ namespace RTSModularSystem
                         objectsOfType.AddRange(kvPair.Value[typeName]);
                     else
                         Debug.Log("ObjectDataManager: Trying to retrieve player object type that does not exist in dictionary: " + kvPair.Key.ToString() + ", " + typeName);
-
-                    return objectsOfType;
                 }
+                return objectsOfType;
             }
             //return all objects of type that are owned by the given player
             else if (instance.allPlayerObjects.ContainsKey(playerID))

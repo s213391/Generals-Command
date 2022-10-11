@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Spawn Supply Center
   m_EditorClassIdentifier: 
   cooldown: 0
-  clientSide: 0
+  clientSide: 1
   lockInput: 0
+  lockCamera: 0
   showOnActionBar: 0
   icon: {fileID: 0}
   interruptionTolerance: 1
@@ -30,7 +31,7 @@ MonoBehaviour:
       m_Bits: 0
     snapToObject: 0
     snapDistance: 0
-    destroyAfterAction: 0
+    destroyAfterAction: 1
     spawnAfterAction: 1
   resourceChange: []
   incomeChange: []
@@ -42,3 +43,6 @@ MonoBehaviour:
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onConditionEvaluate:
+    m_PersistentCalls:
+      m_Calls: []

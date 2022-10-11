@@ -16,14 +16,15 @@ namespace DS_BasicCombat
         public int maxHealth = 1;
         public int xpOnDeath = 0;
         public float objectHeight = 1.0f;
+        public float objectWidth = 100.0f;
         public bool isVisible = true;
 
         Resistances resistances;
         HealthBar healthBar;
 
-        private UnityEvent onDamageEvents;
-        private UnityEvent onHealEvents;
-        private UnityEvent onDeathEvents;
+        public UnityEvent<GameObject, int, int> onDamage;
+        public UnityEvent<GameObject, int, int> onHeal;
+        public UnityEvent<GameObject> onDeath;
 
 
         //set up using inspector values
@@ -37,23 +38,24 @@ namespace DS_BasicCombat
             }
 
             healthBar = HealthBarManager.instance.AddHealthBar(this);
-            healthBar.Init(objectHeight);
+            healthBar.Init(objectHeight, objectWidth);
         }
 
 
         //set up values externally
-        public void Init(float height, int health, List<DamageResistance> resists, int xp = 0)
+        public void Init(float height, float width, int health, List<DamageResistance> resists, int xp = 0)
         {
             currentHealth = health;
             maxHealth = health;
             xpOnDeath = xp;
             objectHeight = height;
+            objectWidth = width;
 
             resistances = gameObject.AddComponent<Resistances>();
             resistances.Init(resists);
 
             healthBar = HealthBarManager.instance.AddHealthBar(this);
-            healthBar.Init(objectHeight);
+            healthBar.Init(objectHeight, objectWidth);
         }
 
 
@@ -74,7 +76,8 @@ namespace DS_BasicCombat
         //delete health bar
         private void OnDestroy()
         {
-            Destroy(healthBar);
+            if (healthBar)
+                Destroy(healthBar);
         }
 
 
@@ -85,6 +88,8 @@ namespace DS_BasicCombat
             if (currentHealth <= 0)
                 return;
 
+            int previousHealth = currentHealth;
+
             //healing is not affected by resistance, and cannot exceed maximum health
             if ((damage < 0))
             {
@@ -92,6 +97,8 @@ namespace DS_BasicCombat
                     currentHealth = maxHealth;
                 else
                     currentHealth -= damage;
+
+                onHeal?.Invoke(gameObject, currentHealth, previousHealth);
             }
             //damage is rounded down after relevant resistance is removed
             else
@@ -100,14 +107,18 @@ namespace DS_BasicCombat
                 if (currentHealth - finalDamage <= 0)
                 {
                     currentHealth = 0;
-                    isVisible = false;
-                    healthBar.UpdateMeter();
-                    gameObject.SetActive(false);
+                    CombatManager.instance.MarkForDestruction(this);
                     if (attacker != null)
                         attacker.XPChange(xpOnDeath);
+
+                    onDeath?.Invoke(gameObject);
                 }
                 else
+                {
                     currentHealth -= finalDamage;
+
+                    onDamage?.Invoke(gameObject, currentHealth, previousHealth);
+                }
             }
         }
 
@@ -116,7 +127,15 @@ namespace DS_BasicCombat
         //update health using value from the server
         public void SetHealth(int newHealth)
         {
-            if (currentHealth > 0)
+            if (newHealth > currentHealth)
+                onHeal?.Invoke(gameObject, newHealth, currentHealth);
+            else if (newHealth > 0)
+                onDamage?.Invoke(gameObject, newHealth, currentHealth);
+            else
+                onDeath?.Invoke(gameObject);
+            
+            
+            if (currentHealth >= 0)
                 currentHealth = newHealth;
         }
 
@@ -127,6 +146,13 @@ namespace DS_BasicCombat
         {
             if (visible != isVisible)
                 isVisible = visible;
+        }
+
+
+        //returns the attackables resistance values
+        public List<int> GetResistances()
+        {
+            return resistances.GetResistanceValues();
         }
     }
 }

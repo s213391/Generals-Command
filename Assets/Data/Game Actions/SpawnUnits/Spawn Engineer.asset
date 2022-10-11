@@ -15,6 +15,7 @@ MonoBehaviour:
   cooldown: 0
   clientSide: 0
   lockInput: 0
+  lockCamera: 0
   showOnActionBar: 1
   icon: {fileID: 21300000, guid: c1c513c9c43ac764596080031ac55d04, type: 3}
   interruptionTolerance: 1
@@ -22,7 +23,7 @@ MonoBehaviour:
   - prefab: {fileID: 7673862430685067604, guid: 3fa31ad2e235a8a419acefc1a38b591d, type: 3}
     location: 0
     worldPosition: 0
-    position: {x: -20, y: 0, z: -22}
+    position: {x: -20, y: 0, z: -11}
     worldRotation: 0
     rotation: {x: 0, y: 180, z: 0}
     mouseLayerMask:
@@ -44,3 +45,6 @@ MonoBehaviour:
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onConditionEvaluate:
+    m_PersistentCalls:
+      m_Calls: []

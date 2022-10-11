@@ -10,25 +10,24 @@ namespace DS_BasicCombat
         public Attackable attackable;
         public Image image;
         private Image background;
+        private RectTransform rectTransform;
 
         [SerializeField]
         private bool hideWhenFullHealth;
         private float heightOffset;
 
         //set up health bar
-        public void Init(float objectHeight)
+        public void Init(float objectHeight, float objectWidth)
         {
             background = GetComponent<Image>();
+            rectTransform = GetComponent<RectTransform>();
             if (image)
             {
                 image.type = Image.Type.Filled;
                 image.fillMethod = Image.FillMethod.Horizontal;
             }
 
-            //set health bar size based on object health
-            Vector3 newScale = transform.localScale;
-            newScale.x *= attackable.maxHealth / 100.0f;
-            transform.localScale = newScale;
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x * objectWidth, rectTransform.sizeDelta.y);
 
             //set the height of the health bar based on the object height
             heightOffset = objectHeight * 1.7f;
