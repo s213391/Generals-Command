@@ -221,9 +221,9 @@ namespace RTSModularSystem
             if (nva)
             {
                 if (nva.velocity.magnitude > 0.2f)
-                    data.movableEvents.onMoveBegin.Invoke(gameObject);
+                    data.movableEvents?.onMoveBegin.Invoke(gameObject);
                 else
-                    data.movableEvents.onMoveEnd.Invoke(gameObject);
+                    data.movableEvents?.onMoveEnd.Invoke(gameObject);
             }
 
             //only update visibilty on initialised moveable enemy objects
@@ -262,7 +262,7 @@ namespace RTSModularSystem
 
         //REFACTOR Split Attackable
         //stop rendering object, and prevent further interaction
-        private void ZeroHealth()
+        public void ZeroHealth()
         {
             ObjectDataManager.RemovePlayerObject(owningPlayer, this);
             

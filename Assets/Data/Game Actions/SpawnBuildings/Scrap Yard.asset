@@ -30,7 +30,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 128
     snapToObject: 1
-    snapDistance: 10
+    snapDistance: 25
     destroyAfterAction: 1
     spawnAfterAction: 1
   resourceChange:
@@ -49,7 +49,7 @@ MonoBehaviour:
     type: 2
     seconds: 0
   successConditions:
-  - conditionMet: 1
+  - conditionMet: 0
     successIfConditionMet: 1
     type: 0
     objectToBeChecked: 1

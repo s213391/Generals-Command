@@ -37,13 +37,6 @@ namespace DS_BasicCombat
         //update position
         public void OnUpdate()
         {
-            //if health does not exist anymore, delete self
-            if (attackable == null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
             transform.position = attackable.transform.position + Vector3.up * heightOffset;
             transform.forward = Camera.main.transform.forward;
             UpdateMeter();

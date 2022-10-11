@@ -137,7 +137,7 @@ namespace DS_BasicCombat
         //updates health value on the clients
         public void RpcSetHealthClient(GameObject attackable, int newHealth)
         {
-            attackable.GetComponent<Attackable>().SetHealth(newHealth);
+            attackable?.GetComponent<Attackable>()?.SetHealth(newHealth);
         }
 
 
