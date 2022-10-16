@@ -36,9 +36,6 @@ namespace DS_BasicCombat
                 enabled = false;
                 return;
             }
-
-            healthBar = HealthBarManager.instance.AddHealthBar(this);
-            healthBar.Init(objectHeight, objectWidth);
         }
 
 
@@ -77,7 +74,7 @@ namespace DS_BasicCombat
         private void OnDestroy()
         {
             if (healthBar)
-                Destroy(healthBar);
+                Destroy(healthBar.gameObject);
         }
 
 
