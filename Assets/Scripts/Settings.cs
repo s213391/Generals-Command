@@ -125,5 +125,7 @@ public class Settings : MonoBehaviour
             RTSModularSystem.CameraController.instance.minZoom = zoomMin;
             RTSModularSystem.CameraController.instance.maxZoom = zoomMax;
         }
+
+        AudioListener.volume = masterVolume;
     }
 }

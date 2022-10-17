@@ -789,6 +789,7 @@ GameObject:
   - component: {fileID: -453182755912117721}
   - component: {fileID: 6721175529149930549}
   - component: {fileID: 3859001047264760614}
+  - component: {fileID: 1628728020332690354}
   m_Layer: 0
   m_Name: Rifleman-Bravo
   m_TagString: Untagged
@@ -912,6 +913,22 @@ CapsuleCollider:
   m_Height: 2.69
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &1628728020332690354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3182519460791625515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 2372268113100086585}
 --- !u!1 &3259555959306840276
 GameObject:
   m_ObjectHideFlags: 0

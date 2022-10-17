@@ -260,41 +260,14 @@ namespace RTSModularSystem
         }
 
 
-        //REFACTOR Split Attackable
-        //stop rendering object, and prevent further interaction
-        public void ZeroHealth()
+        //remove object references from other scripts and destroy
+        public void DestroyPlayerObject()
         {
             ObjectDataManager.RemovePlayerObject(owningPlayer, this);
-            
-            //if object does not persist, destroy completely, else destroy as much as possible
-            if (!data.persistAtZeroHealth)
-            {
-                interrupt = 9;
-                Destroy(gameObject);
-                return;
-            }
 
-            interrupt = 8;
-
-            //destroy children
-            for (int i = 0; i < transform.childCount; i++)
-                Destroy(transform.GetChild(i).gameObject);
-
-            //destroy renderer, collider and navmesh components
-            Renderer[] renderers = GetComponents<Renderer>();
-            foreach (Renderer renderer in renderers)
-                Destroy(renderer);
-            Collider[] colliders = GetComponents<Collider>();
-            foreach (Collider collider in colliders)
-                Destroy(collider);
-            NavMeshAgent agent = GetComponent<NavMeshAgent>();
-            if (agent != null)
-                Destroy(agent);
-            NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
-            if (obstacle != null)
-                Destroy (obstacle);
-
-            Destroy(attackable);
+            interrupt = 9;
+            Destroy(gameObject);
+            return;
         }
 
 

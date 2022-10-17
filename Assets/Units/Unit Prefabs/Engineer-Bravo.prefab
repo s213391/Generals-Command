@@ -1838,6 +1838,7 @@ GameObject:
   - component: {fileID: -6007269738020460505}
   - component: {fileID: -6348370312553493078}
   - component: {fileID: 3196497680632821993}
+  - component: {fileID: 1321273994894605155}
   m_Layer: 0
   m_Name: Engineer-Bravo
   m_TagString: Untagged
@@ -1961,6 +1962,22 @@ CapsuleCollider:
   m_Height: 2.69
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &1321273994894605155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673862430685067604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 7403461390291767737}
 --- !u!1 &7739956369894127275
 GameObject:
   m_ObjectHideFlags: 0

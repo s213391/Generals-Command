@@ -1,23 +1,36 @@
 using UnityEngine;
-using UnityEngine.Animations;
-using RTSModularSystem;
 
 public class GenericUnitEvents : MonoBehaviour
 {
     public void MoveBegin(GameObject go)
     {
-        go.GetComponent<Animator>().SetBool("IsMoving", true);
+        if (GameData.instance.isHost)
+        {
+            Animator animator = go.GetComponent<Animator>();
+            if (animator)
+                animator.SetBool("IsMoving", true);
+        }
     }
 
 
     public void MoveEnd(GameObject go)
     {
-        go.GetComponent<Animator>().SetBool("IsMoving", false);
+        if (GameData.instance.isHost)
+        {
+            Animator animator = go.GetComponent<Animator>();
+            if (animator)
+                animator.SetBool("IsMoving", false);
+        }
     }
 
 
     public void Attack(GameObject go)
     {
-        go.GetComponent<Animator>().SetTrigger("Attacking");
+        if (GameData.instance.isHost)
+        {
+            Animator animator = go.GetComponent<Animator>();
+            if (animator)
+                animator.SetTrigger("Attacking");
+        }
     }
 }
