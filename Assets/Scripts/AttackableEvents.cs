@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(menuName = "Scriptable Objects/Events/AttackableEvents", order = 201)]
-public class AttackableEvents : ScriptableObject
+[System.Serializable]
+public struct AttackableEvents
 {
     public UnityEvent<GameObject, int, int> onDamage;
     public UnityEvent<GameObject, int, int> onHeal;

@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(menuName = "Scriptable Objects/Events/AttackerEvents", order = 202)]
-public class AttackerEvents : ScriptableObject
+[System.Serializable]
+public struct AttackerEvents
 {
     public UnityEvent<GameObject> onAttack;
+    public UnityEvent<GameObject> onKill;
 }

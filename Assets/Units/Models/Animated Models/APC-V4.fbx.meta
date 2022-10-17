@@ -1,63 +1,44 @@
 fileFormatVersion: 2
-guid: 7bbd8cd486f272e4bb23c1b9968087b5
+guid: ccc36b832dc11ae408aba7ffbd391226
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 1759196524929819598
-    second: Infatry |ANTI-TankB.002Action
+      74: -3126604863119479334
+    second: APC.001|APC-0
   - first:
-      74: -1252689092029069853
-    second: Infatry |CameraAction
+      74: 736575905738423371
+    second: APC.001|APC-180
   - first:
-      74: 6174254225263525320
-    second: Infatry |Cube.003Action
+      74: -7608742554803390824
+    second: APC.001|APC-<90
   - first:
-      74: -130817722462186880
-    second: Infatry |Empty.002Action
+      74: 7840591892481931612
+    second: APC.001|APC->90
   - first:
-      74: -526044876124978290
-    second: Infatry |Empty.002Action.001
+      74: -8105936399061434720
+    second: APC.001|APC-death-1
   - first:
-      74: -5888979713131080664
-    second: Infatry |Empty.002Action.002
+      74: -2452365793266882659
+    second: APC.001|APC-Drive-FWD
   - first:
-      74: -1185475976882322576
-    second: Infatry |INF_idle(base)
+      74: -5115929133899217878
+    second: APC.001|APC-Drive-LFT
   - first:
-      74: 3036603767172863882
-    second: Infatry |Infatry .001|Infatry |ANTI-TankB.002Action
+      74: -7661027573932161081
+    second: APC.001|APC-Drive-RGT
   - first:
-      74: -4933053137969722837
-    second: Infatry |Infatry .001|Infatry |CameraAction
+      74: -7484926748300414484
+    second: APC.001|APC-fIRE
   - first:
-      74: -7112701296314550905
-    second: Infatry |Infatry .001|Infatry |Cube.003Action
+      74: -6800405322655293732
+    second: APC.001|APC-idle
+  externalObjects:
   - first:
-      74: 5255484855754804222
-    second: Infatry |Infatry .001|Infatry |Empty.002Action
-  - first:
-      74: 5313602062215075423
-    second: Infatry |Infatry .001|Infatry |Empty.002Action.001
-  - first:
-      74: -3281205787153354880
-    second: Infatry |Infatry .001|Infatry |Empty.002Action.002
-  - first:
-      74: -3230387678762057632
-    second: Infatry |Infatry .001|Infatry |INF_idle(base)
-  - first:
-      74: 1965376604959548411
-    second: Infatry |Infatry .001|Infatry |REF
-  - first:
-      74: -7332169387579411411
-    second: Infatry |Infatry .001|Infatry |ScoutBAction
-  - first:
-      74: 195481471120791855
-    second: Infatry |REF
-  - first:
-      74: 1126807776255400635
-    second: Infatry |ScoutBAction
-  externalObjects: {}
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Veichle1B
+    second: {fileID: 2100000, guid: ea20fce3b9829104799de2991182430c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -85,7 +66,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -127,7 +108,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []

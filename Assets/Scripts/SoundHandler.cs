@@ -18,58 +18,64 @@ public class SoundHandler : MonoBehaviour
 
     public static float sfxVolume;
 
-    private AudioSource audioSource;
 
-    private void Awake()
+    public void PlayDamageClip(GameObject go)
     {
-        audioSource = GetComponent<AudioSource>();
+        AudioSource audioSource = go.GetComponent<AudioSource>();
         if (audioSource == null)
-        {
-            Debug.LogError($"No audio source detected on: {gameObject.name}");
-            Destroy(this);
-        }
-        else
-        {
-            audioSource.loop = true;
-            audioSource.clip = ongoingMoveClip;
-        }
-    }
-
-
-    public void PlayDamageClip()
-    {
+            return;
+        
         audioSource.volume = sfxVolume;
         if (damageClip != null)
             audioSource.PlayOneShot(damageClip);
     }
 
 
-    public void PlayHealClip()
+    public void PlayHealClip(GameObject go)
     {
+        AudioSource audioSource = go.GetComponent<AudioSource>();
+        if (audioSource == null)
+            return;
+
         audioSource.volume = sfxVolume;
         if (healClip != null)
             audioSource.PlayOneShot(healClip);
     }
 
 
-    public void PlayDeathClip()
+    public void PlayDeathClip(GameObject go)
     {
+        AudioSource audioSource = go.GetComponent<AudioSource>();
+        if (audioSource == null)
+            return;
+
         audioSource.volume = sfxVolume;
         if (deathClip != null)
             audioSource.PlayOneShot(deathClip);
     }
 
 
-    public void PlayAttackClip()
+    public void PlayAttackClip(GameObject go)
     {
+        AudioSource audioSource = go.GetComponent<AudioSource>();
+        if (audioSource == null)
+            return;
+
         audioSource.volume = sfxVolume;
         if (attackClip != null)
             audioSource.PlayOneShot(attackClip);
     }
 
 
-    public void PlayBeginMovementClip()
+    public void PlayBeginMovementClip(GameObject go)
     {
+        AudioSource audioSource = go.GetComponent<AudioSource>();
+        if (audioSource == null)
+            return;
+
+        audioSource.clip = ongoingMoveClip;
+        audioSource.loop = true;
+
         audioSource.volume = sfxVolume;
         if (beginMoveClip != null)
             audioSource.PlayOneShot(beginMoveClip);
@@ -78,8 +84,12 @@ public class SoundHandler : MonoBehaviour
     }
 
 
-    public void PlayEndMovementClip()
+    public void PlayEndMovementClip(GameObject go)
     {
+        AudioSource audioSource = go.GetComponent<AudioSource>();
+        if (audioSource == null)
+            return;
+
         audioSource.volume = sfxVolume;
         if (endMoveClip != null)
             audioSource.PlayOneShot(endMoveClip);
@@ -88,8 +98,12 @@ public class SoundHandler : MonoBehaviour
     }
 
 
-    public void PlaySelectedClip()
+    public void PlaySelectedClip(GameObject go)
     {
+        AudioSource audioSource = go.GetComponent<AudioSource>();
+        if (audioSource == null)
+            return;
+
         audioSource.volume = sfxVolume;
         if (selectedClip != null)
             audioSource.PlayOneShot(selectedClip);
