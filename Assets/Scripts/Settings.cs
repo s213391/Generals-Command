@@ -74,27 +74,44 @@ public class Settings : MonoBehaviour
     //save the new settings values
     public static void Save()
     {
-        if (!(PlayerPrefs.GetFloat("brightness") == brightness))
+        if (PlayerPrefs.GetFloat("brightness") != brightness)
             PlayerPrefs.SetFloat("brightness", brightness);
-        if (!(PlayerPrefs.GetInt("shadowsPreset") == shadowsPreset))
+        if (PlayerPrefs.GetInt("shadowsPreset") != shadowsPreset)
             PlayerPrefs.SetInt("shadowsPreset", shadowsPreset);
-        if (!(PlayerPrefs.GetFloat("masterVolume") == masterVolume))
+        if (PlayerPrefs.GetFloat("masterVolume") != masterVolume)
             PlayerPrefs.SetFloat("masterVolume", masterVolume);
-        if (!(PlayerPrefs.GetFloat("musicVolume") == musicVolume))
+        if (PlayerPrefs.GetFloat("musicVolume") != musicVolume)
             PlayerPrefs.SetFloat("musicVolume", musicVolume);
-        if (!(PlayerPrefs.GetFloat("sfxVolume") == sfxVolume))
+        if (PlayerPrefs.GetFloat("sfxVolume") != sfxVolume)
             PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
-        if (!(PlayerPrefs.GetFloat("panSpeed") == panSpeed))
+        if (PlayerPrefs.GetFloat("panSpeed") != panSpeed)
             PlayerPrefs.SetFloat("panSpeed", panSpeed);
-        if (!(PlayerPrefs.GetFloat("zoomSpeed") == zoomSpeed))
+        if (PlayerPrefs.GetFloat("zoomSpeed") != zoomSpeed)
             PlayerPrefs.SetFloat("zoomSpeed", zoomSpeed);
-        if (!(PlayerPrefs.GetFloat("zoomMin") == zoomMin))
+        if (PlayerPrefs.GetFloat("zoomMin") != zoomMin)
             PlayerPrefs.SetFloat("zoomMin", zoomMin);
-        if (!(PlayerPrefs.GetFloat("zoomMax") == zoomMax))
+        if (PlayerPrefs.GetFloat("zoomMax") != zoomMax)
             PlayerPrefs.SetFloat("zoomMax", zoomMax);
 
         ApplySettings();
         PlayerPrefs.Save();
+    }
+
+
+    //reset player prefs to default values on device
+    public static void ResetPrefs()
+    {
+        brightness = 0.5f;
+        shadowsPreset = 1;
+        masterVolume = 1.0f;
+        musicVolume = 0.5f;
+        sfxVolume = 0.7f;
+        panSpeed = 5.0f;
+        zoomSpeed = 2.0f;
+        zoomMin = 60.0f;
+        zoomMax = 100.0f;
+
+        Save();
     }
 
 

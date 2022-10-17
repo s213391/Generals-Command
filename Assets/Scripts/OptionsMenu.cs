@@ -71,4 +71,24 @@ public class OptionsMenu : MonoBehaviour
 
         Settings.Save();
     }
+
+
+    //resets settings to default values
+    public void ResetToDefault()
+    {
+        Settings.ResetPrefs();
+
+        brightnessSlider.value = Settings.brightness;
+        shadowsSlider.value = Settings.shadowsPreset;
+        masterVolumeSlider.value = Settings.masterVolume;
+        musicVolumeSlider.value = Settings.musicVolume;
+        sfxVolumeSlider.value = Settings.sfxVolume;
+        panSpeedSlider.value = Settings.panSpeed;
+        zoomSpeedSlider.value = Settings.zoomSpeed;
+
+        saveButton.interactable = false;
+        if (!textMeshProUGUI)
+            textMeshProUGUI = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        textMeshProUGUI.text = "Saved";
+    }
 }

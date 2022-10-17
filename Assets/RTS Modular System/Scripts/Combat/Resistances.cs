@@ -49,5 +49,18 @@ namespace DS_BasicCombat
             //change the resistance but keep within [0, 100]
             resistanceDictionary[type] = Mathf.Clamp(resistanceDictionary[type] + change, 0, 100);
         }
+
+
+        //returns the resistance values in an ordered list
+        public List<int> GetResistanceValues()
+        { 
+            List<int> values = new List<int>();
+
+            for (int i = 0; i < resistanceDictionary.Count; i++)
+            {
+                values.Add(resistanceDictionary[(DamageType)i]);
+            }
+            return values;
+        }
     }
 }

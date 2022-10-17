@@ -32,6 +32,7 @@ namespace RTSModularSystem
         private Vector3 nullState = new Vector3(-99999, -99999, -99999);
         private DeviceType device;
         private bool selectedThisFrame = false;
+        private bool touchStartedOverUI = false;
 
         public bool singleSelectionEnabled { get; private set; }
         public bool dragSelectionEnabled { get; private set; }
@@ -67,7 +68,9 @@ namespace RTSModularSystem
 
             device = SystemInfo.deviceType;
             singleSelectionEnabled = true;
-            if (device == DeviceType.Handheld)
+            movementEnabled = true;
+            dragSelectionEnabled = true;
+            //if (device == DeviceType.Handheld)
                 ToggleDragSelectionInputs(false);
         }
 
@@ -109,11 +112,19 @@ namespace RTSModularSystem
             {
                 screenRay = mainCam.ScreenPointToRay(Input.GetTouch(0).position);
 
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
                 {
-                    screenPointWorldSpace = nullState;
-                    objectUnderScreenPoint = null;
-                    return;
+                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                    {
+                        screenPointWorldSpace = nullState;
+                        objectUnderScreenPoint = null;
+                        touchStartedOverUI = true;
+                        return;
+                    }
+                    else
+                    {
+                        touchStartedOverUI = false;
+                    }
                 }
             }
 
@@ -161,7 +172,7 @@ namespace RTSModularSystem
             }
             
             //if the touch/click began this frame and is not over UI, turn on selection box
-            if (dragSelectionEnabled && down && screenPointWorldSpace != nullState)
+            if (dragSelectionEnabled && down && !touchStartedOverUI)
             {
                 selectionBox.sizeDelta = Vector2.zero;
                 selectionImage.enabled = true;
@@ -198,7 +209,7 @@ namespace RTSModularSystem
                 }
             }
             //if the touch/click ended this frame, check if anything has been selected
-            else if (up)
+            else if (up && !touchStartedOverUI)
             {
                 //only check the shift key mechanic on desktop
                 bool shift = false;
@@ -312,7 +323,7 @@ namespace RTSModularSystem
         public void ToggleDragSelectionInputs(bool enabled)
         {
             dragSelectionEnabled = enabled;
-            selectionBox.GetComponentInParent<Canvas>().gameObject.SetActive(enabled);
+            selectionBox.parent.gameObject.SetActive(enabled);
         }
 
 

@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 using DS_Selection;
 
 namespace RTSModularSystem
@@ -13,6 +13,8 @@ namespace RTSModularSystem
         private static GUISelected guiSelected;
 
         private static GameObject deviceGUICanvas;
+
+        public UnityEvent onGUIInitialise;
 
         //Ensure only one GUIController exists
         public void Init()
@@ -45,6 +47,7 @@ namespace RTSModularSystem
                 guiBuildings.Init();
                 guiSelected = deviceGUICanvas.GetComponentInChildren<GUISelected>();
                 guiSelected.Init();
+                instance.onGUIInitialise.Invoke();
             }
         }
 

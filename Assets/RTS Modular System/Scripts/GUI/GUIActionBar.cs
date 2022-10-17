@@ -77,14 +77,15 @@ namespace RTSModularSystem
             if (currentObject == previousObject)
                 return;
             
-            //if theres no actions, don't open the menu
             int actionCount = currentObject.data.actions.Count;
-            if (actionCount == 0)
+
+            //if theres no actions, don't open the menu
+            /*if (actionCount == 0)
             {
                 previousObject = currentObject;
                 ToggleMenu(false);
                 return;
-            }
+            }*/
 
             //clear all pre-existing children
             for (int i = actionsGridLayout.transform.childCount - 1; i >= 0; i--)
@@ -126,7 +127,8 @@ namespace RTSModularSystem
             }
 
             //show menu if this object has an action that appears on the action bar
-            ToggleMenu(hasVisibleAction);
+            //ToggleMenu(hasVisibleAction);
+            ToggleMenu(true);
             previousObject = currentObject;
         }
 
@@ -134,6 +136,9 @@ namespace RTSModularSystem
         //open or close the action menu
         private void ToggleMenu(bool open)
         {
+            if (UIElements == null)
+                return;
+
             //show/hide the menu
             foreach (MonoBehaviour mb in UIElements)
                 mb.enabled = open;

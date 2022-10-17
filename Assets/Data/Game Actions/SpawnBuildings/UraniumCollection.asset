@@ -30,7 +30,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 128
     snapToObject: 1
-    snapDistance: 10
+    snapDistance: 25
     destroyAfterAction: 1
     spawnAfterAction: 1
   resourceChange:
@@ -66,28 +66,6 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     maximumHeightAllowed: 0
-  - conditionMet: 1
-    successIfConditionMet: 0
-    type: 1
-    objectToBeChecked: 1
-    distance: 25
-    objectsType: {fileID: 11400000, guid: 559e72dc2dfdcbb498041bc58da9d5a2, type: 2}
-    teamsToCheck: 1
-    layers:
-      serializedVersion: 2
-      m_Bits: 25165824
-    maximumHeightAllowed: 0
-  - conditionMet: 0
-    successIfConditionMet: 1
-    type: 2
-    objectToBeChecked: 1
-    distance: 25
-    objectsType: {fileID: 11400000, guid: 559e72dc2dfdcbb498041bc58da9d5a2, type: 2}
-    teamsToCheck: 1
-    layers:
-      serializedVersion: 2
-      m_Bits: 25165824
-    maximumHeightAllowed: 0.1
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
   onConditionEvaluate:

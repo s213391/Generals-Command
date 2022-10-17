@@ -9,7 +9,7 @@ namespace RTSModularSystem
     [RequireComponent(typeof(NetworkTransform))]
     public class PlayerObject : NetworkBehaviour
     {
-        [SyncVar(hook = nameof(OnIDChange))] [SerializeField] [Tooltip("The Network Identity of the LocalPlayer that owns this object")]
+        [SyncVar(hook = nameof(OnIDChange))] [SerializeField] [Tooltip("The Player Number of the LocalPlayer that owns this object")]
         public uint owningPlayer = 9999;
         [SerializeField] [Tooltip("The PlayerObjectData that dictates how this object behaves")]
         public PlayerObjectData data;
@@ -132,20 +132,30 @@ namespace RTSModularSystem
             //attackable player objects must have a collider
             if (data.attackable && GetComponent<Collider>() != null)
             {
-                float height = 0.0f;
-                if (data.moveable)
-                    height = agent.height;
-                else
-                    height = GetComponent<NavMeshObstacle>().height;
-
                 attackable = gameObject.AddComponent<Attackable>();
-                attackable.Init(height, data.maxHealth, data.resistances, data.xpOnDeath);
+                attackable.Init(data.healthBarHeight, data.healthBarWidth, data.maxHealth, data.resistances, data.xpOnDeath);
+
+                if (data.attackableEvents)
+                { 
+                    if (data.attackableEvents.onDamage != null)
+                        attackable.onDamage = data.attackableEvents.onDamage;
+                    if (data.attackableEvents.onHeal != null)
+                        attackable.onHeal = data.attackableEvents.onHeal;
+                    if (data.attackableEvents.onDeath != null)
+                        attackable.onDeath = data.attackableEvents.onDeath;
+                }
             }
 
             if (data.attacker)
             {
                 attacker = gameObject.AddComponent<Attacker>();
                 attacker.Init(data.attackType, data.damageType, data.targetType, data.attackDamage, data.attackRange, data.attackDuration, data.xpRequirement != -1, data.canAutoTarget, data.autoTargetRange);
+
+                if (data.attackerEvents)
+                { 
+                    if (data.attackerEvents.onAttack != null)
+                        attacker.onAttack = data.attackerEvents.onAttack;
+                }
             }
 
             //add gameobject to combat manager
@@ -154,16 +164,14 @@ namespace RTSModularSystem
 
             //set up layers and colours
             Transform[] transforms = gameObject.GetComponentsInChildren<Transform>();
-            Color colour;
+            Color colour = GameData.instance.playerData[(int)owningPlayer - 1].colour;
             LayerMask mask;
             if (ownedByLocalPlayer)
             {
-                colour = Color.blue;
                 mask = LayerMask.NameToLayer("Friendly");
             }
             else
             {
-                colour = Color.red;
                 mask = LayerMask.NameToLayer("Enemy");
             }
 
@@ -178,14 +186,7 @@ namespace RTSModularSystem
 
                 //set the Replaceable material to team colour
                 Material material = renderer.material;
-                for (int i = 0; i < renderer.materials.Length; i++)
-                {
-                    if (renderer.materials[i].name == "Replaceable (Instance)")
-                    {
-                        renderer.materials[i].color = colour;
-                        break;
-                    }
-                }
+                material.SetColor("_TeamColour", colour);
 
                 //hide mobile enemy units
                 /*if (!ownedByLocalPlayer && data.moveable)
@@ -216,11 +217,20 @@ namespace RTSModularSystem
             //update components
             attackable?.OnUpdate();
 
+            NavMeshAgent nva = GetComponent<NavMeshAgent>();
+            if (nva)
+            {
+                if (nva.velocity.magnitude > 0.2f)
+                    data.movableEvents?.onMoveBegin.Invoke(gameObject);
+                else
+                    data.movableEvents?.onMoveEnd.Invoke(gameObject);
+            }
+
             //only update visibilty on initialised moveable enemy objects
-            if (owningPlayer == 9999 || !data.moveable || (RTSPlayer.localPlayer && RTSPlayer.Owns(this)))
+            /*if (owningPlayer == 9999 || !data.moveable || (RTSPlayer.localPlayer && RTSPlayer.Owns(this)))
                 return;
 
-            /*bool visible = RTSPlayer.fogSampler.IsVisible(transform.position);
+            bool visible = RTSPlayer.fogSampler.IsVisible(transform.position);
 
             if (visible != isHidden)
                 return;
@@ -252,7 +262,7 @@ namespace RTSModularSystem
 
         //REFACTOR Split Attackable
         //stop rendering object, and prevent further interaction
-        private void ZeroHealth()
+        public void ZeroHealth()
         {
             ObjectDataManager.RemovePlayerObject(owningPlayer, this);
             

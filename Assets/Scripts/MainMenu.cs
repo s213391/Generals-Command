@@ -45,6 +45,7 @@ public class MainMenu : MonoBehaviour
     {
         mainMenuScreen.SetActive(false);
         hostGameScreen.SetActive(true);
+        PlayerPrefabsManager.SetPlayerPrefab(1);
     }
 
 
@@ -53,6 +54,7 @@ public class MainMenu : MonoBehaviour
     {
         mainMenuScreen.SetActive(false);
         joinGameScreen.SetActive(true);
+        PlayerPrefabsManager.SetPlayerPrefab(1);
     }
 
 

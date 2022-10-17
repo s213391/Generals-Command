@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Mirror;
 using DS_FogOfWar;
 using DS_Resources;
@@ -26,6 +26,8 @@ namespace RTSModularSystem
 
         static Camera mainCam;
         static GameAction gameAction;
+
+        public UnityEvent onPlayerInitialised;
 
         //set up static reference to the local player, but keep non-local players for commands/clientRPCs 
         public void Start()
@@ -80,6 +82,8 @@ namespace RTSModularSystem
             if (GUIController.instance == null)
                 FindObjectOfType<GUIController>().Init();
             GUIController.PlayerConnect();
+
+            onPlayerInitialised.Invoke();
         }
 
 
@@ -123,7 +127,7 @@ namespace RTSModularSystem
         //returns the networkID of the player
         public static uint GetID()
         {
-            return identity.netId;
+            return (uint)GameData.instance.localPlayerNumber + 1;
         }
 
 

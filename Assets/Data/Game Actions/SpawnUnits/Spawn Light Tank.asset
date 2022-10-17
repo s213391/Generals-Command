@@ -15,6 +15,7 @@ MonoBehaviour:
   cooldown: 0
   clientSide: 0
   lockInput: 0
+  lockCamera: 0
   showOnActionBar: 1
   icon: {fileID: 21300000, guid: 6bf0503d43777174fabe15d0bd4e1e7e, type: 3}
   interruptionTolerance: 1
@@ -34,13 +35,13 @@ MonoBehaviour:
     spawnAfterAction: 1
   resourceChange:
   - resourceType: 0
-    quantity: -100
+    quantity: -800
   - resourceType: 1
     quantity: -750
   - resourceType: 2
     quantity: -500
   - resourceType: 3
-    quantity: -1
+    quantity: -3
   incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
@@ -50,3 +51,6 @@ MonoBehaviour:
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onConditionEvaluate:
+    m_PersistentCalls:
+      m_Calls: []
