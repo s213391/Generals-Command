@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace DS_Selection
 {
@@ -20,6 +20,9 @@ namespace DS_Selection
         private float outlineWidth;
         [SerializeField] [ConditionalHide("useGlobalOutlineSettings", "false")]
         private Color outlineColour;
+
+        public UnityEvent OnSelect;
+        public UnityEvent OnDeselect;
 
         //set up selection and outline
         public void Init()
@@ -46,6 +49,7 @@ namespace DS_Selection
         public void OnSelected()
         {
             outline.enabled = true;
+            OnSelect?.Invoke();
             Debug.Log(name + " selected");
         }
 
@@ -54,6 +58,7 @@ namespace DS_Selection
         public void OnDeselected()
         {
             outline.enabled = false;
+            OnDeselect?.Invoke();
             Debug.Log(name + " deselected");
         }
 

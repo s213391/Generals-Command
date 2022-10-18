@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RTSModularSystem;
 
-public class GenericAttackableEvents : MonoBehaviour
+public class GenericAttackableEvents : EffectEventsBase
 {
     public void Death(GameObject gameobject)
     {
-        gameobject.GetComponent<PlayerObject>().ZeroHealth();
+        gameobject.GetComponent<PlayerObject>().DestroyPlayerObject();
 
     }
 }

@@ -135,15 +135,12 @@ namespace RTSModularSystem
                 attackable = gameObject.AddComponent<Attackable>();
                 attackable.Init(data.healthBarHeight, data.healthBarWidth, data.maxHealth, data.resistances, data.xpOnDeath);
 
-                if (data.attackableEvents)
-                { 
-                    if (data.attackableEvents.onDamage != null)
-                        attackable.onDamage = data.attackableEvents.onDamage;
-                    if (data.attackableEvents.onHeal != null)
-                        attackable.onHeal = data.attackableEvents.onHeal;
-                    if (data.attackableEvents.onDeath != null)
-                        attackable.onDeath = data.attackableEvents.onDeath;
-                }
+                if (data.attackableEvents.onDamage != null)
+                    attackable.onDamage = data.attackableEvents.onDamage;
+                if (data.attackableEvents.onHeal != null)
+                    attackable.onHeal = data.attackableEvents.onHeal;
+                if (data.attackableEvents.onDeath != null)
+                    attackable.onDeath = data.attackableEvents.onDeath;
             }
 
             if (data.attacker)
@@ -151,11 +148,8 @@ namespace RTSModularSystem
                 attacker = gameObject.AddComponent<Attacker>();
                 attacker.Init(data.attackType, data.damageType, data.targetType, data.attackDamage, data.attackRange, data.attackDuration, data.xpRequirement != -1, data.canAutoTarget, data.autoTargetRange);
 
-                if (data.attackerEvents)
-                { 
-                    if (data.attackerEvents.onAttack != null)
-                        attacker.onAttack = data.attackerEvents.onAttack;
-                }
+                if (data.attackerEvents.onAttack != null)
+                    attacker.onAttack = data.attackerEvents.onAttack;
             }
 
             //add gameobject to combat manager
@@ -221,9 +215,9 @@ namespace RTSModularSystem
             if (nva)
             {
                 if (nva.velocity.magnitude > 0.2f)
-                    data.movableEvents?.onMoveBegin.Invoke(gameObject);
+                    data.movableEvents.onMoveBegin?.Invoke(gameObject);
                 else
-                    data.movableEvents?.onMoveEnd.Invoke(gameObject);
+                    data.movableEvents.onMoveEnd?.Invoke(gameObject);
             }
 
             //only update visibilty on initialised moveable enemy objects
@@ -260,41 +254,14 @@ namespace RTSModularSystem
         }
 
 
-        //REFACTOR Split Attackable
-        //stop rendering object, and prevent further interaction
-        public void ZeroHealth()
+        //remove object references from other scripts and destroy
+        public void DestroyPlayerObject()
         {
             ObjectDataManager.RemovePlayerObject(owningPlayer, this);
-            
-            //if object does not persist, destroy completely, else destroy as much as possible
-            if (!data.persistAtZeroHealth)
-            {
-                interrupt = 9;
-                Destroy(gameObject);
-                return;
-            }
 
-            interrupt = 8;
-
-            //destroy children
-            for (int i = 0; i < transform.childCount; i++)
-                Destroy(transform.GetChild(i).gameObject);
-
-            //destroy renderer, collider and navmesh components
-            Renderer[] renderers = GetComponents<Renderer>();
-            foreach (Renderer renderer in renderers)
-                Destroy(renderer);
-            Collider[] colliders = GetComponents<Collider>();
-            foreach (Collider collider in colliders)
-                Destroy(collider);
-            NavMeshAgent agent = GetComponent<NavMeshAgent>();
-            if (agent != null)
-                Destroy(agent);
-            NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
-            if (obstacle != null)
-                Destroy (obstacle);
-
-            Destroy(attackable);
+            interrupt = 9;
+            Destroy(gameObject);
+            return;
         }
 
 
