@@ -9,12 +9,25 @@ ModelImporter:
   - first:
       74: 195481471120791855
     second: Infatry |REF
+  - first:
+      74: 1827226128182048838
+    second: Take 001
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: infantryB_materials
     second: {fileID: 2100000, guid: 11786655bb0fd72449e673f309c3c943, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 13b05a95ad7674d428953a925f2e8a6a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: 13b05a95ad7674d428953a925f2e8a6a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -27,7 +40,12 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'thigh.L'
+      : position error = 106.339287 mm\n\t'knee.L' : position error = 363.654236
+      mm\n\t'Foot.L' : position error = 434.307892 mm\n\t'thigh.R' : position error
+      = 106.339287 mm\n\t'knee.R' : position error = 363.654236 mm\n\t'Foot.R' :
+      position error = 434.307892 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
