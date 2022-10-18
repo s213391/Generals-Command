@@ -1678,7 +1678,7 @@ GameObject:
   - component: {fileID: 580128709}
   - component: {fileID: 580128708}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: xMin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1696,7 +1696,7 @@ Transform:
   m_LocalScale: {x: 1032.84, y: 249.67842, z: 26.49742}
   m_Children: []
   m_Father: {fileID: 651006232}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!65 &580128708
 BoxCollider:
@@ -1895,10 +1895,10 @@ Transform:
   m_LocalPosition: {x: 677.7199, y: 488.09933, z: 439.4702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1664318518}
-  - {fileID: 1384441323}
   - {fileID: 580128707}
   - {fileID: 763883885}
+  - {fileID: 1384441323}
+  - {fileID: 1664318518}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2279,7 +2279,7 @@ GameObject:
   - component: {fileID: 763883887}
   - component: {fileID: 763883886}
   m_Layer: 0
-  m_Name: cube 4
+  m_Name: xMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2297,7 +2297,7 @@ Transform:
   m_LocalScale: {x: 1032.84, y: 249.67842, z: 26.49742}
   m_Children: []
   m_Father: {fileID: 651006232}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!65 &763883886
 BoxCollider:
@@ -4665,7 +4665,7 @@ GameObject:
   - component: {fileID: 1384441325}
   - component: {fileID: 1384441324}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: zMin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4683,7 +4683,7 @@ Transform:
   m_LocalScale: {x: 596.531, y: 249.67842, z: 26.49742}
   m_Children: []
   m_Father: {fileID: 651006232}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1384441324
 BoxCollider:
@@ -5043,10 +5043,10 @@ MonoBehaviour:
   yReadZone: 1
   moveWhenOutsideOfReadZone: 0
   keepCameraWithinBoundaries: 1
-  xMin: {fileID: 0}
-  xMax: {fileID: 0}
-  zMin: {fileID: 0}
-  zMax: {fileID: 0}
+  xMin: {fileID: 580128707}
+  xMax: {fileID: 763883885}
+  zMin: {fileID: 1384441323}
+  zMax: {fileID: 1664318518}
 --- !u!114 &1546076793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5476,7 +5476,7 @@ GameObject:
   - component: {fileID: 1664318520}
   - component: {fileID: 1664318519}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: zMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5494,7 +5494,7 @@ Transform:
   m_LocalScale: {x: 596.531, y: 249.67842, z: 26.49742}
   m_Children: []
   m_Father: {fileID: 651006232}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1664318519
 BoxCollider:
