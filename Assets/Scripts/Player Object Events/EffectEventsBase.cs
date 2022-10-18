@@ -6,13 +6,16 @@ public class EffectEventsBase : MonoBehaviour
 {
     #region sounds
 
+    //public ScriptableObjectThatHoldsAudioClips
+
+    //protected GetRandomClip(GameObject go, AudioClip[])
+
     protected void PlayOneShotClip(GameObject go, AudioClip clip)
     {
         AudioSource audioSource = go.GetComponent<AudioSource>();
         if (audioSource == null)
             return;
 
-        audioSource.volume = Settings.sfxVolume;
         if (clip != null)
             audioSource.PlayOneShot(clip);
     }
@@ -24,7 +27,6 @@ public class EffectEventsBase : MonoBehaviour
         if (audioSource == null)
             return;
 
-        audioSource.volume = Settings.sfxVolume;
         if (clip != null && !audioSource.isPlaying)
         {
             audioSource.clip = clip;

@@ -99,6 +99,8 @@ namespace RTSModularSystem
                     agent = gameObject.AddComponent<NavMeshAgent>();
 
                 agent.speed = data.moveSpeed;
+                agent.acceleration = data.acceleration;
+                agent.angularSpeed = data.angularSpeed;
                 agent.height = data.agentHeight;
                 agent.radius = data.agentWidth;
                 agent.avoidancePriority = data.pathfingPriority;

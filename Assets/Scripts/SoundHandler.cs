@@ -15,6 +15,7 @@ public class SoundHandler : MonoBehaviour
 
     [Header("Selection")]
     public AudioClip selectedClip;
+    public AudioClip deselectedClip;
 
     public static float sfxVolume;
 

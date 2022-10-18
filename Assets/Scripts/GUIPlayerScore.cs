@@ -9,10 +9,12 @@ public class GUIPlayerScore : MonoBehaviour
     
     public List<GameObject> playerScores;
     public List<int> playerObjectHealths;
+    public float flashDuration = 0.2f;
 
     private RectTransform rectTransform;
     private List<TextMeshProUGUI> playerNames = new List<TextMeshProUGUI>();
     private List<TextMeshProUGUI> playerHealth = new List<TextMeshProUGUI>();
+    private List<bool> playerHealthFlashing = new List<bool>();
 
     // Start is called before the first frame update
     void Start()
@@ -45,13 +47,33 @@ public class GUIPlayerScore : MonoBehaviour
             playerHealth[i].color = GameData.instance.playerData[i].colour;
 
             playerObjectHealths.Add(1000);
+            playerHealthFlashing.Add(false);
         }
     }
+
 
     //updates health values for the given player
     public void UpdateHealth(int playerNumber, int newHealth)
     {
         playerHealth[playerNumber].text = newHealth.ToString() + "%";
         playerObjectHealths[playerNumber] = newHealth;
+
+        if (!playerHealthFlashing[playerNumber])
+            StartCoroutine(FlashHealthWhite(playerNumber));
+    }
+
+
+    //turns a player's name white then back for a set time to indicate damage
+    private IEnumerator FlashHealthWhite(int playerNumber)
+    {
+        playerHealthFlashing[playerNumber] = true;
+
+        playerHealth[playerNumber].color = Color.white;
+        yield return new WaitForSeconds(flashDuration);
+
+        playerHealth[playerNumber].color = GameData.instance.playerData[playerNumber].colour;
+        yield return new WaitForSeconds(flashDuration);
+
+        playerHealthFlashing[playerNumber] = false;
     }
 }
