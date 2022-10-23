@@ -1,7 +1,7 @@
 using UnityEngine;
 using RTSModularSystem;
 
-public class CommandCenterEvents : MonoBehaviour
+public class CommandCenterEvents : EffectEventsBase
 {
     public void Damage(GameObject commandCentre, int newHealth, int oldHealth)
     {

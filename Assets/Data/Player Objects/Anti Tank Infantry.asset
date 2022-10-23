@@ -28,7 +28,16 @@ MonoBehaviour:
   healthBarWidth: 1
   xpOnDeath: 0
   persistAtZeroHealth: 0
-  attackableEvents: {fileID: 11400000, guid: 7a09807016c8ac74b9cda813311e3b00, type: 2}
+  attackableEvents:
+    onDamage:
+      m_PersistentCalls:
+        m_Calls: []
+    onHeal:
+      m_PersistentCalls:
+        m_Calls: []
+    onDeath:
+      m_PersistentCalls:
+        m_Calls: []
   attacker: 1
   attackType: 1
   damageType: 2
@@ -38,7 +47,13 @@ MonoBehaviour:
   attackDuration: 5
   canAutoTarget: 1
   autoTargetRange: 30
-  attackerEvents: {fileID: 0}
+  attackerEvents:
+    onAttack:
+      m_PersistentCalls:
+        m_Calls: []
+    onKill:
+      m_PersistentCalls:
+        m_Calls: []
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
@@ -49,7 +64,13 @@ MonoBehaviour:
   agentWidth: 0.5
   pathfingPriority: 50
   passThroughOtherAgents: 1
-  movableEvents: {fileID: 0}
+  movableEvents:
+    onMoveBegin:
+      m_PersistentCalls:
+        m_Calls: []
+    onMoveEnd:
+      m_PersistentCalls:
+        m_Calls: []
   description: 
   unitCap: -1
   visibilityRanges: []
