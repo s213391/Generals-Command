@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4101385925698837991}
   - component: {fileID: 9153682034840812136}
   - component: {fileID: 344648071154657338}
+  - component: {fileID: -5187166316659797797}
   m_Layer: 0
   m_Name: Uranium Collection
   m_TagString: Untagged
@@ -213,6 +214,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!111 &-5187166316659797797
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456422188585449799}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 1827226128182048838, guid: 828a30910cc0f3748aeb4da94687f3ff, type: 3}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &716898823534084019
 PrefabInstance:
   m_ObjectHideFlags: 0
