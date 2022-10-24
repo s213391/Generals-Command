@@ -21,10 +21,7 @@ namespace DS_BasicCombat
 
         Resistances resistances;
         HealthBar healthBar;
-
-        public UnityEvent<GameObject, int, int> onDamage;
-        public UnityEvent<GameObject, int, int> onHeal;
-        public UnityEvent<GameObject> onDeath;
+        AttackableEvents attackableEvents;
 
 
         //set up using inspector values
@@ -53,6 +50,8 @@ namespace DS_BasicCombat
 
             healthBar = HealthBarManager.instance.AddHealthBar(this);
             healthBar.Init(objectHeight, objectWidth);
+
+            attackableEvents = GetComponent<AttackableEvents>();
         }
 
 
@@ -95,7 +94,7 @@ namespace DS_BasicCombat
                 else
                     currentHealth -= damage;
 
-                onHeal?.Invoke(gameObject, currentHealth, previousHealth);
+                attackableEvents?.OnHeal(currentHealth, previousHealth);
             }
             //damage is rounded down after relevant resistance is removed
             else
@@ -106,15 +105,15 @@ namespace DS_BasicCombat
                     currentHealth = 0;
                     CombatManager.instance.MarkForDestruction(this);
                     if (attacker != null)
-                        attacker.XPChange(xpOnDeath);
+                        attacker.UnitKill(xpOnDeath);
 
-                    onDeath?.Invoke(gameObject);
+                    attackableEvents?.OnDeath();
                 }
                 else
                 {
                     currentHealth -= finalDamage;
 
-                    onDamage?.Invoke(gameObject, currentHealth, previousHealth);
+                    attackableEvents?.OnDamage(currentHealth, previousHealth);
                 }
             }
         }
@@ -125,11 +124,11 @@ namespace DS_BasicCombat
         public void SetHealth(int newHealth)
         {
             if (newHealth > currentHealth)
-                onHeal?.Invoke(gameObject, newHealth, currentHealth);
+                attackableEvents?.OnHeal(newHealth, currentHealth);
             else if (newHealth > 0)
-                onDamage?.Invoke(gameObject, newHealth, currentHealth);
+                attackableEvents?.OnDamage(newHealth, currentHealth);
             else
-                onDeath?.Invoke(gameObject);
+                attackableEvents?.OnDeath();
             
             
             if (currentHealth >= 0)

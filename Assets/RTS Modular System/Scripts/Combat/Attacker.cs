@@ -62,8 +62,7 @@ namespace DS_BasicCombat
         private bool targetCheckedRecently = false;
         private bool currentlyAttacking = false;
 
-        public UnityEvent<GameObject> onAttack;
-
+        private AttackerEvents attackerEvents;
 
         // Start is called before the first frame update
         void Start()
@@ -86,6 +85,8 @@ namespace DS_BasicCombat
             canAutoTarget = canTarget;
             autoTargetRange = targetRange;
             secondsBetweenTargetChecks = CombatManager.instance.secondsBetweenTargetChecks;
+
+            attackerEvents = GetComponent<AttackerEvents>();
 
             StartCoroutine(TargettingCooldownDuration());
         }
@@ -120,20 +121,22 @@ namespace DS_BasicCombat
                 StartCoroutine(AttackDuration());
                 transform.LookAt(target.transform);
 
-                onAttack.Invoke(gameObject);
+                attackerEvents?.OnAttack();
             }
         }
 
 
         //updates the xp total
-        public void XPChange(int xp)
+        public void UnitKill(int xp)
         {
-            if (!canAccumulateXP)
-                return;
+            attackerEvents?.OnKill();
 
-            xpTotal += xp;
-            if (xpTotal < 0)
-                xpTotal = 0;
+            if (canAccumulateXP)
+            {
+                xpTotal += xp;
+                if (xpTotal < 0)
+                    xpTotal = 0;
+            }
         }
 
 
