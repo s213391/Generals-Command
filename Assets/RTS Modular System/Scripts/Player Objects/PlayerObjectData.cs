@@ -67,6 +67,10 @@ namespace RTSModularSystem
         public bool moveable = false;
         [ConditionalHide("moveable", "true")] [Tooltip("The maximum speed this object can move")]
         public float moveSpeed = 1.0f;
+        [ConditionalHide("moveable", "true"), Tooltip("The rate at which this rate gets up to its maximum speed")]
+        public float acceleration = 8.0f;
+        [ConditionalHide("moveable", "true"), Tooltip("How many degrees this agent can rotate in a second")]
+        public float angularSpeed = 120.0f;
         [ConditionalHide("moveable", "true")] [Tooltip("The height the navmesh agent will be set to for obstacle avoidance")]
         public float agentHeight = 2.0f;
         [ConditionalHide("moveable", "true")] [Tooltip("The radius width the navmesh agent will be set to for obstacle avoidance")]
