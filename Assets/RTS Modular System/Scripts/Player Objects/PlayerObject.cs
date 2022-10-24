@@ -21,6 +21,7 @@ namespace RTSModularSystem
         private Attackable attackable;
         private Attacker attacker;
         private Selectable selectable;
+        private MovableEvents movableEvents;
 
         private bool initialised = false;
 
@@ -110,6 +111,8 @@ namespace RTSModularSystem
                     agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
                 else
                     agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+
+                movableEvents = GetComponent<MovableEvents>();
             }
             //REFACTOR Obstacle
             else
@@ -136,22 +139,12 @@ namespace RTSModularSystem
             {
                 attackable = gameObject.AddComponent<Attackable>();
                 attackable.Init(data.healthBarHeight, data.healthBarWidth, data.maxHealth, data.resistances, data.xpOnDeath);
-
-                if (data.attackableEvents.onDamage != null)
-                    attackable.onDamage = data.attackableEvents.onDamage;
-                if (data.attackableEvents.onHeal != null)
-                    attackable.onHeal = data.attackableEvents.onHeal;
-                if (data.attackableEvents.onDeath != null)
-                    attackable.onDeath = data.attackableEvents.onDeath;
             }
 
             if (data.attacker)
             {
                 attacker = gameObject.AddComponent<Attacker>();
                 attacker.Init(data.attackType, data.damageType, data.targetType, data.attackDamage, data.attackRange, data.attackDuration, data.xpRequirement != -1, data.canAutoTarget, data.autoTargetRange);
-
-                if (data.attackerEvents.onAttack != null)
-                    attacker.onAttack = data.attackerEvents.onAttack;
             }
 
             //add gameobject to combat manager
@@ -217,9 +210,9 @@ namespace RTSModularSystem
             if (nva)
             {
                 if (nva.velocity.magnitude > 0.2f)
-                    data.movableEvents.onMoveBegin?.Invoke(gameObject);
+                    movableEvents?.OnMovementBegin();
                 else
-                    data.movableEvents.onMoveEnd?.Invoke(gameObject);
+                    movableEvents?.OnMovementEnd();
             }
 
             //only update visibilty on initialised moveable enemy objects

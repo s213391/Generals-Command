@@ -1,23 +1,40 @@
 using UnityEngine;
 using RTSModularSystem;
 
-public class CommandCenterEvents : EffectEventsBase
+public class CommandCenterEvents : AttackableEvents
 {
-    public void Damage(GameObject commandCentre, int newHealth, int oldHealth)
+    AudioSource _audioSource;
+
+    private void Start()
     {
-        GUIPlayerScore.instance.UpdateHealth((int)(commandCentre.GetComponent<PlayerObject>().owningPlayer - 1), (newHealth / 10));
+        _audioSource = GetComponentInChildren<AudioSource>();
     }
 
 
-    public void Heal(GameObject commandCentre, int newHealth, int oldHealth)
+    public override void OnDamage(int newHealth, int oldHealth)
+    {
+        PlayOneShotAudio(_audioSource, damageSounds);
+        StartParticleEffect(damageParticles);
+
+        GUIPlayerScore.instance.UpdateHealth((int)(GetComponent<PlayerObject>().owningPlayer - 1), (newHealth / 10));
+    }
+
+
+    public override void OnHeal(int newHealth, int oldHealth)
     {
 
     }
 
 
-    public void Death(GameObject commandCentre)
+    public override void OnDeath()
     {
-        if (commandCentre.GetComponent<PlayerObject>().owningPlayer == GameData.instance.localPlayerNumber + 1)
+        PlayOneShotAudio(_audioSource, deathSounds);
+        StartParticleEffect(deathParticles);
+
+        if (GameData.instance.isHost)
+            SetAnimationTrigger(animators, "Death");
+
+        if (GetComponent<PlayerObject>().owningPlayer == GameData.instance.localPlayerNumber + 1)
             GameOver.instance.TriggerGameOver(false);
         else
             GameOver.instance.TriggerGameOver(true);

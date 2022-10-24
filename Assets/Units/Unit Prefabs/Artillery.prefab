@@ -12,9 +12,12 @@ GameObject:
   - component: {fileID: 5117672540328024352}
   - component: {fileID: 8450248266444468741}
   - component: {fileID: 227347098357905254}
+  - component: {fileID: 8453493951603825204}
   - component: {fileID: 7047031477673827244}
   - component: {fileID: 8480375177464921117}
   - component: {fileID: 853211506148464915}
+  - component: {fileID: 7872557447505326881}
+  - component: {fileID: 9074188381485805286}
   m_Layer: 0
   m_Name: Artillery
   m_TagString: Untagged
@@ -129,6 +132,22 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &8453493951603825204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978581094077902860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 6503676463035554550}
 --- !u!114 &7047031477673827244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +187,7 @@ AudioSource:
   m_GameObject: {fileID: 7978581094077902860}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -255,6 +274,44 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7872557447505326881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978581094077902860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3f4f4b1ba749942b5660b3b90a386e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 6503676463035554550}
+  damageSounds: []
+  damageParticles: []
+  healSounds: []
+  healParticles: []
+  deathSounds: []
+  deathParticles: []
+--- !u!114 &9074188381485805286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978581094077902860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12985c2157ecc948a067d036150f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 6503676463035554550}
+  attackSounds: []
+  attackParticles: []
+  killSounds: []
+  killParticles: []
 --- !u!1001 &804779706133849959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -315,5 +372,10 @@ PrefabInstance:
 --- !u!4 &910184098581987468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c3428afc573c6ee4cb5429141852e344, type: 3}
+  m_PrefabInstance: {fileID: 804779706133849959}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6503676463035554550 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: c3428afc573c6ee4cb5429141852e344, type: 3}
   m_PrefabInstance: {fileID: 804779706133849959}
   m_PrefabAsset: {fileID: 0}

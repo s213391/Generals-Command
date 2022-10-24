@@ -12,9 +12,12 @@ GameObject:
   - component: {fileID: 804396829882469980}
   - component: {fileID: 5753681577284455757}
   - component: {fileID: 4685506746545413981}
+  - component: {fileID: -5432078627761566665}
   - component: {fileID: 2495490364703422463}
   - component: {fileID: 3127623887273594012}
   - component: {fileID: 4748199749798991575}
+  - component: {fileID: 4585225034658125081}
+  - component: {fileID: 8817488737525805158}
   m_Layer: 0
   m_Name: APC Unit
   m_TagString: Untagged
@@ -129,6 +132,22 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &-5432078627761566665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169522998790028702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 2761632202047290022}
 --- !u!114 &2495490364703422463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +187,7 @@ AudioSource:
   m_GameObject: {fileID: 6169522998790028702}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -255,6 +274,44 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4585225034658125081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169522998790028702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3f4f4b1ba749942b5660b3b90a386e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 2761632202047290022}
+  damageSounds: []
+  damageParticles: []
+  healSounds: []
+  healParticles: []
+  deathSounds: []
+  deathParticles: []
+--- !u!114 &8817488737525805158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169522998790028702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12985c2157ecc948a067d036150f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 2761632202047290022}
+  attackSounds: []
+  attackParticles: []
+  killSounds: []
+  killParticles: []
 --- !u!1001 &8591140150003517239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -310,10 +367,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: APC
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 069c065883134474dbc6d05a6c8bd1af, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8e55f32e514552845a7e02e11ce05b56, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 069c065883134474dbc6d05a6c8bd1af, type: 3}
 --- !u!4 &8120945670966419676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 069c065883134474dbc6d05a6c8bd1af, type: 3}
+  m_PrefabInstance: {fileID: 8591140150003517239}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2761632202047290022 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 069c065883134474dbc6d05a6c8bd1af, type: 3}
   m_PrefabInstance: {fileID: 8591140150003517239}
   m_PrefabAsset: {fileID: 0}
