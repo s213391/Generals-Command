@@ -12,9 +12,12 @@ GameObject:
   - component: {fileID: 3407951110451759423}
   - component: {fileID: 8415337559965903083}
   - component: {fileID: 5922539037935982440}
+  - component: {fileID: 5952899320567067533}
   - component: {fileID: 8844640023076902129}
   - component: {fileID: 3420221898706957987}
   - component: {fileID: 8741845705244209969}
+  - component: {fileID: 6773589982294644435}
+  - component: {fileID: 6514839469120016064}
   m_Layer: 0
   m_Name: Light Tank
   m_TagString: Untagged
@@ -129,6 +132,22 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &5952899320567067533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621937889023251508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 8182888763982134256}
 --- !u!114 &8844640023076902129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +187,7 @@ AudioSource:
   m_GameObject: {fileID: 4621937889023251508}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -255,6 +274,44 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6773589982294644435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621937889023251508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3f4f4b1ba749942b5660b3b90a386e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 8182888763982134256}
+  damageSounds: []
+  damageParticles: []
+  healSounds: []
+  healParticles: []
+  deathSounds: []
+  deathParticles: []
+--- !u!114 &6514839469120016064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621937889023251508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12985c2157ecc948a067d036150f88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 8182888763982134256}
+  attackSounds: []
+  attackParticles: []
+  killSounds: []
+  killParticles: []
 --- !u!1001 &2370547413727315553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -310,10 +367,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightTank
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: f64ef97096624fb45aad6f92cab1bc97, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 33eba76eb9fc0b44495b8cdccd126eeb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f64ef97096624fb45aad6f92cab1bc97, type: 3}
 --- !u!4 &2841587941192327562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f64ef97096624fb45aad6f92cab1bc97, type: 3}
+  m_PrefabInstance: {fileID: 2370547413727315553}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8182888763982134256 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: f64ef97096624fb45aad6f92cab1bc97, type: 3}
   m_PrefabInstance: {fileID: 2370547413727315553}
   m_PrefabAsset: {fileID: 0}

@@ -16,7 +16,7 @@ public class GenericAttackerEvents : AttackerEvents
         StartParticleEffect(attackParticles);
 
         if (GameData.instance.isHost)
-            SetAnimationTrigger(attackAnimators, "Attack");
+            SetAnimationTrigger(animators, "Attack");
     }
 
 

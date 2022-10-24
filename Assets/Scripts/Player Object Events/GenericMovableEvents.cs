@@ -18,17 +18,17 @@ public class GenericMovableEvents : MovableEvents
         StartParticleEffect(movementOngoingParticles);
 
         if (GameData.instance.isHost)
-            SetAnimationBool(movementOngoingAnimators, "IsMoving", true);
+            SetAnimationBool(animators, "IsMoving", true);
     }
 
 
     public override void OnMovementEnd()
     {
         StopLoopingSound(_audioSource);
-        SetAnimationBool(movementOngoingAnimators, "IsMoving", false);
+        SetAnimationBool(animators, "IsMoving", false);
         StopParticleEffect(movementOngoingParticles);
 
         if (GameData.instance.isHost)
-            SetAnimationBool(movementOngoingAnimators, "IsMoving", false);
+            SetAnimationBool(animators, "IsMoving", false);
     }
 }

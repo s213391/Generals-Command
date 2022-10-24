@@ -30,7 +30,7 @@ public class GenericAttackableEvents : AttackableEvents
         StartParticleEffect(deathParticles);
 
         if (GameData.instance.isHost)
-            SetAnimationTrigger(deathAnimators, "Death");
+            SetAnimationTrigger(animators, "Death");
 
         GetComponent<PlayerObject>().DestroyPlayerObject();
     }

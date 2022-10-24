@@ -32,7 +32,7 @@ public class CommandCenterEvents : AttackableEvents
         StartParticleEffect(deathParticles);
 
         if (GameData.instance.isHost)
-            SetAnimationTrigger(deathAnimators, "Death");
+            SetAnimationTrigger(animators, "Death");
 
         if (GetComponent<PlayerObject>().owningPlayer == GameData.instance.localPlayerNumber + 1)
             GameOver.instance.TriggerGameOver(false);

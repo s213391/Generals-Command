@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class EffectEventsBase : MonoBehaviour 
@@ -53,7 +51,6 @@ public abstract class EffectEventsBase : MonoBehaviour
     #endregion
 
     #region animations
-
 
     protected void SetAnimationBool(Animator[] animators, string boolName, bool value)
     {
