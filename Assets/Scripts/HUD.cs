@@ -138,6 +138,13 @@ public class HUD : MonoBehaviour
     }
 
 
+    //deselects all objects and closes the actions and selected menus
+    public void DeselectAll()
+    {
+        SelectionController.instance.DeselectAll();
+    }
+
+
     //quits the game
     public void Quit()
     { 

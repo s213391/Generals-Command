@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 using Mirror;
 using DS_BasicCombat;
 using DS_Selection;
@@ -22,6 +23,7 @@ namespace RTSModularSystem
         private Attacker attacker;
         private Selectable selectable;
         private MovableEvents movableEvents;
+        private List<int> queuedActionIndexes;
 
         private bool initialised = false;
 
@@ -264,6 +266,13 @@ namespace RTSModularSystem
         public void StartAction(int index)
         {
             RTSPlayer.StartAction(data.actions[index].action, this);
+        }
+
+
+        //adds this action to the queue to be started later
+        public void AddActionToQueue(int index)
+        {
+            queuedActionIndexes.Add(index);
         }
 
 

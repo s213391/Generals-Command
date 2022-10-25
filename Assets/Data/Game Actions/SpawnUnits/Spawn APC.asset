@@ -15,8 +15,9 @@ MonoBehaviour:
   cooldown: 0
   clientSide: 0
   lockInput: 0
+  lockCamera: 0
   showOnActionBar: 1
-  icon: {fileID: 21300000, guid: d9e81c41893feaa4ba123773eefdd42e, type: 3}
+  icon: {fileID: 21300000, guid: 9c1526f1de9f0304ba736c92752267cc, type: 3}
   interruptionTolerance: 1
   objectsToSpawn:
   - prefab: {fileID: 6169522998790028702, guid: 6edd02cbf3ec86a408a133540d1efa2b, type: 3}
@@ -45,8 +46,11 @@ MonoBehaviour:
   loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
-    type: 4
-    seconds: 0
+    type: 5
+    seconds: 2
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onConditionEvaluate:
+    m_PersistentCalls:
+      m_Calls: []
