@@ -18,19 +18,17 @@ namespace DS_Selection
         private bool panelOpen; //whether the selected GUI panel is open
 
 
-        //set up singleton
-        public void Awake()
-        {
-            if (instance != null && instance != this)
-                Destroy(this);
-            else
-                instance = this;
-        }
-
-
         //set up and hide the panel
         public void Init()
         {
+            if (instance != null && instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+            else
+                instance = this;
+
             selectedObjects = GetComponentInChildren<GridLayoutGroup>();
             UIElements = GetComponents<UIBehaviour>();
 
