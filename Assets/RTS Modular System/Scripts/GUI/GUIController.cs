@@ -41,11 +41,11 @@ namespace RTSModularSystem
                 deviceGUICanvas.SetActive(true);
 
                 //initialise all components of the gui
-                guiResources = deviceGUICanvas.GetComponentInChildren<GUIResources>();
+                guiResources = deviceGUICanvas.GetComponentInChildren<GUIResources>(true);
                 guiResources.Init();
-                guiBuildings = deviceGUICanvas.GetComponentInChildren<GUIActionBar>();
+                guiBuildings = deviceGUICanvas.GetComponentInChildren<GUIActionBar>(true);
                 guiBuildings.Init();
-                guiSelected = deviceGUICanvas.GetComponentInChildren<GUISelected>();
+                guiSelected = deviceGUICanvas.GetComponentInChildren<GUISelected>(true);
                 guiSelected.Init();
                 instance.onGUIInitialise.Invoke();
             }
