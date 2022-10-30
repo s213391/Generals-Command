@@ -457,29 +457,29 @@ namespace RTSModularSystem
                             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                             //not every object will have the same LayerMask, so the raycast will need to be done for each
-                            foreach (MouseTrackingObject olm in objectsFollowingMouse)
+                            foreach (MouseTrackingObject mto in objectsFollowingMouse)
                             {
                                 RaycastHit hit;
-                                Physics.Raycast(ray, out hit, 250.0f, olm.layerMask);
+                                Physics.Raycast(ray, out hit, 250.0f, mto.layerMask);
 
                                 //reset rotation every frame
-                                olm.obj.transform.rotation = Quaternion.identity;
+                                mto.obj.transform.rotation = Quaternion.identity;
 
                                 if (hit.collider != null)
                                 {
-                                    olm.obj.transform.position = hit.point;
+                                    mto.obj.transform.position = hit.point;
 
                                     //if this uses snapping, check each snappoint to see if any are in range
-                                    if (olm.snapping)
+                                    if (mto.snapping)
                                     {
                                         bool snapped = false;
                                         foreach (SnapPoint snapPoint in snapPoints)
                                         {
                                             Transform snapTrans = snapPoint.transform;
-                                            if ((snapTrans.position - hit.point).magnitude <= olm.snapDistance)
+                                            if ((snapTrans.position - hit.point).magnitude <= mto.snapDistance)
                                             {
-                                                olm.obj.transform.position = snapTrans.position;
-                                                olm.obj.transform.rotation = snapTrans.rotation;
+                                                mto.obj.transform.position = snapTrans.position;
+                                                mto.obj.transform.rotation = snapTrans.rotation;
                                                 snapped = true;
                                                 break;
                                             }
@@ -489,6 +489,8 @@ namespace RTSModularSystem
                                             success = false;
                                     }
                                 }
+                                else if (mto.snapping)
+                                    success = false;
                             }
                         }
 

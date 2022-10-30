@@ -1,19 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectEventsBase : MonoBehaviour
+public abstract class EffectEventsBase : MonoBehaviour 
 {
     #region sounds
 
-    //public ScriptableObjectThatHoldsAudioClips
 
-    //protected GetRandomClip(GameObject go, AudioClip[])
-
-    protected void PlayOneShotClip(GameObject go, AudioClip clip)
+    protected void PlayOneShotAudio(AudioSource audioSource, AudioClip[] clips)
     {
-        AudioSource audioSource = go.GetComponent<AudioSource>();
-        if (audioSource == null)
+        if (!audioSource || clips.Length == 0)
+            return;
+        else if (clips.Length == 1)
+            audioSource.PlayOneShot(clips[0]);
+        else
+            audioSource.PlayOneShot(clips[(int)Random.Range(1, clips.Length)]);
+    }
+
+
+    protected void PlayOneShotAudio(AudioSource audioSource, AudioClip clip)
+    {
+        if (!audioSource)
             return;
 
         if (clip != null)
@@ -21,10 +26,9 @@ public class EffectEventsBase : MonoBehaviour
     }
 
 
-    protected void StartSoundClip(GameObject go, AudioClip clip)
+    protected void PlayLoopingSound(AudioSource audioSource, AudioClip clip)
     {
-        AudioSource audioSource = go.GetComponent<AudioSource>();
-        if (audioSource == null)
+        if (!audioSource)
             return;
 
         if (clip != null && !audioSource.isPlaying)
@@ -35,10 +39,9 @@ public class EffectEventsBase : MonoBehaviour
     }
 
 
-    protected void StopSoundClip(GameObject go)
+    protected void StopLoopingSound(AudioSource audioSource)
     {
-        AudioSource audioSource = go.GetComponent<AudioSource>();
-        if (audioSource == null)
+        if (!audioSource)
             return;
 
         if (audioSource.isPlaying)
@@ -49,19 +52,37 @@ public class EffectEventsBase : MonoBehaviour
 
     #region animations
 
-    protected void SetAnimationBool(GameObject go, string boolName, bool value)
+    protected void SetAnimationBool(Animator[] animators, string boolName, bool value)
     {
-        Animator[] animators = go.GetComponentsInChildren<Animator>();
         foreach (Animator animator in animators)
             animator.SetBool(boolName, value);
     }
 
 
-    protected void SetAnimationTrigger(GameObject go, string triggerName)
+    protected void SetAnimationTrigger(Animator[] animators, string triggerName)
     {
-        Animator[] animators = go.GetComponentsInChildren<Animator>();
         foreach (Animator animator in animators)
             animator.SetTrigger(triggerName);
+    }
+
+    #endregion
+
+    #region particles
+
+
+    protected void StartParticleEffect(ParticleSystem[] emitters)
+    {
+        foreach (ParticleSystem emitter in emitters)
+            if (emitter && !emitter.isEmitting)
+                emitter.Play();
+    }
+
+
+    protected void StopParticleEffect(ParticleSystem[] emitters)
+    {
+        foreach (ParticleSystem emitter in emitters)
+            if (emitter && emitter.isEmitting)
+                emitter.Stop();
     }
 
     #endregion

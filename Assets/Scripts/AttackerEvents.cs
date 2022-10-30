@@ -1,9 +1,17 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-[System.Serializable]
-public struct AttackerEvents
+public abstract class AttackerEvents : EffectEventsBase
 {
-    public UnityEvent<GameObject> onAttack;
-    public UnityEvent<GameObject> onKill;
+    public Animator[] animators;
+
+    [Header("On Attack")]
+    public AudioClip[] attackSounds;
+    public ParticleSystem[] attackParticles;
+
+    [Header("On Kill")]
+    public AudioClip[] killSounds;
+    public ParticleSystem[] killParticles;
+
+    public abstract void OnAttack();
+    public abstract void OnKill();
 }
