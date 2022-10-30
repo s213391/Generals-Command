@@ -23,7 +23,7 @@ namespace RTSModularSystem
         private Attacker attacker;
         private Selectable selectable;
         private MovableEvents movableEvents;
-        private List<int> queuedActionIndexes;
+        public List<GameActionData> queuedActions;
 
         private bool initialised = false;
 
@@ -262,17 +262,27 @@ namespace RTSModularSystem
         }
 
 
-        //performs the action at the given index
+        //either performs the action at the given index immediately or adds it to the queue to be performed in turn
         public void StartAction(int index)
         {
+            if (data.actions[index].action.queueAction)
+            {
+                queuedActions.Add(data.actions[index].action);
+                if (queuedActions.Count > 1)
+                    return;
+            }
+
             RTSPlayer.StartAction(data.actions[index].action, this);
         }
 
 
-        //adds this action to the queue to be started later
-        public void AddActionToQueue(int index)
+        //tells the player object that the queued action has completed and to start the next one
+        public void QueuedActionCompleted()
         {
-            queuedActionIndexes.Add(index);
+            queuedActions.RemoveAt(0);
+
+            if (queuedActions.Count > 0)
+                RTSPlayer.StartAction(queuedActions[0], this);
         }
 
 

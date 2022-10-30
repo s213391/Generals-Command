@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using DS_Selection;
 
@@ -41,6 +42,9 @@ namespace RTSModularSystem
         public Vector3 screenPointWorldSpace { get; private set; }
         public PlayerObject objectUnderScreenPoint { get; private set; }
         public Ray screenRay { get; private set; }
+
+        [SerializeField, Tooltip("Add an event here to modify how inputs are handled based on the mouse/touch position and what is under it")]
+        private UnityEvent<Vector3, PlayerObject> modifiedInputHandling;
 
 
         //set up singleton
@@ -82,6 +86,7 @@ namespace RTSModularSystem
             if (device == DeviceType.Desktop || (device == DeviceType.Handheld && Input.touchCount == 1))
             {
                 CheckUnderScreenPoint();
+                modifiedInputHandling?.Invoke(screenPointWorldSpace, objectUnderScreenPoint);
                 HandleSelectionInputs();
                 HandleMovementInputs();
             }

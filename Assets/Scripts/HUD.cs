@@ -42,7 +42,7 @@ public class HUD : MonoBehaviour
     public void Init()
     {
         ToggleMinimap(false);
-        //ToggleGroupsMenu(false);
+        ToggleGroupsMenu(false);
         ToggleSelectedMenu(false);
         ToggleSelection(false);
         ToggleInGameMenu(false);
@@ -151,6 +151,7 @@ public class HUD : MonoBehaviour
         Application.Quit();
     }
 
+
     #region optionsMenu
 
     //opens the options sub menu
@@ -222,6 +223,29 @@ public class HUD : MonoBehaviour
             saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         saveButtonText.text = "Settings Applied";
     }
+
+    #endregion
+
+    #region groupsMenu
+
+
+    public void AddToGroup(int groupNumber)
+    {
+        SelectionController.instance.AddSelectedToGroup(groupNumber);
+    }
+
+
+    public void EmptyGroup(int groupNumber)
+    {
+        SelectionController.instance.EmptyQuickSelectGroup(groupNumber);
+    }
+
+
+    public void SelectGroup(int groupNumber)
+    {
+        SelectionController.instance.SelectGroup(groupNumber);
+    }    
+
 
     #endregion
 }
