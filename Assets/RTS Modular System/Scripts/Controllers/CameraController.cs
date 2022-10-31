@@ -35,8 +35,21 @@ namespace RTSModularSystem
         [Tooltip("How much of an effect that zooming out has on speeding up camera movement. \n0 or less will disable this feature")]
         public float speedUpOnZoomOut = 0.2f;
 
+        [Header("Camera Movement Restriction")]
+        public bool keepCameraWithinBoundaries = true;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform xMin;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform xMax;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform zMin;
+        [ConditionalHide("keepCameraWithinBoundaries", "true")]
+        public Transform zMax;
+
         [Header("Movement")]
         public float movementSpeed = 0.7f;
+        public bool invertXMovement = false;
+        public bool invertYMovement = false;
         [Tooltip("Uses Horizontal and Vertical axes set in Input Manager.\nIncludes WASD, Arrows and Joysticks by default.")]
         public bool moveWithAxes;
         [Tooltip("Uses the mouse position as well as a safe zone and a read zone to determine how fast to move the camera.")]
@@ -56,17 +69,6 @@ namespace RTSModularSystem
         public float yReadZone = 1.0f;
         [ConditionalHide("moveWithMouse", "true"), Tooltip("Whether moving the mouse outside of the read zone is considered movement at maximum speed(true) or no movement(false)")]
         public bool moveWhenOutsideOfReadZone;
-
-        [Header("Camera Movement Restriction")]
-        public bool keepCameraWithinBoundaries = true;
-        [ConditionalHide("keepCameraWithinBoundaries", "true")]
-        public Transform xMin;
-        [ConditionalHide("keepCameraWithinBoundaries", "true")]
-        public Transform xMax;
-        [ConditionalHide("keepCameraWithinBoundaries", "true")]
-        public Transform zMin;
-        [ConditionalHide("keepCameraWithinBoundaries", "true")]
-        public Transform zMax;
 
         public bool movementEnabled { get; private set; } //whether the camera inputs are enabled
 
@@ -228,6 +230,11 @@ namespace RTSModularSystem
                 //clamp camera movement and update target position
                 dx = Mathf.Clamp(dx, -1, 1);
                 dz = Mathf.Clamp(dz, -1, 1);
+
+                if (invertXMovement)
+                    dx *= -1;
+                if (invertYMovement)
+                    dz *= -1;
 
                 Transform targetTrans = target.transform;
 

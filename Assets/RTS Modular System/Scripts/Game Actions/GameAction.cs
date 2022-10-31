@@ -563,6 +563,8 @@ namespace RTSModularSystem
                             }
 
                             //an exit condition has been reached, end this action
+                            if (data.queueAction)
+                                playerObject.QueuedActionCompleted();
                             break;
                         }
                         else if (data.successConditions.Count > 0)

@@ -20,6 +20,8 @@ namespace RTSModularSystem
         public bool lockCamera;
         [Tooltip("If this action will appear as a button on the action bar when its player object is selected")]
         public bool showOnActionBar;
+        [Tooltip("If true, this action is added to the object's queue to be started in turn.\nIf false, this action is started immediately")]
+        public bool queueAction;
         [Tooltip("The image that will be displayed in the GUI representing this action")]
         public Sprite icon;
         [Range(1, 9)] [Tooltip("The value of interruption that is required to stop this action early. \nDefault interruption values: \n1: Starting a new action/ deselecting a player object \n3: The stop actions button \n8: 'Killing' the Player Object performing this action \n9: Destroying the Player Object script")]

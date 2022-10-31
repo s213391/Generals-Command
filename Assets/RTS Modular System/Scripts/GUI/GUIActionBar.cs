@@ -79,14 +79,6 @@ namespace RTSModularSystem
             
             int actionCount = currentObject.data.actions.Count;
 
-            //if theres no actions, don't open the menu
-            /*if (actionCount == 0)
-            {
-                previousObject = currentObject;
-                ToggleMenu(false);
-                return;
-            }*/
-
             //clear all pre-existing children
             for (int i = actionsGridLayout.transform.childCount - 1; i >= 0; i--)
                 DestroyImmediate(actionsGridLayout.transform.GetChild(i).gameObject);
@@ -94,7 +86,6 @@ namespace RTSModularSystem
             buttons.Clear();
 
             //create a button and set its name, sprite and delegate action
-            bool hasVisibleAction = false;
             for (int i = 0; i < actionCount; i++)
             {
                 //check if this is a action that appears in the bar
@@ -122,12 +113,9 @@ namespace RTSModularSystem
                 int j = i;
                 PlayerObject po = currentObject;
                 button.GetComponent<Button>().onClick.AddListener(delegate { po.StartAction(j); });
-
-                hasVisibleAction = true;
             }
 
             //show menu if this object has an action that appears on the action bar
-            //ToggleMenu(hasVisibleAction);
             ToggleMenu(true);
             previousObject = currentObject;
         }
