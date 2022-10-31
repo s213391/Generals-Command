@@ -17,6 +17,8 @@ namespace RTSModularSystem
             if (!isLocalPlayer)
                 return;
 
+            actionData.onActionStart?.Invoke(functionCaller, actionData);
+
             if (actionData.clientSide)
             {
                 //use empty data, it won't be checked

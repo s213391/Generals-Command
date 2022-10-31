@@ -63,12 +63,15 @@ public class UnitStats : MonoBehaviour
         Attacker attacker = currentObject.GetComponent<Attacker>();
         if (attacker == null)
         {
-            damageText.text = "N/A";
-            damageImage.texture = damageIcons[0];
+            damageText.enabled = false;
+            damageImage.enabled = false;
         }
-        else 
+        else
         {
+            damageText.enabled = true;
             damageText.text = attacker.attackDamage.ToString();
+
+            damageImage.enabled = true;
             damageImage.texture = damageIcons[(int)attacker.damageType];
         }
     }

@@ -46,6 +46,10 @@ namespace RTSModularSystem
         public List<GameActionData> nextActionsOnSuccess;
         [Tooltip("Actions that will start when this action ends with a failure state")]
         public List<GameActionData> nextActionsOnFailure;
+
+        [Header("Events")]
+        [Tooltip("Event that will be called on the client when an action starts")]
+        public UnityEvent<PlayerObject, GameActionData> onActionStart;
         [Tooltip("The event that will be called once a frame when success conditions are evaluated. \nUsed to give feedback to whether an action would be successful or not.")]
         public UnityEvent<ConditionEventData> onConditionEvaluate;
     }
