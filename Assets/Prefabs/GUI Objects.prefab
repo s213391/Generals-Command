@@ -8549,6 +8549,7 @@ RectTransform:
   - {fileID: 207891583095814403}
   - {fileID: 207891582889485864}
   - {fileID: 207891583304479061}
+  - {fileID: 3491222833935033029}
   m_Father: {fileID: 207891582997385113}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9163,7 +9164,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 5bf9e14847e34ae4aa481f5b914aca7d, type: 3}
+  m_Texture: {fileID: 2800000, guid: 7e76ba6fc03ad564682621a9f61c3403, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -9311,7 +9312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 4bdef78788d957b46a61686bbc6c4fd3, type: 3}
+  m_Texture: {fileID: 2800000, guid: 6046786c8f74b30498923bee22e4ea8c, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -11259,7 +11260,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 8777d992e01fa444b8723afe8bf606de, type: 3}
+  m_Texture: {fileID: 2800000, guid: 10b9ccf8548a28a44a0c7191b31a1665, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -12300,7 +12301,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: f93b3df231bac3d45bcfbe3423dfc676, type: 3}
+  m_Texture: {fileID: 2800000, guid: fe09f7dbfe971324784d1fa09c980d95, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -12437,7 +12438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.23529412}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -16598,7 +16599,7 @@ RectTransform:
   - {fileID: 2899811075501219781}
   - {fileID: 7039477682867199155}
   m_Father: {fileID: 7128645833064689519}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -18136,7 +18137,7 @@ RectTransform:
   - {fileID: 8843518928307774301}
   - {fileID: 5663783017759849728}
   m_Father: {fileID: 7128645833064689519}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -19616,7 +19617,6 @@ RectTransform:
   m_Children:
   - {fileID: 7128645833847070528}
   - {fileID: 207891584175705975}
-  - {fileID: 3491222833935033029}
   - {fileID: 4874430712162705937}
   - {fileID: 4247826356477209255}
   - {fileID: 2395296309195283295}
@@ -23106,7 +23106,7 @@ GameObject:
   - component: {fileID: 6582119668442654015}
   - component: {fileID: 2917800157777456136}
   m_Layer: 5
-  m_Name: ' Screen (Move Back To Action Menu When Implemented)emented)'
+  m_Name: Production Screen (Move Back To Action Menu When Implemented)emented)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23135,12 +23135,12 @@ RectTransform:
   - {fileID: 3454420938123349798}
   - {fileID: 8619195518030693517}
   - {fileID: 8392724148501307542}
-  m_Father: {fileID: 7128645833064689519}
-  m_RootOrder: 2
+  m_Father: {fileID: 207891584778087820}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.9139, y: 259.90073}
+  m_AnchoredPosition: {x: -0.91350603, y: 259.90073}
   m_SizeDelta: {x: 622.6581, y: 330.8016}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6582119668442654015
@@ -23486,7 +23486,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 362a046f469901a43a974f4b3030aed5, type: 3}
+  m_Texture: {fileID: 2800000, guid: 81f9dccccb7b7984ead10f9cb83e2ad9, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -24023,7 +24023,7 @@ RectTransform:
   - {fileID: 3012697426272401006}
   - {fileID: 5726363555915913336}
   m_Father: {fileID: 7128645833064689519}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
