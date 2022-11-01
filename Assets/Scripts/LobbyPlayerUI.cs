@@ -68,9 +68,9 @@ public class LobbyPlayerUI : MonoBehaviour
         if (isOccupied)
         {
             if (isLocalPlayer)
-                player.name = player.name + " (You)";
-            
-            nameField.text = player.name;
+                nameField.text = player.name + " (You)";
+            else
+                nameField.text = player.name;
             nameField.interactable = isLocalPlayer;
 
             readyIcon.SetActive(player.ready);
