@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5021913186657828113}
   - component: {fileID: 2313382236090556414}
   - component: {fileID: 2288418122834696198}
+  - component: {fileID: 2500577517857211117}
   m_Layer: 0
   m_Name: ScrapYard
   m_TagString: Untagged
@@ -103,6 +104,7 @@ MonoBehaviour:
   syncInterval: 0.1
   owningPlayer: 9999
   data: {fileID: 11400000, guid: 113c51f550e77504797e14401d8501ee, type: 2}
+  queuedActions: []
 --- !u!136 &2313382236090556414
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -213,6 +215,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2500577517857211117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136793333329025796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9136793333984307471
 PrefabInstance:
   m_ObjectHideFlags: 0

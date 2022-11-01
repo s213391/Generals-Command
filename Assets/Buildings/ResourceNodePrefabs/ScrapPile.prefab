@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6599532215976200144}
   - component: {fileID: -8943085528889802071}
+  - component: {fileID: 8493381440797100554}
   m_Layer: 0
   m_Name: ScrapPile
   m_TagString: Untagged
@@ -46,6 +47,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
   - {fileID: 11400000, guid: 113c51f550e77504797e14401d8501ee, type: 2}
+  rendererCentre: {x: 0, y: 0, z: 0}
+--- !u!114 &8493381440797100554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6899626326704856870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8779650081772881250
 PrefabInstance:
   m_ObjectHideFlags: 0

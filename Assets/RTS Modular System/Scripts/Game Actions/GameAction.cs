@@ -336,6 +336,7 @@ namespace RTSModularSystem
                 
                 List<GameObject> objectsCreated = new List<GameObject>();
                 List<MouseTrackingObject> objectsFollowingMouse = new List<MouseTrackingObject>();
+                List<ObjectCreation> objectsToCreateAfterAction = new List<ObjectCreation>();
                 List<GameObject> objectsToBeDestroyed = new List<GameObject>();
                 List<GameObject> objectsToBeSpawned = new List<GameObject>();
                 List<SnapPoint> snapPoints = new List<SnapPoint>();
@@ -343,6 +344,12 @@ namespace RTSModularSystem
                 //instantiate all objects immediately
                 foreach (ObjectCreation oc in data.objectsToSpawn)
                 {
+                    if (oc.createAfterAction)
+                    { 
+                        objectsToCreateAfterAction.Add(oc);
+                        continue;
+                    }
+                    
                     //instantiate object in specified manner
                     GameObject prefab = null;
                     switch (oc.location)
@@ -419,7 +426,7 @@ namespace RTSModularSystem
                         objectsCreated.Add(prefab);
                         if (oc.destroyAfterAction)
                             objectsToBeDestroyed.Add(prefab);
-                        if (oc.spawnAfterAction)
+                        if (oc.serverSpawnAfterAction)
                             objectsToBeSpawned.Add(prefab);
                         if (!data.clientSide)
                         {
@@ -505,8 +512,8 @@ namespace RTSModularSystem
                             if (success && data.successConditions.Count > 0)
                                 success = EvaluateSuccess(data, playerObject, objectsCreated[0]);
 
-                            //for server actions, the last check for success is always resources, which will be changed now if they can be
-                            if (success && data.resourceChange.Count > 0)
+                            //for server actions, the last check for success is always resources, which will be changed now if they have not been already
+                            if (success && !data.changeResourcesAtStart && data.resourceChange.Count > 0)
                             {
                                 if (!data.clientSide)
                                     success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
@@ -522,6 +529,73 @@ namespace RTSModularSystem
                                 foreach (GameActionData action in data.nextActionsOnSuccess)
                                     StartAction(action, playerObject, owningPlayer);
 
+                                foreach (ObjectCreation oc in objectsToCreateAfterAction)
+                                {
+                                    //instantiate object in specified manner
+                                    GameObject prefab = null;
+                                    switch (oc.location)
+                                    {
+                                        case ObjectCreationLocation.atPoint:
+                                            Vector3 pos;
+                                            if (oc.worldPosition)
+                                                pos = oc.position;
+                                            else
+                                                pos = functionCaller.transform.position + functionCaller.transform.rotation * oc.position;
+
+                                            Quaternion rot;
+                                            if (oc.worldRotation)
+                                                rot = Quaternion.Euler(oc.rotation);
+                                            else
+                                                rot = functionCaller.transform.rotation * Quaternion.Euler(oc.rotation);
+
+                                            prefab = Instantiate(oc.prefab, pos, rot);
+                                            break;
+
+                                        //create object at mouse position and add to mouse tracking list for rest of action
+                                        //do not instantiate anything on the server unless a valid point is given from the client up front
+                                        case ObjectCreationLocation.atMouse:
+                                            Debug.LogError($"GameAction: {functionCaller.name} using action {data.name} cannot create mouse object at end of action");
+                                            break;
+
+                                        case ObjectCreationLocation.atObject:
+                                            Transform spawn = functionCaller.transform;
+                                            foreach (Transform child in spawn)
+                                            {
+                                                if (child.tag == "Spawnpoint")
+                                                {
+                                                    spawn = child;
+                                                    break;
+                                                }
+                                            }
+
+                                            prefab = Instantiate(oc.prefab, spawn.position, spawn.rotation);
+                                            break;
+                                    }
+                                    if (prefab != null)
+                                    {
+                                        objectsCreated.Add(prefab);
+                                        if (oc.destroyAfterAction)
+                                            objectsToBeDestroyed.Add(prefab);
+                                        if (oc.serverSpawnAfterAction)
+                                            objectsToBeSpawned.Add(prefab);
+                                        if (!data.clientSide)
+                                        {
+                                            //objects created serverside need to be created on all clients
+                                            NetworkServer.Spawn(prefab);
+                                            InitialiseNewPlayerObject(prefab, owningPlayer);
+                                        }
+                                        else
+                                        {
+                                            //add any clientside only objects to the preview layer
+                                            prefab.layer = LayerMask.NameToLayer("Preview");
+                                            foreach (Transform trans in prefab.GetComponentsInChildren<Transform>())
+                                            {
+                                                trans.gameObject.layer = LayerMask.NameToLayer("Preview");
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if (data.clientSide)
                                 {
                                     if (objectsToBeSpawned.Count > 0)
@@ -532,7 +606,7 @@ namespace RTSModularSystem
 
                                         for (int i = 0; i < objectsToBeSpawned.Count; i++)
                                         {
-                                            if (data.objectsToSpawn[i].spawnAfterAction)
+                                            if (data.objectsToSpawn[i].serverSpawnAfterAction)
                                             {
                                                 indices.Add(i);
                                                 positions.Add(objectsToBeSpawned[i].transform.position);

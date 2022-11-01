@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4514206838945434814}
   - component: {fileID: -3432800164948357517}
   - component: {fileID: 9020023925972913788}
+  - component: {fileID: 1786207611809105458}
   m_Layer: 0
   m_Name: Heavy Tank
   m_TagString: Untagged
@@ -165,6 +166,7 @@ MonoBehaviour:
   syncInterval: 0.1
   owningPlayer: 9999
   data: {fileID: 11400000, guid: d709491b194e7b84ca03849f6877a9b6, type: 2}
+  queuedActions: []
 --- !u!136 &52266298219725070
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -333,6 +335,18 @@ MonoBehaviour:
   movementEndParticles: []
   movementOngoingSounds: {fileID: 0}
   movementOngoingParticles: []
+--- !u!114 &1786207611809105458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620937673621846186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8649071264243464205
 PrefabInstance:
   m_ObjectHideFlags: 0

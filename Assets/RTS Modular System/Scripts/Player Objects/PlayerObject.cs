@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using DS_BasicCombat;
 using DS_Selection;
+using DS_Resources;
 
 namespace RTSModularSystem
 {
@@ -265,14 +266,19 @@ namespace RTSModularSystem
         //either performs the action at the given index immediately or adds it to the queue to be performed in turn
         public void StartAction(int index)
         {
-            if (data.actions[index].action.queueAction)
+            GameActionData actionData = data.actions[index].action;
+
+            if (actionData.changeResourcesAtStart && actionData.resourceChange.Count > 0)
+                RTSPlayer.ApplyCost(actionData.resourceChange, owningPlayer);
+
+            if (actionData.queueAction)
             {
-                queuedActions.Add(data.actions[index].action);
+                queuedActions.Add(actionData);
                 if (queuedActions.Count > 1)
                     return;
             }
 
-            RTSPlayer.StartAction(data.actions[index].action, this);
+            RTSPlayer.StartAction(actionData, this);
         }
 
 

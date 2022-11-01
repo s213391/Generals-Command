@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7490071961463627413}
   - component: {fileID: 1890647689142859608}
   - component: {fileID: 2364811035325341218}
+  - component: {fileID: -8091648680028973239}
   m_Layer: 0
   m_Name: AntiTank Infantry
   m_TagString: Untagged
@@ -165,6 +166,7 @@ MonoBehaviour:
   syncInterval: 0.1
   owningPlayer: 9999
   data: {fileID: 11400000, guid: 896e7b070e1f5d24c9c5706047a505f6, type: 2}
+  queuedActions: []
 --- !u!136 &1988858159977405058
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -333,6 +335,18 @@ MonoBehaviour:
   movementEndParticles: []
   movementOngoingSounds: {fileID: 0}
   movementOngoingParticles: []
+--- !u!114 &-8091648680028973239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352760121285526402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6624785589246367394
 PrefabInstance:
   m_ObjectHideFlags: 0

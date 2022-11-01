@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6773589982294644435}
   - component: {fileID: 6514839469120016064}
   - component: {fileID: 7146260345166761794}
+  - component: {fileID: 1523169136977869459}
   m_Layer: 0
   m_Name: Light Tank
   m_TagString: Untagged
@@ -165,6 +166,7 @@ MonoBehaviour:
   syncInterval: 0.1
   owningPlayer: 9999
   data: {fileID: 11400000, guid: 7123480f9580b0645b40917bce373ab5, type: 2}
+  queuedActions: []
 --- !u!136 &3420221898706957987
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -333,6 +335,18 @@ MonoBehaviour:
   movementEndParticles: []
   movementOngoingSounds: {fileID: 0}
   movementOngoingParticles: []
+--- !u!114 &1523169136977869459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621937889023251508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4966516010992784724
 PrefabInstance:
   m_ObjectHideFlags: 0

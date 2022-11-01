@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 406728059243865924}
   - component: {fileID: 2732880421661252409}
   - component: {fileID: 3980235498467550895}
+  - component: {fileID: 6170967188875785091}
   m_Layer: 0
   m_Name: Oil Collection
   m_TagString: Untagged
@@ -103,6 +104,7 @@ MonoBehaviour:
   syncInterval: 0.1
   owningPlayer: 9999
   data: {fileID: 11400000, guid: 3f52bb2a8cf43d3438c6353e7e9a7557, type: 2}
+  queuedActions: []
 --- !u!136 &2732880421661252409
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -213,6 +215,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6170967188875785091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2944867985040915856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1231318396666207433
 PrefabInstance:
   m_ObjectHideFlags: 0

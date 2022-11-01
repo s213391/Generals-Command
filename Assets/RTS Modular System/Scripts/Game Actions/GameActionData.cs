@@ -30,6 +30,8 @@ namespace RTSModularSystem
         [Header("Action Effects")]
         [Tooltip("GameObjects that will be spawned at the start of this action")]
         public List<ObjectCreation> objectsToSpawn;
+        [Tooltip("When true, resource change will occur when the action is requested, else will occur when the action ends. \nRecommended for queued actions.")]
+        public bool changeResourcesAtStart;
         [Tooltip("Any changes to player resources this action causes. \nPositive quantities for production or bonuses, Negative quantities for costs")]
         public List<ResourceQuantity> resourceChange;
         [Tooltip("Any changes to player resource income this action causes. \nPositive quantities for income or production, Negative quantities for upkeep")]

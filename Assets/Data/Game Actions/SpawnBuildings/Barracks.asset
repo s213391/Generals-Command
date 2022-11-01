@@ -17,6 +17,7 @@ MonoBehaviour:
   lockInput: 0
   lockCamera: 0
   showOnActionBar: 1
+  queueAction: 0
   icon: {fileID: 21300000, guid: 7f9ff499d429487449ef31f25abb740a, type: 3}
   interruptionTolerance: 1
   objectsToSpawn:
@@ -31,8 +32,10 @@ MonoBehaviour:
       m_Bits: 128
     snapToObject: 0
     snapDistance: 0
+    createAfterAction: 0
     destroyAfterAction: 1
-    spawnAfterAction: 1
+    serverSpawnAfterAction: 1
+  changeResourcesAtStart: 0
   resourceChange:
   - resourceType: 0
     quantity: -250
@@ -86,6 +89,9 @@ MonoBehaviour:
     maximumHeightAllowed: 0.1
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onActionStart:
+    m_PersistentCalls:
+      m_Calls: []
   onConditionEvaluate:
     m_PersistentCalls:
       m_Calls:

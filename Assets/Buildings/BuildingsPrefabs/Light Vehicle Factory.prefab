@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 865472020559758802}
   - component: {fileID: 2036745296996532413}
   - component: {fileID: 5139749516359940198}
+  - component: {fileID: 1178244632500445964}
   m_Layer: 0
   m_Name: Light Vehicle Factory
   m_TagString: Untagged
@@ -215,6 +216,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1178244632500445964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505693401245802175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4893099491377304422
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -106,10 +106,12 @@ namespace RTSModularSystem
         public bool snapToObject;
         [ConditionalHide("snapToObject", "true")] [Tooltip("The distance at which this object will check for nearby objects to snap to")]
         public float snapDistance;
+        [Tooltip("Whether this object will be created on the client at the start of the action, or the end of it")]
+        public bool createAfterAction;
         [Tooltip("Whether this object will be destroyed when this action ends. \nUseful for clientside visual effects such as building placement")]
         public bool destroyAfterAction;
         [Tooltip("Only useful if run on a clientside action. Whether this object will be spawned on the server at its current position when this action ends successfully.")]
-        public bool spawnAfterAction;
+        public bool serverSpawnAfterAction;
     }
 
 

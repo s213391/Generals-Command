@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9153682034840812136}
   - component: {fileID: 344648071154657338}
   - component: {fileID: -5187166316659797797}
+  - component: {fileID: 8471104839100818243}
   m_Layer: 0
   m_Name: Uranium Collection
   m_TagString: Untagged
@@ -104,6 +105,7 @@ MonoBehaviour:
   syncInterval: 0.1
   owningPlayer: 9999
   data: {fileID: 11400000, guid: 0c017c7b9dd070147b9df617ef619116, type: 2}
+  queuedActions: []
 --- !u!136 &9153682034840812136
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -224,11 +226,24 @@ Animation:
   m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 1827226128182048838, guid: 828a30910cc0f3748aeb4da94687f3ff, type: 3}
-  m_Animations: []
+  m_Animations:
+  - {fileID: 1827226128182048838, guid: 828a30910cc0f3748aeb4da94687f3ff, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &8471104839100818243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456422188585449799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &716898823534084019
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -171,6 +171,16 @@ namespace RTSModularSystem
         }
 
 
+        //TODO
+        public static void ApplyCost(List<ResourceQuantity> cost, uint requestedID, uint requesterID = 0)
+        {
+            if (requesterID == 0)
+                requesterID = GetID();
+
+            ResourceManager.instance.OneOffResourceChange(requestedID, requesterID, cost);
+        }
+
+
         //returns whether this object belongs to the local player
         public static bool Owns(PlayerObject po)
         {

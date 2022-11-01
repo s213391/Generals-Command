@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5043973647985506807}
   - component: {fileID: 9155939383856098958}
   - component: {fileID: 757499853067077952}
+  - component: {fileID: -6062373027238789155}
   m_Layer: 0
   m_Name: Supply Center
   m_TagString: Untagged
@@ -103,6 +104,7 @@ MonoBehaviour:
   syncInterval: 0.1
   owningPlayer: 9999
   data: {fileID: 11400000, guid: a4da8bfc7dce87f48ab90618a1a06a4c, type: 2}
+  queuedActions: []
 --- !u!136 &9155939383856098958
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -213,6 +215,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6062373027238789155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904034498900065490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8904034496784518782
 PrefabInstance:
   m_ObjectHideFlags: 0
