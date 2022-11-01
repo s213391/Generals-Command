@@ -1,21 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!208 &1547128404458484763
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3496504753849773335}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.82400006, y: 1.1340001, z: 0.62200004}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -0.094000004, y: -0.009000001, z: 0.395}
-  m_TimeToStationary: 0.5
 --- !u!1 &4653794823522779820
 GameObject:
   m_ObjectHideFlags: 0
@@ -25,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7900730979769933556}
+  - component: {fileID: -30124151472193479}
   m_Layer: 0
   m_Name: Statue-Top 1
   m_TagString: Untagged
@@ -47,6 +32,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-30124151472193479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4653794823522779820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4343578206232842310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,11 +109,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fa9becee2bc25540bedcdab04682822, type: 3}
---- !u!1 &3496504753849773335 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3fa9becee2bc25540bedcdab04682822, type: 3}
-  m_PrefabInstance: {fileID: 4343578206232842310}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4309316064377730989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3fa9becee2bc25540bedcdab04682822, type: 3}
