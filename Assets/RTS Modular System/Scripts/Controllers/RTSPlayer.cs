@@ -177,6 +177,12 @@ namespace RTSModularSystem
             if (requesterID == 0)
                 requesterID = GetID();
 
+            localPlayer.CmdApplyCost(cost, requestedID, requesterID);
+        }
+
+        [Command]
+        private void CmdApplyCost(List<ResourceQuantity> cost, uint requestedID, uint requesterID)
+        {
             ResourceManager.instance.OneOffResourceChange(requestedID, requesterID, cost);
         }
 
