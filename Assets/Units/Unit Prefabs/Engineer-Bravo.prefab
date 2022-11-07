@@ -262,6 +262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3f4f4b1ba749942b5660b3b90a386e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   animators:
   - {fileID: 8270287668209757478}
   damageSounds: []
@@ -283,6 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1dffa848579013489685ea93eb2c911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   animators:
   - {fileID: 8270287668209757478}
   movementBeginSounds: []
@@ -390,6 +394,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierDeath
       objectReference: {fileID: 0}
+    - target: {fileID: 1684488725729502, guid: c44c4c982666c8441b67519e57f8c1dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4282359552302604, guid: c44c4c982666c8441b67519e57f8c1dd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -484,6 +492,10 @@ PrefabInstance:
     - target: {fileID: 1382888447127858, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
       propertyPath: m_Name
       value: movementSmoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382888447127858, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4290283023539298, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
       propertyPath: m_RootOrder

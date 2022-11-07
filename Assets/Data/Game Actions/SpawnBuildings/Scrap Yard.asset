@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
   m_Name: Scrap Yard
   m_EditorClassIdentifier: 
+  description: 
   cooldown: 0
   clientSide: 1
   lockInput: 0
@@ -32,6 +33,7 @@ MonoBehaviour:
       m_Bits: 128
     snapToObject: 1
     snapDistance: 25
+    onlyMoveWhenUnderCursor: 1
     createAfterAction: 0
     destroyAfterAction: 1
     serverSpawnAfterAction: 1

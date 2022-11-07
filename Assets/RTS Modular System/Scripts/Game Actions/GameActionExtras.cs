@@ -107,7 +107,7 @@ namespace RTSModularSystem
         public bool snapToObject;
         [ConditionalHide("snapToObject", "true")] [Tooltip("The distance at which this object will check for nearby objects to snap to")]
         public float snapDistance;
-        [ConditionalHide("snapToObject", "true"), Tooltip("Only move the spawned object when the cursor is over it, else fix the object relative to the camera")]
+        [ConditionalHide("location", "atMouse"), Tooltip("Only move the spawned object when the cursor is over it, else fix the object relative to the camera")]
         public bool onlyMoveWhenUnderCursor;
         [Tooltip("Whether this object will be created on the client at the start of the action, or the end of it")]
         public bool createAfterAction;
