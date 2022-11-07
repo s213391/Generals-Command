@@ -508,18 +508,36 @@ namespace RTSModularSystem
 
                         //get the mouse's position and update any objects following it
                         //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
-                        if (data.clientSide && !firstTime && PlayerInput.instance.externalInputEnabled && objectsFollowingMouse.Count > 0)
+                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0)
                         {
                             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                             //not every object will have the same LayerMask, so the raycast will need to be done for each
                             foreach (MouseTrackingObject mto in objectsFollowingMouse)
                             {
+                                if (mto.onlyMoveWhenUnderCursor)
+                                {
+                                    RaycastHit objectHit;
+                                    Physics.Raycast(ray, out objectHit, 250.0f, LayerMask.NameToLayer("Preview"));
+                                    if (objectHit.collider == null || objectHit.collider.gameObject != mto.obj)
+                                    {
+                                        CameraController.instance.ToggleCameraInputs(true);
+                                        mto.obj.transform.SetParent(Camera.main.transform);
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        CameraController.instance.ToggleCameraInputs(false);
+                                        mto.obj.transform.SetParent(null);
+                                    }
+                                }
+
                                 RaycastHit hit;
                                 Physics.Raycast(ray, out hit, 250.0f, mto.layerMask);
 
                                 //reset rotation every frame
                                 mto.obj.transform.rotation = Quaternion.identity;
+
 
                                 if (hit.collider != null)
                                 {

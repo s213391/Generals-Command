@@ -38,7 +38,6 @@ namespace RTSModularSystem
         public bool singleSelectionEnabled { get; private set; }
         public bool dragSelectionEnabled { get; private set; }
         public bool movementEnabled { get; private set; }
-        public bool externalInputEnabled { get; private set; }
 
         public Vector3 screenPointWorldSpace { get; private set; }
         public PlayerObject objectUnderScreenPoint { get; private set; }
@@ -84,7 +83,6 @@ namespace RTSModularSystem
             if (device == DeviceType.Desktop || (device == DeviceType.Handheld && Input.touchCount == 1))
             {
                 CheckUnderScreenPoint();
-                ValidateCursorInput();
                 HandleSelectionInputs();
                 HandleMovementInputs();
             }
@@ -142,22 +140,6 @@ namespace RTSModularSystem
                 objectUnderScreenPoint = objectHit.collider.GetComponentInParent<PlayerObject>();
             else
                 objectUnderScreenPoint = null;
-        }
-
-
-        //checks what is under the cursor and handles inputs accordingly
-        private void ValidateCursorInput()
-        {
-            if (objectUnderScreenPoint.gameObject.layer == LayerMask.NameToLayer("Preview"))
-            {
-                CameraController.instance.ToggleCameraInputs(false);
-                externalInputEnabled = true;
-            }
-            else
-            {
-                CameraController.instance.ToggleCameraInputs(true);
-                externalInputEnabled = false;
-            }
         }
 
 
