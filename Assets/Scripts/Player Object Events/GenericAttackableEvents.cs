@@ -1,5 +1,6 @@
 using UnityEngine;
 using RTSModularSystem;
+using Mirror;
 
 public class GenericAttackableEvents : AttackableEvents
 {
@@ -12,6 +13,13 @@ public class GenericAttackableEvents : AttackableEvents
 
 
     public override void OnDamage(int newHealth, int oldHealth)
+    {
+        RpcOnDamage(newHealth, oldHealth);
+    }
+
+
+    [ClientRpc]
+    public void RpcOnDamage(int newHealth, int oldHealth)
     {
         PlayOneShotAudio(_audioSource, damageSounds);
         StartParticleEffect(damageParticles);
@@ -26,11 +34,17 @@ public class GenericAttackableEvents : AttackableEvents
 
     public override void OnDeath()
     {
+        RpcOnDeath();
+    }
+
+
+    [ClientRpc]
+    public void RpcOnDeath()
+    {
         PlayOneShotAudio(_audioSource, deathSounds);
         StartParticleEffect(deathParticles);
 
-        if (GameData.instance.isHost)
-            SetAnimationTrigger(animators, "Death");
+        SetAnimationTrigger(animators, "Death");
 
         GetComponent<PlayerObject>().DestroyPlayerObject();
     }

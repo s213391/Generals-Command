@@ -1,4 +1,5 @@
 using UnityEngine;
+using Mirror;
 
 public class GenericMovableEvents : MovableEvents
 {
@@ -12,23 +13,36 @@ public class GenericMovableEvents : MovableEvents
 
     public override void OnMovementBegin()
     {
+        RpcOnMovementBegin();
+    }
+
+
+    [ClientRpc]
+    public void RpcOnMovementBegin()
+    {
         PlayOneShotAudio(_audioSource, movementBeginSounds);
         PlayLoopingSound(_audioSource, movementOngoingSounds);
         StartParticleEffect(movementBeginParticles);
         StartParticleEffect(movementOngoingParticles);
 
-        if (GameData.instance.isHost)
-            SetAnimationBool(animators, "IsMoving", true);
+        SetAnimationBool(animators, "IsMoving", true);
     }
 
 
     public override void OnMovementEnd()
     {
+        if (GameData.instance.isHost)
+            RpcOnMovementEnd();
+    }
+
+
+    [ClientRpc]
+    public void RpcOnMovementEnd()
+    {
         StopLoopingSound(_audioSource);
         SetAnimationBool(animators, "IsMoving", false);
         StopParticleEffect(movementOngoingParticles);
 
-        if (GameData.instance.isHost)
-            SetAnimationBool(animators, "IsMoving", false);
+        SetAnimationBool(animators, "IsMoving", false);
     }
 }
