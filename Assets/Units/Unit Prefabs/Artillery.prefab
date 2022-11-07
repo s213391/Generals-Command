@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 853211506148464915}
   - component: {fileID: 7872557447505326881}
   - component: {fileID: 9074188381485805286}
+  - component: {fileID: 1588526207892554957}
   - component: {fileID: 4554953354905879313}
   m_Layer: 0
   m_Name: Artillery
@@ -191,7 +192,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -289,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animators:
-  - {fileID: 0}
+  - {fileID: 4333301137155946829}
   damageSounds: []
   damageParticles: []
   healSounds: []
@@ -309,11 +310,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animators:
-  - {fileID: 0}
+  - {fileID: 4333301137155946829}
   attackSounds: []
   attackParticles: []
   killSounds: []
   killParticles: []
+--- !u!114 &1588526207892554957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978581094077902860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1dffa848579013489685ea93eb2c911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 4333301137155946829}
+  movementBeginSounds: []
+  movementBeginParticles: []
+  movementEndSounds: []
+  movementEndParticles: []
+  movementOngoingSounds: {fileID: 0}
+  movementOngoingParticles: []
 --- !u!114 &4554953354905879313
 MonoBehaviour:
   m_ObjectHideFlags: 0

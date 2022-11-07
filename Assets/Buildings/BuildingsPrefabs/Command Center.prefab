@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 7673960522417029272}
   - component: {fileID: 8824255175272344473}
   - component: {fileID: 1287279899953743038}
+  - component: {fileID: 9156423007430148016}
   m_Layer: 0
   m_Name: Command Center
   m_TagString: Untagged
@@ -331,6 +332,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9156423007430148016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852773982916845588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e27fc904c815da4abbdfca69682f0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators: []
+  damageSounds: []
+  damageParticles: []
+  healSounds: []
+  healParticles: []
+  deathSounds: []
+  deathParticles: []
 --- !u!1001 &1454370830870896437
 PrefabInstance:
   m_ObjectHideFlags: 0

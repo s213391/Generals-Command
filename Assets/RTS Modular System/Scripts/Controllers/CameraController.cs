@@ -102,14 +102,21 @@ namespace RTSModularSystem
             }
             
             currentDistance = defaultDistance;
-            transform.eulerAngles = new Vector3(xAngle, 0.0f, 0.0f);
             canMoveTarget = true;
 
             //set target's initial position based on host status
             if (isHost)
+            {
                 target.transform.position = ObjectDataManager.HostPosition();
+                target.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+                transform.rotation = Quaternion.Euler(xAngle, 180.0f, 0.0f);
+            }
             else
+            {
                 target.transform.position = ObjectDataManager.ClientPosition();
+                target.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+                transform.rotation = Quaternion.Euler(xAngle, 0.0f, 0.0f);
+            }
 
             //prevent camera moving in opposite direction
             if (moveWithMouse && (xSafeZone >= xReadZone || ySafeZone >= yReadZone))
@@ -237,11 +244,13 @@ namespace RTSModularSystem
                     dz *= -1;
 
                 Transform targetTrans = target.transform;
+                Quaternion cameraRotation = Quaternion.AngleAxis(targetTrans.eulerAngles.y, Vector3.up);
+                Vector3 movementVector = new Vector3(dx, 0.0f, dz) * movementSpeed;
 
                 if (speedUpOnZoomOut > 0)
-                    targetTrans.position += new Vector3(dx, 0.0f, dz) * movementSpeed * Time.deltaTime * currentDistance * speedUpOnZoomOut;
+                    targetTrans.position += cameraRotation * movementVector * (Time.deltaTime * currentDistance * speedUpOnZoomOut);
                 else
-                    targetTrans.position += new Vector3(dx, 0.0f, dz) * movementSpeed * Time.deltaTime;
+                    targetTrans.position += cameraRotation * movementVector * Time.deltaTime;
 
                 //keep within bounds
                 if (keepCameraWithinBoundaries)

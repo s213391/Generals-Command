@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2209935658387833279}
   - component: {fileID: 8302839232731869931}
   - component: {fileID: 115957731338257521}
+  - component: {fileID: 4970050454423757294}
   m_Layer: 0
   m_Name: Barracks
   m_TagString: Untagged
@@ -228,6 +229,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4970050454423757294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2172653949634308172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3f4f4b1ba749942b5660b3b90a386e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators: []
+  damageSounds: []
+  damageParticles: []
+  healSounds: []
+  healParticles: []
+  deathSounds: []
+  deathParticles: []
 --- !u!1001 &414034375579525023
 PrefabInstance:
   m_ObjectHideFlags: 0
