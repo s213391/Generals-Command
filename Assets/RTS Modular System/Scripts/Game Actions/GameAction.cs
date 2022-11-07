@@ -10,6 +10,8 @@ namespace RTSModularSystem
     //attached to the player prefab, handles all the actions performed by buildings, units and the player
     public class GameAction : NetworkBehaviour
     {
+        List<ActionTrigger> triggers = new List<ActionTrigger>();
+        
         //check if action can be started, then start it
         public void StartAction(GameActionData actionData, PlayerObject functionCaller, uint owningPlayer)
         {
@@ -139,8 +141,27 @@ namespace RTSModularSystem
         }
 
 
+        //sets a trigger to true if it exists in the list
+        public void SetTrigger(PlayerObject po, GameActionData data)
+        {
+            if (po == null || data == null)
+                return;
+
+            for (int i = 0; i < triggers.Count; i++)
+            {
+                if (triggers[i].objectPerformingAction == po && triggers[i].actionBeingPerformed == data)
+                {
+                    ActionTrigger newTrigger = triggers[i];
+                    newTrigger.triggered = true;
+                    triggers[i] = newTrigger;
+                    return;
+                }
+            }
+        }
+
+
         //returns the first end condition that is active this frame, defaults to none condition
-        private ActionEnd EndConditionActive(List<ActionEnd> endConditions, float duration)
+        private ActionEnd EndConditionActive(List<ActionEnd> endConditions, float duration, PlayerObject functionCaller, GameActionData data)
         {
             foreach (ActionEnd ae in endConditions)
             {
@@ -172,6 +193,22 @@ namespace RTSModularSystem
                     case ActionEndType.duration:
                         if (duration >= ae.seconds)
                             return ae;
+                        break;
+
+                    case ActionEndType.trigger:
+                        foreach (ActionTrigger trigger in triggers)
+                        {
+                            if (trigger.objectPerformingAction == functionCaller && trigger.actionBeingPerformed == data)
+                            {
+                                if (trigger.triggered)
+                                {
+                                    triggers.Remove(trigger);
+                                    return ae;
+                                }
+                                else
+                                    break;
+                            }
+                        }
                         break;
                 }
             }
@@ -310,6 +347,16 @@ namespace RTSModularSystem
             bool previousDragSelectionState = PlayerInput.instance.dragSelectionEnabled;
             bool previousSingleSelectionState = PlayerInput.instance.singleSelectionEnabled;
             bool previousMovementState = PlayerInput.instance.movementEnabled;
+
+            //set up a trigger if needed
+            foreach (ActionEnd ae in data.endConditions)
+            {
+                if (ae.type == ActionEndType.trigger)
+                {
+                    triggers.Add(new ActionTrigger { objectPerformingAction = playerObject, actionBeingPerformed = data, triggered = false });
+                    break;
+                }
+            }
 
             //prevent camera movement and selection during this action
             if (data.lockCamera)
@@ -461,7 +508,7 @@ namespace RTSModularSystem
 
                         //get the mouse's position and update any objects following it
                         //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
-                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0)
+                        if (data.clientSide && !firstTime && PlayerInput.instance.externalInputEnabled && objectsFollowingMouse.Count > 0)
                         {
                             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -503,7 +550,7 @@ namespace RTSModularSystem
                             }
                         }
 
-                        ActionEnd actionEnd = EndConditionActive(data.endConditions, duration);
+                        ActionEnd actionEnd = EndConditionActive(data.endConditions, duration, playerObject, data);
                         if (actionEnd.type != ActionEndType.none)
                         {
                             //evaluate conditions to choose whether this action will end as a success or a failure

@@ -1,20 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using RTSModularSystem;
 
 public class BuildMode : MonoBehaviour
 {
-    public void BuildingPreview(Vector3 screenPointWorldSpace, PlayerObject objectUnderScreenPoint)
+    public Button confirmButton;
+    public Button cancelButton;
+
+    
+    public void StartBuildMode(PlayerObject po, GameActionData data)
     {
-        //if touching the building, disable camera input, otherwise move the camera and have the building follow it
-        if (objectUnderScreenPoint?.gameObject.layer == LayerMask.NameToLayer("Preview"))
-        {
-            CameraController.instance.ToggleCameraInputs(false);
-        }
-        else
-        {
-            CameraController.instance.ToggleCameraInputs(true);
-        }
+        confirmButton.onClick.AddListener(delegate { RTSPlayer.localPlayer.SetTrigger(po, data); });
+        PlayerInput.instance.ToggleMovementInputs(false);
+    }
+
+
+    public void EndBuildMode()
+    {
+        confirmButton.onClick.RemoveAllListeners();
+        PlayerInput.instance.ToggleMovementInputs(true);
     }
 }

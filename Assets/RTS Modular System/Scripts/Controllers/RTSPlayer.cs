@@ -200,5 +200,11 @@ namespace RTSModularSystem
         {
             unitArrangement.MoveUnit(unit, destination);
         }
+
+
+        public void SetTrigger(PlayerObject po, GameActionData data)
+        {
+            gameAction.SetTrigger(po, data);
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace RTSModularSystem
         enter,
         immediate,
         duration,
+        trigger,
         none //does not end
     }
 
@@ -152,5 +153,14 @@ namespace RTSModularSystem
     {
         public GameActionData action;
         public bool autoStart;
+    }
+
+
+    //holds reference to a trigger that can be used to end an action
+    public struct ActionTrigger
+    {
+        public PlayerObject objectPerformingAction;
+        public GameActionData actionBeingPerformed;
+        public bool triggered;
     }
 }
