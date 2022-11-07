@@ -142,7 +142,7 @@ namespace RTSModularSystem
 
 
         //sets a trigger to true if it exists in the list
-        public void SetTrigger(PlayerObject po, GameActionData data)
+        public void SetTrigger(PlayerObject po, GameActionData data, bool successful)
         {
             if (po == null || data == null)
                 return;
@@ -152,6 +152,7 @@ namespace RTSModularSystem
                 if (triggers[i].objectPerformingAction == po && triggers[i].actionBeingPerformed == data)
                 {
                     ActionTrigger newTrigger = triggers[i];
+                    newTrigger.successful = successful;
                     newTrigger.triggered = true;
                     triggers[i] = newTrigger;
                     return;
@@ -196,14 +197,16 @@ namespace RTSModularSystem
                         break;
 
                     case ActionEndType.trigger:
-                        foreach (ActionTrigger trigger in triggers)
+                        for (int i = 0; i < triggers.Count; i++)
                         {
-                            if (trigger.objectPerformingAction == functionCaller && trigger.actionBeingPerformed == data)
+                            if (triggers[i].objectPerformingAction == functionCaller && triggers[i].actionBeingPerformed == data)
                             {
-                                if (trigger.triggered)
+                                if (triggers[i].triggered)
                                 {
-                                    triggers.Remove(trigger);
-                                    return ae;
+                                    ActionEnd temp = ae;
+                                    temp.successfulEnd = triggers[i].successful;
+                                    triggers.RemoveAt(i);
+                                    return temp;
                                 }
                                 else
                                     break;

@@ -10,6 +10,8 @@ namespace RTSModularSystem
     public class GameActionData : ScriptableObject
     {
         [Header("Settings")]
+        [Multiline(3)]
+        public string description;
         [Tooltip("The time after the end of the action that this action can not be reused")]
         public float cooldown;
         [Tooltip("If this action is run on the client, or on the server. \nAny action that affects resources can only be run on the server")]

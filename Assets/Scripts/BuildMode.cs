@@ -12,7 +12,7 @@ public class BuildMode : MonoBehaviour
     
     public void StartBuildMode(PlayerObject po, GameActionData data)
     {
-        confirmButton.onClick.AddListener(delegate { RTSPlayer.localPlayer.SetTrigger(po, data); });
+        confirmButton.onClick.AddListener(delegate { RTSPlayer.localPlayer.SetTrigger(po, data, true); });
         PlayerInput.instance.ToggleMovementInputs(false);
     }
 

@@ -202,9 +202,9 @@ namespace RTSModularSystem
         }
 
 
-        public void SetTrigger(PlayerObject po, GameActionData data)
+        public void SetTrigger(PlayerObject po, GameActionData data, bool successful)
         {
-            gameAction.SetTrigger(po, data);
+            gameAction.SetTrigger(po, data, successful);
         }
     }
 }

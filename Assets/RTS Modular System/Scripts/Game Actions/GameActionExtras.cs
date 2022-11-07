@@ -164,6 +164,7 @@ namespace RTSModularSystem
     {
         public PlayerObject objectPerformingAction;
         public GameActionData actionBeingPerformed;
+        public bool successful;
         public bool triggered;
     }
 }
