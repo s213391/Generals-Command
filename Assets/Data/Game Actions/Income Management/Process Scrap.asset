@@ -17,13 +17,15 @@ MonoBehaviour:
   lockInput: 0
   lockCamera: 0
   showOnActionBar: 0
+  queueAction: 0
   icon: {fileID: 0}
   interruptionTolerance: 1
   objectsToSpawn: []
+  changeResourcesAtStart: 0
   resourceChange: []
   incomeChange:
   - resourceType: 1
-    quantity: 25
+    quantity: 20
   loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
@@ -32,6 +34,9 @@ MonoBehaviour:
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onActionStart:
+    m_PersistentCalls:
+      m_Calls: []
   onConditionEvaluate:
     m_PersistentCalls:
       m_Calls: []
