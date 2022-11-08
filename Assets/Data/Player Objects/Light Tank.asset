@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHealth: 300
   resistances:
   - damageType: 0
-    percentageResistance: 85
+    percentageResistance: 50
   - damageType: 1
     percentageResistance: 50
   - damageType: 2
@@ -43,7 +43,7 @@ MonoBehaviour:
   xpRequirement: -1
   moveable: 1
   moveSpeed: 30
-  acceleration: 8
+  acceleration: 30
   angularSpeed: 120
   agentHeight: 2
   agentWidth: 0.5
