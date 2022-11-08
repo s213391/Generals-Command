@@ -76,8 +76,6 @@ namespace RTSModularSystem
         public bool passThroughOtherAgents = true;
 
         [Header("Required Settings")]
-        [Tooltip("A brief summary of what this object is and what it does")]
-        public string description;
         [Tooltip("The maximum amount of this object allowed to exist at once, per team. -1 for infinite")]
         public int unitCap = -1; 
         [Tooltip("The range in metres that this unit can see around itself at different heights. \nEach vector is read as (horizontal range, vertical offset from ground) \nUsed to allow different vision over areas of the map that are lower or higher than this object")]

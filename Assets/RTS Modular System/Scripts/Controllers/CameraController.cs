@@ -110,6 +110,7 @@ namespace RTSModularSystem
                 target.transform.position = ObjectDataManager.HostPosition();
                 target.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
                 transform.rotation = Quaternion.Euler(xAngle, 180.0f, 0.0f);
+
             }
             else
             {

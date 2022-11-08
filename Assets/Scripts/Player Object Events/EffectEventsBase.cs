@@ -45,7 +45,7 @@ public abstract class EffectEventsBase : NetworkBehaviour
         if (!audioSource)
             return;
 
-        if (audioSource.isPlaying)
+        if (audioSource.clip != null && audioSource.isPlaying)
             audioSource.Stop();
     }
 

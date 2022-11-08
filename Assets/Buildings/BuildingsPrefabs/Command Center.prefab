@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  secondsBetweenTargetChecks: 1
+  secondsBetweenTargetChecks: 0.33
   friendlyObjectLayers:
     serializedVersion: 2
     m_Bits: 8388608
@@ -344,6 +344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e27fc904c815da4abbdfca69682f0aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   animators: []
   damageSounds: []
   damageParticles: []

@@ -454,7 +454,7 @@ namespace RTSModularSystem
                             }
 
                             if (prefab != null && data.clientSide)
-                                objectsFollowingMouse.Add(new MouseTrackingObject { obj = prefab, layerMask = oc.mouseLayerMask, snapping = oc.snapToObject, snapDistance = oc.snapDistance });
+                                objectsFollowingMouse.Add(new MouseTrackingObject { obj = prefab, layerMask = oc.mouseLayerMask, snapping = oc.snapToObject, snapDistance = oc.snapDistance, onlyMoveWhenUnderCursor = oc.onlyMoveWhenUnderCursor });
                             break;
 
                         case ObjectCreationLocation.atObject:
@@ -521,11 +521,15 @@ namespace RTSModularSystem
                                 if (mto.onlyMoveWhenUnderCursor)
                                 {
                                     RaycastHit objectHit;
-                                    Physics.Raycast(ray, out objectHit, 250.0f, LayerMask.NameToLayer("Preview"));
+                                    Physics.Raycast(ray, out objectHit, 250.0f, LayerMask.GetMask("Preview"));
                                     if (objectHit.collider == null || objectHit.collider.gameObject != mto.obj)
                                     {
                                         CameraController.instance.ToggleCameraInputs(true);
                                         mto.obj.transform.SetParent(Camera.main.transform);
+                                        RaycastHit terrainHit;
+                                        Physics.Raycast(mto.obj.transform.position + 50.0f * Vector3.up, Vector3.down, out terrainHit, 100.0f, PlayerInput.instance.terrainLayers);
+                                        if (terrainHit.collider != null)
+                                            mto.obj.transform.position = terrainHit.point;
                                         continue;
                                     }
                                     else

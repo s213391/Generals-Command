@@ -13,8 +13,7 @@ public class HUD : MonoBehaviour
     [Header("Groups Menu")]
     public GameObject groupsMenuExpanded;
     public GameObject groupsMenuMinimised;
-    public GameObject addToGroupMenuExpanded;
-    public GameObject addToGroupMenuMinimised;
+    public GameObject addToGroupMenu;
     [Header("Selection Box")]
     public GameObject selectionToggleExpanded;
     public GameObject selectionToggleMinimised;
@@ -43,10 +42,9 @@ public class HUD : MonoBehaviour
     {
         ToggleMinimap(false);
         ToggleGroupsMenu(false);
-        ToggleSelectedMenu(false);
         ToggleSelection(false);
         ToggleInGameMenu(false);
-        //ToggleAddToGroupMenu(false);
+        ToggleAddToGroupMenu(false);
         ToggleOptionsMenu(false);
     }
 
@@ -107,8 +105,7 @@ public class HUD : MonoBehaviour
     //opens/closes the add-to-group sub menu of the selection menu
     public void ToggleAddToGroupMenu(bool open)
     {
-        addToGroupMenuExpanded.SetActive(open);
-        addToGroupMenuMinimised.SetActive(!open);
+        addToGroupMenu.SetActive(open);
     }
 
 
