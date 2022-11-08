@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,10 @@ namespace RTSModularSystem
         
         [SerializeField]
         private RectTransform selectionBox;
+        [SerializeField]
+        private GameObject movementIndicator;
+        [SerializeField]
+        private float indicatorLifetime;
         public LayerMask objectLayers;
         public LayerMask terrainLayers;
         public LayerMask uiLayers;
@@ -295,6 +300,9 @@ namespace RTSModularSystem
                     moveables.Add(po.GetComponent<NavMeshAgent>());
             }
 
+            if (moveables.Count > 0)
+                StartCoroutine(SpawnMovementIndicator());
+
             //check if an object is already at the clicked point and set it as the movement target
             if (objectUnderScreenPoint == null)
                 unitArrangement.AssignDestination(moveables, screenPointWorldSpace);
@@ -332,6 +340,15 @@ namespace RTSModularSystem
         public void ToggleMovementInputs(bool enabled)
         {
             movementEnabled = enabled;
+        }
+
+
+        //spawns an object where a movement order is given
+        private IEnumerator SpawnMovementIndicator()
+        {
+            GameObject indicator = Instantiate(movementIndicator, screenPointWorldSpace, Quaternion.identity);
+            yield return new WaitForSeconds(indicatorLifetime);
+            Destroy(indicator);
         }
     }
 }

@@ -50,14 +50,8 @@ MonoBehaviour:
   incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
-  - successfulEnd: 1
-    type: 0
-    seconds: 0
   - successfulEnd: 0
-    type: 1
-    seconds: 0
-  - successfulEnd: 0
-    type: 2
+    type: 6
     seconds: 0
   successConditions:
   - conditionMet: 1

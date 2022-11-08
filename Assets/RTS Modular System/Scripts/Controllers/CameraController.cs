@@ -57,7 +57,7 @@ namespace RTSModularSystem
         [Tooltip("Uses touch screen inputs to move the camera. \nSingle finger to move, Double finger pinch to zoom.")]
         public bool moveWithTouch;
         [ConditionalHide("moveWithTouch", "true"), Tooltip("How many pixels of movement must be detected before moving the camera")]
-        public float minTouchDragDistance = 0.05f;
+        public float minTouchDragDistance = 1f;
 
         [ConditionalHide("moveWithMouse", "true"), Range(0f, 1f), Tooltip("The percentage width of the screen that moving the mouse in won't move the camera sideways. \nValue of 1 will only move camera if mouse is outside of window")]
         public float xSafeZone = 0.6f;

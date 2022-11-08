@@ -5309,6 +5309,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionBox: {fileID: 0}
+  movementIndicator: {fileID: 7474481812872419663, guid: 74af78153df86c542aa2244f71a4c092, type: 3}
+  indicatorLifetime: 2
   objectLayers:
     serializedVersion: 2
     m_Bits: 26558464
@@ -5319,9 +5321,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32
   dragDelay: 0.1
-  modifiedInputHandling:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &36415991
 MonoBehaviour:
   m_ObjectHideFlags: 0
