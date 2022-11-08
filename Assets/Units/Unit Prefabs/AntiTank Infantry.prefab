@@ -377,6 +377,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierDeath
       objectReference: {fileID: 0}
+    - target: {fileID: 1684488725729502, guid: c44c4c982666c8441b67519e57f8c1dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4282359552302604, guid: c44c4c982666c8441b67519e57f8c1dd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -552,6 +556,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: movementSmoke
       objectReference: {fileID: 0}
+    - target: {fileID: 1382888447127858, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4290283023539298, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -622,6 +630,10 @@ PrefabInstance:
     - target: {fileID: 1411588298947990, guid: 22429e62552901f4d94bca4295a9886a, type: 3}
       propertyPath: m_Name
       value: TankFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411588298947990, guid: 22429e62552901f4d94bca4295a9886a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4154665286399674, guid: 22429e62552901f4d94bca4295a9886a, type: 3}
       propertyPath: m_LocalRotation.w
