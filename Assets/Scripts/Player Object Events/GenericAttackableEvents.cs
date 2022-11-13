@@ -9,6 +9,7 @@ public class GenericAttackableEvents : AttackableEvents
     private void Start()
     {
         _audioSource = GetComponentInChildren<AudioSource>();
+        OnStart();
     }
 
 

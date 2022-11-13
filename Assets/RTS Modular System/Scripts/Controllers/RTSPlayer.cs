@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Mirror;
-using DS_FogOfWar;
-using DS_Resources;
-using DS_BasicCombat;
-using DS_Selection;
+using RTSModularSystem.FogOfWar;
+using RTSModularSystem.GameResources;
+using RTSModularSystem.BasicCombat;
+using RTSModularSystem.Selection;
 
 namespace RTSModularSystem
 {

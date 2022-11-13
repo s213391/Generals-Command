@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 
 namespace RTSModularSystem
 {
@@ -514,23 +514,47 @@ namespace RTSModularSystem
                         if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0)
                         {
                             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            RaycastHit hit;
 
                             //not every object will have the same LayerMask, so the raycast will need to be done for each
                             foreach (MouseTrackingObject mto in objectsFollowingMouse)
                             {
+
                                 if (mto.onlyMoveWhenUnderCursor)
                                 {
-                                    RaycastHit objectHit;
-                                    Physics.Raycast(ray, out objectHit, 250.0f, LayerMask.GetMask("Preview"));
-                                    if (objectHit.collider == null || objectHit.collider.gameObject != mto.obj)
+                                    Physics.Raycast(ray, out hit, 250.0f, LayerMask.GetMask("Preview"));
+                                    if (hit.collider == null || hit.collider.gameObject != mto.obj)
                                     {
+                                        //if this uses snapping, check each snappoint to see if any are in range
+                                        if (mto.snapping)
+                                        {
+                                            Physics.Raycast(ray, out hit, 250.0f, mto.layerMask);
+                                            bool snapped = false;
+                                            foreach (SnapPoint snapPoint in snapPoints)
+                                            {
+                                                Transform snapTrans = snapPoint.transform;
+                                                if ((snapTrans.position - hit.point).magnitude <= mto.snapDistance)
+                                                {
+                                                    mto.obj.transform.position = snapTrans.position;
+                                                    mto.obj.transform.rotation = snapTrans.rotation;
+                                                    snapped = true;
+                                                    break;
+                                                }
+                                            }
+                                            //only update success if a snapping object has not snapped
+                                            if (!snapped)
+                                                success = false;
+                                            else
+                                                continue;
+                                        }
+
                                         CameraController.instance.ToggleCameraInputs(true);
                                         mto.obj.transform.SetParent(Camera.main.transform);
-                                        RaycastHit terrainHit;
-                                        Physics.Raycast(mto.obj.transform.position + 50.0f * Vector3.up, Vector3.down, out terrainHit, 100.0f, PlayerInput.instance.terrainLayers);
-                                        if (terrainHit.collider != null)
-                                            mto.obj.transform.position = terrainHit.point;
+                                        Physics.Raycast(mto.obj.transform.position + 50.0f * Vector3.up, Vector3.down, out hit, 100.0f, mto.layerMask);
+                                        if (hit.collider != null)
+                                            mto.obj.transform.position = hit.point;
                                         continue;
+
                                     }
                                     else
                                     {
@@ -539,7 +563,7 @@ namespace RTSModularSystem
                                     }
                                 }
 
-                                RaycastHit hit;
+                                
                                 Physics.Raycast(ray, out hit, 250.0f, mto.layerMask);
 
                                 //reset rotation every frame
@@ -734,6 +758,8 @@ namespace RTSModularSystem
                 }
 
                 //cleanup
+                data.onActionEnd?.Invoke(playerObject, data);
+
                 foreach (GameObject go in objectsToBeDestroyed)
                     Destroy(go);
 

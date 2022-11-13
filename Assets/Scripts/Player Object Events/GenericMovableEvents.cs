@@ -8,6 +8,7 @@ public class GenericMovableEvents : MovableEvents
     private void Start()
     {
         _audioSource = GetComponentInChildren<AudioSource>();
+        OnStart();
     }
 
 

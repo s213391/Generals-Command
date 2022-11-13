@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-namespace DS_Resources
+namespace RTSModularSystem.GameResources
 {
     [DisallowMultipleComponent]
     //this class contains everything to do with tracking and protecting players' resource counts

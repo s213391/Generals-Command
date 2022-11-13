@@ -59,7 +59,7 @@ namespace RTSModularSystem
         [ConditionalHide("type", "proximityToObjects")]
         public PlayerObjectData objectsType;
         [ConditionalHide("type", "proximityToObjects")]
-        public DS_BasicCombat.TargetType teamsToCheck;
+        public RTSModularSystem.BasicCombat.TargetType teamsToCheck;
         [ConditionalHide("type", "collidingWithLayers")]
         public LayerMask layers;
         [ConditionalHide("type", "onTerrain")]

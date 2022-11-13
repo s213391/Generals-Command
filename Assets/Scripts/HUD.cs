@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using RTSModularSystem;
-using DS_Selection;
+using RTSModularSystem.Selection;
 using TMPro;
 
 public class HUD : MonoBehaviour
@@ -130,7 +130,7 @@ public class HUD : MonoBehaviour
         if (closest != null)
         {
             SelectionController.instance.DeselectAll();
-            SelectionController.instance.Select(closest.GetComponent<DS_Selection.Selectable>());
+            SelectionController.instance.Select(closest.GetComponent<RTSModularSystem.Selection.Selectable>());
         }
     }
 

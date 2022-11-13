@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 
 namespace RTSModularSystem
 {
@@ -54,6 +54,8 @@ namespace RTSModularSystem
         [Header("Events")]
         [Tooltip("Event that will be called on the client when an action starts")]
         public UnityEvent<PlayerObject, GameActionData> onActionStart;
+        [Tooltip("Event that will be called on the client when an action ends")]
+        public UnityEvent<PlayerObject, GameActionData> onActionEnd;
         [Tooltip("The event that will be called once a frame when success conditions are evaluated. \nUsed to give feedback to whether an action would be successful or not.")]
         public UnityEvent<ConditionEventData> onConditionEvaluate;
     }

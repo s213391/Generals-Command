@@ -16,7 +16,7 @@ MonoBehaviour:
   cooldown: 0
   clientSide: 1
   lockInput: 1
-  lockCamera: 0
+  lockCamera: 1
   showOnActionBar: 1
   queueAction: 0
   icon: {fileID: 21300000, guid: 110b5c7b27b8d584ca1c2b9108155ebe, type: 3}
@@ -91,7 +91,34 @@ MonoBehaviour:
   nextActionsOnFailure: []
   onActionStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3244260398583424558, guid: f9a5fadf63b28e54fbd4f857a0144ba8, type: 3}
+        m_TargetAssemblyTypeName: GreenRedPlacement, Assembly-CSharp
+        m_MethodName: ShowEngineerRange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onActionEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3244260398583424558, guid: f9a5fadf63b28e54fbd4f857a0144ba8, type: 3}
+        m_TargetAssemblyTypeName: GreenRedPlacement, Assembly-CSharp
+        m_MethodName: HideEngineerRange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onConditionEvaluate:
     m_PersistentCalls:
       m_Calls:

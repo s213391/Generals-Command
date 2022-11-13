@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using RTSModularSystem;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 using TMPro;
 
 public class ProductionScreen : MonoBehaviour

@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-using DS_Selection;
+using RTSModularSystem.Selection;
 
-using Selectable = DS_Selection.Selectable;
+using Selectable = RTSModularSystem.Selection.Selectable;
 
 namespace RTSModularSystem
 {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using DS_BasicCombat;
+using RTSModularSystem.BasicCombat;
 
 namespace RTSModularSystem
 {

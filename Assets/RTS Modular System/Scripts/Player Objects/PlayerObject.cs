@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using Mirror;
-using DS_BasicCombat;
-using DS_Selection;
-using DS_Resources;
+using RTSModularSystem.BasicCombat;
+using RTSModularSystem.Selection;
+using RTSModularSystem.GameResources;
 
 namespace RTSModularSystem
 {

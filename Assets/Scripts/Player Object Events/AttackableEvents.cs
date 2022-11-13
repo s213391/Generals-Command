@@ -16,6 +16,18 @@ public abstract class AttackableEvents : EffectEventsBase
     public AudioClip[] deathSounds;
     public ParticleSystem[] deathParticles;
 
+    protected void OnStart()
+    {
+        foreach (ParticleSystem particle in damageParticles)
+            particle.gameObject.SetActive(true);
+
+        foreach (ParticleSystem particle in healParticles)
+            particle.gameObject.SetActive(true);
+
+        foreach (ParticleSystem particle in deathParticles)
+            particle.gameObject.SetActive(true);
+    }
+
     public abstract void OnDamage(int newHealth, int oldHealth);
     public abstract void OnHeal(int newHealth, int oldHealth);
     public abstract void OnDeath();

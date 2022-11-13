@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using Mirror;
 
-namespace DS_BasicCombat
+namespace RTSModularSystem.BasicCombat
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Collider))]

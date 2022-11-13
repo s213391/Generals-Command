@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 using RTSModularSystem;
 
 public class GUIActionButton : MonoBehaviour

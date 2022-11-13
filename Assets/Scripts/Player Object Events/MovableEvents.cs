@@ -16,6 +16,18 @@ public abstract class MovableEvents : EffectEventsBase
     public AudioClip movementOngoingSounds;
     public ParticleSystem[] movementOngoingParticles;
 
+    protected void OnStart()
+    {
+        foreach (ParticleSystem particle in movementBeginParticles)
+            particle.gameObject.SetActive(true);
+
+        foreach (ParticleSystem particle in movementEndParticles)
+            particle.gameObject.SetActive(true);
+
+        foreach (ParticleSystem particle in movementOngoingParticles)
+            particle.gameObject.SetActive(true);
+    }
+
     public abstract void OnMovementBegin();
     public abstract void OnMovementEnd();
 }

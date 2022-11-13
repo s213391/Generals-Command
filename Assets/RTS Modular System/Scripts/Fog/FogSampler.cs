@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DS_FogOfWar
+namespace RTSModularSystem.FogOfWar
 {
 
     public class FogSampler : MonoBehaviour
