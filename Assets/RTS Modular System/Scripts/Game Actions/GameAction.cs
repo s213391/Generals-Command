@@ -515,7 +515,7 @@ namespace RTSModularSystem
 
                         //get the mouse's position and update any objects following it
                         //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
-                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0 && (Input.touchCount == 0 || !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)))
+                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0 && (Input.touchCount == 0 ||  !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)))
                         {
                             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                             RaycastHit hit;
@@ -531,12 +531,11 @@ namespace RTSModularSystem
                                         //if this uses snapping, check each snappoint to see if any are in range
                                         if (mto.snapping)
                                         {
-                                            Physics.Raycast(ray, out hit, 250.0f, mto.layerMask);
                                             bool snapped = false;
                                             foreach (SnapPoint snapPoint in snapPoints)
                                             {
                                                 Transform snapTrans = snapPoint.transform;
-                                                if ((snapTrans.position - hit.point).magnitude <= mto.snapDistance)
+                                                if ((snapTrans.position - mto.obj.transform.position).magnitude <= mto.snapDistance)
                                                 {
                                                     mto.obj.transform.position = snapTrans.position;
                                                     mto.obj.transform.rotation = snapTrans.rotation;
