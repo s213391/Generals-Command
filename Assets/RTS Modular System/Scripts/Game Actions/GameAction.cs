@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Mirror;
 using RTSModularSystem.GameResources;
 
@@ -428,6 +429,9 @@ namespace RTSModularSystem
                                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                             else
                                 ray = inputData.mouseRay;
+                            if (SystemInfo.deviceType == DeviceType.Handheld)
+                                ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
                             RaycastHit hit;
                             Physics.Raycast(ray, out hit, 250.0f, oc.mouseLayerMask);
 
@@ -511,7 +515,7 @@ namespace RTSModularSystem
 
                         //get the mouse's position and update any objects following it
                         //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
-                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0)
+                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0 && (Input.touchCount == 0 || !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)))
                         {
                             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                             RaycastHit hit;
@@ -519,7 +523,6 @@ namespace RTSModularSystem
                             //not every object will have the same LayerMask, so the raycast will need to be done for each
                             foreach (MouseTrackingObject mto in objectsFollowingMouse)
                             {
-
                                 if (mto.onlyMoveWhenUnderCursor && SystemInfo.deviceType == DeviceType.Handheld)
                                 {
                                     Physics.Raycast(ray, out hit, 250.0f, LayerMask.GetMask("Preview"));
