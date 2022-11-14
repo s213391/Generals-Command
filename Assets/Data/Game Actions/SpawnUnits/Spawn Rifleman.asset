@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
   m_Name: Spawn Rifleman
   m_EditorClassIdentifier: 
+  description: 'The meat of the army, cheap and effective. Anyone who scoffs at the
+    strength of a rifleman has never run across a field of a thousand of them. '
   cooldown: 0
   clientSide: 1
   lockInput: 0
@@ -32,6 +34,7 @@ MonoBehaviour:
       m_Bits: 0
     snapToObject: 0
     snapDistance: 0
+    onlyMoveWhenUnderCursor: 0
     createAfterAction: 1
     destroyAfterAction: 1
     serverSpawnAfterAction: 1
@@ -63,6 +66,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onActionEnd:
+    m_PersistentCalls:
+      m_Calls: []
   onConditionEvaluate:
     m_PersistentCalls:
       m_Calls: []
