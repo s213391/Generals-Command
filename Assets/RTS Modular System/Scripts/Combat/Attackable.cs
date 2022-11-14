@@ -123,14 +123,6 @@ namespace DS_BasicCombat
         //update health using value from the server
         public void SetHealth(int newHealth)
         {
-            if (newHealth > currentHealth)
-                attackableEvents?.OnHeal(newHealth, currentHealth);
-            else if (newHealth > 0)
-                attackableEvents?.OnDamage(newHealth, currentHealth);
-            else
-                attackableEvents?.OnDeath();
-            
-            
             if (currentHealth >= 0)
                 currentHealth = newHealth;
         }

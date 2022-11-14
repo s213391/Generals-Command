@@ -1,6 +1,7 @@
 using UnityEngine;
+using Mirror;
 
-public abstract class EffectEventsBase : MonoBehaviour 
+public abstract class EffectEventsBase : NetworkBehaviour 
 {
     #region sounds
 

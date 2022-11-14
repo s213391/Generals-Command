@@ -1,4 +1,5 @@
 using UnityEngine;
+using Mirror;
 
 public class GenericAttackerEvents : AttackerEvents
 {
@@ -12,11 +13,17 @@ public class GenericAttackerEvents : AttackerEvents
 
     public override void OnAttack()
     {
+        RpcOnAttack();
+    }
+
+
+    [ClientRpc]
+    public void RpcOnAttack()
+    {
         PlayOneShotAudio(_audioSource, attackSounds);
         StartParticleEffect(attackParticles);
 
-        if (GameData.instance.isHost)
-            SetAnimationTrigger(animators, "Attacking");
+        SetAnimationTrigger(animators, "Attacking");
     }
 
 
