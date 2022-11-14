@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
   m_Name: Scrap Yard
   m_EditorClassIdentifier: 
+  description: 
   cooldown: 0
   clientSide: 1
-  lockInput: 0
-  lockCamera: 0
+  lockInput: 1
+  lockCamera: 1
   showOnActionBar: 1
   queueAction: 0
   icon: {fileID: 0}
@@ -32,6 +33,7 @@ MonoBehaviour:
       m_Bits: 128
     snapToObject: 1
     snapDistance: 25
+    onlyMoveWhenUnderCursor: 1
     createAfterAction: 0
     destroyAfterAction: 1
     serverSpawnAfterAction: 1
@@ -42,17 +44,11 @@ MonoBehaviour:
   incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
-  - successfulEnd: 1
-    type: 0
-    seconds: 0
   - successfulEnd: 0
-    type: 1
-    seconds: 0
-  - successfulEnd: 0
-    type: 2
+    type: 6
     seconds: 0
   successConditions:
-  - conditionMet: 0
+  - conditionMet: 1
     successIfConditionMet: 1
     type: 0
     objectToBeChecked: 1
@@ -63,11 +59,49 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     maximumHeightAllowed: 0
+  - conditionMet: 0
+    successIfConditionMet: 0
+    type: 1
+    objectToBeChecked: 1
+    distance: 25
+    objectsType: {fileID: 11400000, guid: 559e72dc2dfdcbb498041bc58da9d5a2, type: 2}
+    teamsToCheck: 1
+    layers:
+      serializedVersion: 2
+      m_Bits: 25165824
+    maximumHeightAllowed: 0
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
   onActionStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3244260398583424558, guid: f9a5fadf63b28e54fbd4f857a0144ba8, type: 3}
+        m_TargetAssemblyTypeName: GreenRedPlacement, Assembly-CSharp
+        m_MethodName: ShowEngineerRange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onActionEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3244260398583424558, guid: f9a5fadf63b28e54fbd4f857a0144ba8, type: 3}
+        m_TargetAssemblyTypeName: GreenRedPlacement, Assembly-CSharp
+        m_MethodName: HideEngineerRange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onConditionEvaluate:
     m_PersistentCalls:
       m_Calls:

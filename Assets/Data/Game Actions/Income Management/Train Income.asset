@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
   m_Name: Train Income
   m_EditorClassIdentifier: 
+  description: 
   cooldown: 0
   clientSide: 0
   lockInput: 0
   lockCamera: 0
   showOnActionBar: 0
+  queueAction: 0
   icon: {fileID: 0}
   interruptionTolerance: 1
   objectsToSpawn: []
+  changeResourcesAtStart: 0
   resourceChange: []
   incomeChange:
   - resourceType: 0
-    quantity: 25
+    quantity: 50
   - resourceType: 1
     quantity: 15
   loopOnSuccessfulEnd: 0
@@ -34,6 +37,12 @@ MonoBehaviour:
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
+  onActionStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onActionEnd:
+    m_PersistentCalls:
+      m_Calls: []
   onConditionEvaluate:
     m_PersistentCalls:
       m_Calls: []

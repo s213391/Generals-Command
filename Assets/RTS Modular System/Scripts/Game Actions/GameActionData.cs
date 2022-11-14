@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 
 namespace RTSModularSystem
 {
@@ -10,6 +10,8 @@ namespace RTSModularSystem
     public class GameActionData : ScriptableObject
     {
         [Header("Settings")]
+        [Multiline(3)]
+        public string description;
         [Tooltip("The time after the end of the action that this action can not be reused")]
         public float cooldown;
         [Tooltip("If this action is run on the client, or on the server. \nAny action that affects resources can only be run on the server")]
@@ -52,6 +54,8 @@ namespace RTSModularSystem
         [Header("Events")]
         [Tooltip("Event that will be called on the client when an action starts")]
         public UnityEvent<PlayerObject, GameActionData> onActionStart;
+        [Tooltip("Event that will be called on the client when an action ends")]
+        public UnityEvent<PlayerObject, GameActionData> onActionEnd;
         [Tooltip("The event that will be called once a frame when success conditions are evaluated. \nUsed to give feedback to whether an action would be successful or not.")]
         public UnityEvent<ConditionEventData> onConditionEvaluate;
     }

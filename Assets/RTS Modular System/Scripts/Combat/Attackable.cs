@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using Mirror;
 
-namespace DS_BasicCombat
+namespace RTSModularSystem.BasicCombat
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Collider))]
@@ -52,6 +52,8 @@ namespace DS_BasicCombat
             healthBar.Init(objectHeight, objectWidth);
 
             attackableEvents = GetComponent<AttackableEvents>();
+            if (attackableEvents)
+                attackableEvents.Init();
         }
 
 

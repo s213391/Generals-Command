@@ -24,6 +24,9 @@ namespace RTSModularSystem
         //must specify if target is enemy or not to use a target, if an enemy, ranged units' destinations will be at their max range away from the enemy
         public void AssignDestination(List<NavMeshAgent> agents, Vector3 centrepoint, bool isTargetAnEnemy = false, PlayerObject target = null)
         {
+            if (agents.Count == 0)
+                return;
+            
             //if there is a target, the centrepoint does not need to be (and likely isn't) on the navmesh
             if (target == null)
             {

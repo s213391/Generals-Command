@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using RTSModularSystem;
-using DS_Selection;
-using DS_BasicCombat;
+using RTSModularSystem.Selection;
+using RTSModularSystem.BasicCombat;
 
-using Selectable = DS_Selection.Selectable;
+using Selectable = RTSModularSystem.Selection.Selectable;
 
 public class UnitStats : MonoBehaviour
 {

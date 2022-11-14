@@ -28,7 +28,6 @@ MonoBehaviour:
   healthBarWidth: 1
   xpOnDeath: 0
   persistAtZeroHealth: 0
-  attackableEvents: {fileID: 11400000, guid: 7a09807016c8ac74b9cda813311e3b00, type: 2}
   attacker: 0
   attackType: 0
   damageType: 0
@@ -38,22 +37,21 @@ MonoBehaviour:
   attackDuration: 1
   canAutoTarget: 0
   autoTargetRange: 1
-  attackerEvents: {fileID: 0}
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
   xpRequirement: -1
   moveable: 1
   moveSpeed: 20
+  acceleration: 40
+  angularSpeed: 120
   agentHeight: 2
   agentWidth: 0.5
   pathfingPriority: 50
   passThroughOtherAgents: 1
-  movableEvents: {fileID: 11400000, guid: 6230988c6de3d8f408e0896bdfb06080, type: 2}
-  description: 
   unitCap: -1
   visibilityRanges: []
-  sprite: {fileID: 21300000, guid: 25942af86d808024da9d2bfd0b2de760, type: 3}
+  sprite: {fileID: 21300000, guid: c1c513c9c43ac764596080031ac55d04, type: 3}
   selectable: 1
   actions:
   - action: {fileID: 11400000, guid: 05c86614eff4b7442b0865623a960d18, type: 2}

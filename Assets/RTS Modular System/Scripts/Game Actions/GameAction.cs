@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Mirror;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 
 namespace RTSModularSystem
 {
@@ -10,6 +11,8 @@ namespace RTSModularSystem
     //attached to the player prefab, handles all the actions performed by buildings, units and the player
     public class GameAction : NetworkBehaviour
     {
+        List<ActionTrigger> triggers = new List<ActionTrigger>();
+        
         //check if action can be started, then start it
         public void StartAction(GameActionData actionData, PlayerObject functionCaller, uint owningPlayer)
         {
@@ -139,8 +142,28 @@ namespace RTSModularSystem
         }
 
 
+        //sets a trigger to true if it exists in the list
+        public void SetTrigger(PlayerObject po, GameActionData data, bool successful)
+        {
+            if (po == null || data == null)
+                return;
+
+            for (int i = 0; i < triggers.Count; i++)
+            {
+                if (triggers[i].objectPerformingAction == po && triggers[i].actionBeingPerformed == data)
+                {
+                    ActionTrigger newTrigger = triggers[i];
+                    newTrigger.successful = successful;
+                    newTrigger.triggered = true;
+                    triggers[i] = newTrigger;
+                    return;
+                }
+            }
+        }
+
+
         //returns the first end condition that is active this frame, defaults to none condition
-        private ActionEnd EndConditionActive(List<ActionEnd> endConditions, float duration)
+        private ActionEnd EndConditionActive(List<ActionEnd> endConditions, float duration, PlayerObject functionCaller, GameActionData data)
         {
             foreach (ActionEnd ae in endConditions)
             {
@@ -172,6 +195,24 @@ namespace RTSModularSystem
                     case ActionEndType.duration:
                         if (duration >= ae.seconds)
                             return ae;
+                        break;
+
+                    case ActionEndType.trigger:
+                        for (int i = 0; i < triggers.Count; i++)
+                        {
+                            if (triggers[i].objectPerformingAction == functionCaller && triggers[i].actionBeingPerformed == data)
+                            {
+                                if (triggers[i].triggered)
+                                {
+                                    ActionEnd temp = ae;
+                                    temp.successfulEnd = triggers[i].successful;
+                                    triggers.RemoveAt(i);
+                                    return temp;
+                                }
+                                else
+                                    break;
+                            }
+                        }
                         break;
                 }
             }
@@ -311,6 +352,16 @@ namespace RTSModularSystem
             bool previousSingleSelectionState = PlayerInput.instance.singleSelectionEnabled;
             bool previousMovementState = PlayerInput.instance.movementEnabled;
 
+            //set up a trigger if needed
+            foreach (ActionEnd ae in data.endConditions)
+            {
+                if (ae.type == ActionEndType.trigger)
+                {
+                    triggers.Add(new ActionTrigger { objectPerformingAction = playerObject, actionBeingPerformed = data, triggered = false });
+                    break;
+                }
+            }
+
             //prevent camera movement and selection during this action
             if (data.lockCamera)
                 CameraController.instance.ToggleCameraInputs(false);
@@ -378,6 +429,9 @@ namespace RTSModularSystem
                                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                             else
                                 ray = inputData.mouseRay;
+                            if (SystemInfo.deviceType == DeviceType.Handheld)
+                                ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
                             RaycastHit hit;
                             Physics.Raycast(ray, out hit, 250.0f, oc.mouseLayerMask);
 
@@ -404,7 +458,7 @@ namespace RTSModularSystem
                             }
 
                             if (prefab != null && data.clientSide)
-                                objectsFollowingMouse.Add(new MouseTrackingObject { obj = prefab, layerMask = oc.mouseLayerMask, snapping = oc.snapToObject, snapDistance = oc.snapDistance });
+                                objectsFollowingMouse.Add(new MouseTrackingObject { obj = prefab, layerMask = oc.mouseLayerMask, snapping = oc.snapToObject, snapDistance = oc.snapDistance, onlyMoveWhenUnderCursor = oc.onlyMoveWhenUnderCursor });
                             break;
 
                         case ObjectCreationLocation.atObject:
@@ -461,18 +515,62 @@ namespace RTSModularSystem
 
                         //get the mouse's position and update any objects following it
                         //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
-                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0)
+                        if (data.clientSide && !firstTime && objectsFollowingMouse.Count > 0 && (Input.touchCount == 0 ||  !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)))
                         {
                             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            RaycastHit hit;
 
                             //not every object will have the same LayerMask, so the raycast will need to be done for each
                             foreach (MouseTrackingObject mto in objectsFollowingMouse)
                             {
-                                RaycastHit hit;
+                                if (mto.onlyMoveWhenUnderCursor && SystemInfo.deviceType == DeviceType.Handheld)
+                                {
+                                    Physics.Raycast(ray, out hit, 250.0f, LayerMask.GetMask("Preview"));
+                                    if (hit.collider == null || hit.collider.gameObject != mto.obj)
+                                    {
+                                        //if this uses snapping, check each snappoint to see if any are in range
+                                        if (mto.snapping)
+                                        {
+                                            bool snapped = false;
+                                            foreach (SnapPoint snapPoint in snapPoints)
+                                            {
+                                                Transform snapTrans = snapPoint.transform;
+                                                if ((snapTrans.position - mto.obj.transform.position).magnitude <= mto.snapDistance)
+                                                {
+                                                    mto.obj.transform.position = snapTrans.position;
+                                                    mto.obj.transform.rotation = snapTrans.rotation;
+                                                    snapped = true;
+                                                    break;
+                                                }
+                                            }
+                                            //only update success if a snapping object has not snapped
+                                            if (!snapped)
+                                                success = false;
+                                            else
+                                                continue;
+                                        }
+
+                                        CameraController.instance.ToggleCameraInputs(true);
+                                        mto.obj.transform.SetParent(Camera.main.transform);
+                                        Physics.Raycast(mto.obj.transform.position + 50.0f * Vector3.up, Vector3.down, out hit, 100.0f, mto.layerMask);
+                                        if (hit.collider != null)
+                                            mto.obj.transform.position = hit.point;
+                                        continue;
+
+                                    }
+                                    else
+                                    {
+                                        CameraController.instance.ToggleCameraInputs(false);
+                                        mto.obj.transform.SetParent(null);
+                                    }
+                                }
+
+                                
                                 Physics.Raycast(ray, out hit, 250.0f, mto.layerMask);
 
                                 //reset rotation every frame
                                 mto.obj.transform.rotation = Quaternion.identity;
+
 
                                 if (hit.collider != null)
                                 {
@@ -503,7 +601,7 @@ namespace RTSModularSystem
                             }
                         }
 
-                        ActionEnd actionEnd = EndConditionActive(data.endConditions, duration);
+                        ActionEnd actionEnd = EndConditionActive(data.endConditions, duration, playerObject, data);
                         if (actionEnd.type != ActionEndType.none)
                         {
                             //evaluate conditions to choose whether this action will end as a success or a failure
@@ -662,6 +760,8 @@ namespace RTSModularSystem
                 }
 
                 //cleanup
+                data.onActionEnd?.Invoke(playerObject, data);
+
                 foreach (GameObject go in objectsToBeDestroyed)
                     Destroy(go);
 

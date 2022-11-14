@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 1
   attackable: 1
-  maxHealth: 300
+  maxHealth: 700
   resistances:
   - damageType: 0
-    percentageResistance: 85
+    percentageResistance: 75
   - damageType: 1
     percentageResistance: 50
   - damageType: 2
@@ -28,31 +28,29 @@ MonoBehaviour:
   healthBarWidth: 1
   xpOnDeath: 0
   persistAtZeroHealth: 0
-  attackableEvents: {fileID: 11400000, guid: 7a09807016c8ac74b9cda813311e3b00, type: 2}
   attacker: 1
   attackType: 1
   damageType: 1
   targetType: 0
-  attackDamage: 150
-  attackRange: 30
-  attackDuration: 5
+  attackDamage: 200
+  attackRange: 20
+  attackDuration: 15
   canAutoTarget: 1
-  autoTargetRange: 30
-  attackerEvents: {fileID: 0}
+  autoTargetRange: 15
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
   xpRequirement: -1
   moveable: 1
-  moveSpeed: 30
+  moveSpeed: 15
+  acceleration: 15
+  angularSpeed: 120
   agentHeight: 2
   agentWidth: 0.5
   pathfingPriority: 50
   passThroughOtherAgents: 1
-  movableEvents: {fileID: 0}
-  description: 
   unitCap: -1
   visibilityRanges: []
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 6bf0503d43777174fabe15d0bd4e1e7e, type: 3}
   selectable: 1
   actions: []

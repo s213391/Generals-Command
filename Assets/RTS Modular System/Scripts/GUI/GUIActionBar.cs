@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-using DS_Selection;
+using RTSModularSystem.Selection;
 
-using Selectable = DS_Selection.Selectable;
+using Selectable = RTSModularSystem.Selection.Selectable;
 
 namespace RTSModularSystem
 {
@@ -14,6 +14,7 @@ namespace RTSModularSystem
     public class GUIActionBar : MonoBehaviour
     {
         public GameObject actionButtonPrefab; //the button prefab that will be created for each action
+        public ProductionScreen productionScreen;
 
         private GameObject actionsGridLayout; //the grid layout that holds all the action buttons
         private UIBehaviour[] UIElements; //every ui element on this gameobject
@@ -112,7 +113,7 @@ namespace RTSModularSystem
                 //the value of i and currentObject will change, create dummy variables for the listener
                 int j = i;
                 PlayerObject po = currentObject;
-                button.GetComponent<Button>().onClick.AddListener(delegate { po.StartAction(j); });
+                button.GetComponent<Button>().onClick.AddListener(delegate { productionScreen.OpenScreen(po, po.GetActionData(j)); });
             }
 
             //show menu if this object has an action that appears on the action bar

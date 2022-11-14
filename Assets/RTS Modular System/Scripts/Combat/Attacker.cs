@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using RTSModularSystem;
 
-namespace DS_BasicCombat
+namespace RTSModularSystem.BasicCombat
 {
     //the different types of damage that each have different resistances
     public enum DamageType
@@ -87,6 +87,8 @@ namespace DS_BasicCombat
             secondsBetweenTargetChecks = CombatManager.instance.secondsBetweenTargetChecks;
 
             attackerEvents = GetComponent<AttackerEvents>();
+            if (attackerEvents)
+                attackerEvents.Init();
 
             StartCoroutine(TargettingCooldownDuration());
         }

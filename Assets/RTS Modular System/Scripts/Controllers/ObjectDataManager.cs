@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 
 namespace RTSModularSystem
 {

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Spawn Heavy Tank
   m_EditorClassIdentifier: 
   cooldown: 0
-  clientSide: 0
+  clientSide: 1
   lockInput: 0
   lockCamera: 0
   showOnActionBar: 1
-  queueAction: 0
+  queueAction: 1
   icon: {fileID: 21300000, guid: 5a998a97e384ada47a9a554a023796d4, type: 3}
   interruptionTolerance: 3
   objectsToSpawn:
@@ -33,8 +33,8 @@ MonoBehaviour:
     snapToObject: 0
     snapDistance: 0
     createAfterAction: 1
-    destroyAfterAction: 0
-    serverSpawnAfterAction: 0
+    destroyAfterAction: 1
+    serverSpawnAfterAction: 1
   changeResourcesAtStart: 1
   resourceChange:
   - resourceType: 0

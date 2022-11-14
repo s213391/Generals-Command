@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace DS_BasicCombat
+namespace RTSModularSystem.BasicCombat
 {
     //creates a health bar that follows the object it is attached to
     public class HealthBar : MonoBehaviour
