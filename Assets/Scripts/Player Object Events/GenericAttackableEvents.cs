@@ -6,10 +6,10 @@ public class GenericAttackableEvents : AttackableEvents
 {
     AudioSource _audioSource;
 
-    private void Start()
+    public override void Init()
     {
         _audioSource = GetComponentInChildren<AudioSource>();
-        OnStart();
+        base.Init();
     }
 
 

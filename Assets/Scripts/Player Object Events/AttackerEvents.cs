@@ -12,13 +12,21 @@ public abstract class AttackerEvents : EffectEventsBase
     public AudioClip[] killSounds;
     public ParticleSystem[] killParticles;
 
-    protected void OnStart()
+    public virtual void Init()
     {
         foreach (ParticleSystem particle in attackParticles)
+        {
             particle.gameObject.SetActive(true);
+            for (int i = 0; i < particle.transform.childCount; i++)
+                particle.transform.GetChild(i).gameObject.SetActive(true);
+        }
 
         foreach (ParticleSystem particle in killParticles)
+        {
             particle.gameObject.SetActive(true);
+            for (int i = 0; i < particle.transform.childCount; i++)
+                particle.transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 
     public abstract void OnAttack();

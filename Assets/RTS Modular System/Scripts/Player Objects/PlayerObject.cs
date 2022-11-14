@@ -116,6 +116,8 @@ namespace RTSModularSystem
                     agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
 
                 movableEvents = GetComponent<MovableEvents>();
+                if (movableEvents)
+                    movableEvents.Init();
             }
             //REFACTOR Obstacle
             else

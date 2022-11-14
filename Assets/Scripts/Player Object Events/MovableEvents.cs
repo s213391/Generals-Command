@@ -16,16 +16,28 @@ public abstract class MovableEvents : EffectEventsBase
     public AudioClip movementOngoingSounds;
     public ParticleSystem[] movementOngoingParticles;
 
-    protected void OnStart()
+    public virtual void Init()
     {
         foreach (ParticleSystem particle in movementBeginParticles)
+        {
             particle.gameObject.SetActive(true);
+            for (int i =0;i<particle.transform.childCount;i++)
+                particle.transform.GetChild(i).gameObject.SetActive(true);
+        }
 
         foreach (ParticleSystem particle in movementEndParticles)
+        {
             particle.gameObject.SetActive(true);
+            for (int i = 0; i < particle.transform.childCount; i++)
+                particle.transform.GetChild(i).gameObject.SetActive(true);
+        }
 
         foreach (ParticleSystem particle in movementOngoingParticles)
+        {
             particle.gameObject.SetActive(true);
+            for (int i = 0; i < particle.transform.childCount; i++)
+                particle.transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 
     public abstract void OnMovementBegin();

@@ -52,6 +52,8 @@ namespace RTSModularSystem.BasicCombat
             healthBar.Init(objectHeight, objectWidth);
 
             attackableEvents = GetComponent<AttackableEvents>();
+            if (attackableEvents)
+                attackableEvents.Init();
         }
 
 

@@ -87,6 +87,8 @@ namespace RTSModularSystem.BasicCombat
             secondsBetweenTargetChecks = CombatManager.instance.secondsBetweenTargetChecks;
 
             attackerEvents = GetComponent<AttackerEvents>();
+            if (attackerEvents)
+                attackerEvents.Init();
 
             StartCoroutine(TargettingCooldownDuration());
         }

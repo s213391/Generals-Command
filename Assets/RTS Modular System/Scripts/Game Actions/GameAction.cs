@@ -520,7 +520,7 @@ namespace RTSModularSystem
                             foreach (MouseTrackingObject mto in objectsFollowingMouse)
                             {
 
-                                if (mto.onlyMoveWhenUnderCursor)
+                                if (mto.onlyMoveWhenUnderCursor && SystemInfo.deviceType == DeviceType.Handheld)
                                 {
                                     Physics.Raycast(ray, out hit, 250.0f, LayerMask.GetMask("Preview"));
                                     if (hit.collider == null || hit.collider.gameObject != mto.obj)
