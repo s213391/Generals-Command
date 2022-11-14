@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 1
   attackable: 1
-  maxHealth: 300
+  maxHealth: 550
   resistances:
   - damageType: 0
     percentageResistance: 75
@@ -33,7 +33,7 @@ MonoBehaviour:
   damageType: 1
   targetType: 0
   attackDamage: 100
-  attackRange: 30
+  attackRange: 35
   attackDuration: 5
   canAutoTarget: 1
   autoTargetRange: 25
@@ -42,14 +42,13 @@ MonoBehaviour:
   nextLevel: {fileID: 0}
   xpRequirement: -1
   moveable: 1
-  moveSpeed: 35
-  acceleration: 35
+  moveSpeed: 20
+  acceleration: 20
   angularSpeed: 120
   agentHeight: 2
   agentWidth: 0.5
   pathfingPriority: 50
   passThroughOtherAgents: 1
-  description: 
   unitCap: -1
   visibilityRanges: []
   sprite: {fileID: 0}

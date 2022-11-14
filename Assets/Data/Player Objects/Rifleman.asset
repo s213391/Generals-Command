@@ -32,11 +32,11 @@ MonoBehaviour:
   attackType: 1
   damageType: 0
   targetType: 0
-  attackDamage: 15
-  attackRange: 10
+  attackDamage: 50
+  attackRange: 15
   attackDuration: 2
   canAutoTarget: 1
-  autoTargetRange: 10
+  autoTargetRange: 15
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
@@ -49,7 +49,6 @@ MonoBehaviour:
   agentWidth: 0.5
   pathfingPriority: 50
   passThroughOtherAgents: 1
-  description: 
   unitCap: -1
   visibilityRanges: []
   sprite: {fileID: 0}
