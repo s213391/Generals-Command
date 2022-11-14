@@ -6,9 +6,10 @@ public class CommandCenterEvents : AttackableEvents
 {
     AudioSource _audioSource;
 
-    private void Start()
+    public override void Init()
     {
         _audioSource = GetComponentInChildren<AudioSource>();
+        base.Init();
     }
 
 

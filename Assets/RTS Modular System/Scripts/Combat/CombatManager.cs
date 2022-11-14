@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-namespace DS_BasicCombat
+namespace RTSModularSystem.BasicCombat
 {
     //Class that handles range checking for all Attacker objects
     public class CombatManager : NetworkBehaviour

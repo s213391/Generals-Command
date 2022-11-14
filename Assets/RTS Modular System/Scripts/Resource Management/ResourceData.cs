@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DS_Resources
+namespace RTSModularSystem.GameResources
 {
     //replace these with the names of every resource used in the game
     public enum ResourceType

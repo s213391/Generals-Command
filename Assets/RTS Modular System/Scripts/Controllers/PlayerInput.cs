@@ -1,12 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using DS_Selection;
+using RTSModularSystem.Selection;
 
-using Selectable = DS_Selection.Selectable;
+using Selectable = RTSModularSystem.Selection.Selectable;
 
 namespace RTSModularSystem
 {
@@ -18,6 +19,10 @@ namespace RTSModularSystem
         
         [SerializeField]
         private RectTransform selectionBox;
+        [SerializeField]
+        private GameObject movementIndicator;
+        [SerializeField]
+        private float indicatorLifetime;
         public LayerMask objectLayers;
         public LayerMask terrainLayers;
         public LayerMask uiLayers;
@@ -42,9 +47,6 @@ namespace RTSModularSystem
         public Vector3 screenPointWorldSpace { get; private set; }
         public PlayerObject objectUnderScreenPoint { get; private set; }
         public Ray screenRay { get; private set; }
-
-        [SerializeField, Tooltip("Add an event here to modify how inputs are handled based on the mouse/touch position and what is under it")]
-        private UnityEvent<Vector3, PlayerObject> modifiedInputHandling;
 
 
         //set up singleton
@@ -86,7 +88,6 @@ namespace RTSModularSystem
             if (device == DeviceType.Desktop || (device == DeviceType.Handheld && Input.touchCount == 1))
             {
                 CheckUnderScreenPoint();
-                modifiedInputHandling?.Invoke(screenPointWorldSpace, objectUnderScreenPoint);
                 HandleSelectionInputs();
                 HandleMovementInputs();
             }
@@ -285,9 +286,11 @@ namespace RTSModularSystem
         //check if any selected objects need to be given a navmesh destination
         private void HandleMovementInputs()
         {
-            if (!movementEnabled || selectedThisFrame || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState)
+            if (!movementEnabled || selectedThisFrame || selectionController.selectedObjects.Count == 0 || screenPointWorldSpace == nullState || touchStartedOverUI)
                 return;
             if (device == DeviceType.Desktop && !Input.GetKeyUp(KeyCode.Mouse1))
+                return;
+            if (device == DeviceType.Handheld && Input.GetTouch(0).phase != TouchPhase.Began)
                 return;
 
             //add every selected movable object to a list
@@ -298,6 +301,9 @@ namespace RTSModularSystem
                 if (po && po.data.moveable)
                     moveables.Add(po.GetComponent<NavMeshAgent>());
             }
+
+            if (moveables.Count > 0)
+                StartCoroutine(SpawnMovementIndicator());
 
             //check if an object is already at the clicked point and set it as the movement target
             if (objectUnderScreenPoint == null)
@@ -336,6 +342,15 @@ namespace RTSModularSystem
         public void ToggleMovementInputs(bool enabled)
         {
             movementEnabled = enabled;
+        }
+
+
+        //spawns an object where a movement order is given
+        private IEnumerator SpawnMovementIndicator()
+        {
+            GameObject indicator = Instantiate(movementIndicator, screenPointWorldSpace, Quaternion.identity);
+            yield return new WaitForSeconds(indicatorLifetime);
+            Destroy(indicator);
         }
     }
 }

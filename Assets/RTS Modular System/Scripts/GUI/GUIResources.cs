@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DS_Resources;
+using RTSModularSystem.GameResources;
 
 namespace RTSModularSystem
 {

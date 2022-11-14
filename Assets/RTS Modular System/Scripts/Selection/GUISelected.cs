@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace DS_Selection
+namespace RTSModularSystem.Selection
 {
     //Class that uses a GUI to display/interact with selected objects, can be on an empty or image gameobject
     public class GUISelected : MonoBehaviour

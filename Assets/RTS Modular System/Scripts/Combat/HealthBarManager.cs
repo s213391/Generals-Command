@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DS_BasicCombat
+namespace RTSModularSystem.BasicCombat
 {
     //displays all health bars on the canvas it is attached to
     public class HealthBarManager : MonoBehaviour

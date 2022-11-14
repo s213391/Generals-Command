@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace DS_FogOfWar
+namespace RTSModularSystem.FogOfWar
 {
 
     public class FogProjector : MonoBehaviour

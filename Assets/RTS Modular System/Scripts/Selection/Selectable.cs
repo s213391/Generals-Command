@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DS_Selection
+namespace RTSModularSystem.Selection
 {
     //Class that allows an object to be selected in-game
     [RequireComponent(typeof(Outline))]

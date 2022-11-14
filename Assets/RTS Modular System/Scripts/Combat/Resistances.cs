@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DS_BasicCombat
+namespace RTSModularSystem.BasicCombat
 {
     [System.Serializable]
     //how resistant an attackable is to damage of this type

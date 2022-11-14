@@ -208,20 +208,20 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
+  m_audioClip: {fileID: 8300000, guid: ddf8a9fed6f10d34f9193d999fe31fd9, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 10
+  MaxDistance: 80
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -229,23 +229,41 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.125
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -8.0032
+      outSlope: -8.0032
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.25
+      value: 0.5
+      inSlope: -2.0008
+      outSlope: -2.0008
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.48999786
+      value: 0.19093323
+      inSlope: -0.65171796
+      outSlope: -0.65171796
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.44117877
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.12505
+      outSlope: -0.12505
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -254,7 +272,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -306,6 +324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3f4f4b1ba749942b5660b3b90a386e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   animators:
   - {fileID: 1550942886173042885}
   damageSounds: []
@@ -328,6 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12985c2157ecc948a067d036150f88d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   animators:
   - {fileID: 1550942886173042885}
   attackSounds: []
@@ -347,6 +369,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1dffa848579013489685ea93eb2c911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   animators:
   - {fileID: 1550942886173042885}
   movementBeginSounds: []
@@ -645,6 +669,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198012736009217054, guid: 703aca4d9e2bf7549abc76fddc616fa0, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198012736009217054, guid: 703aca4d9e2bf7549abc76fddc616fa0, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198211679349588138, guid: 703aca4d9e2bf7549abc76fddc616fa0, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198211679349588138, guid: 703aca4d9e2bf7549abc76fddc616fa0, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198706369550347640, guid: 703aca4d9e2bf7549abc76fddc616fa0, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198706369550347640, guid: 703aca4d9e2bf7549abc76fddc616fa0, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 703aca4d9e2bf7549abc76fddc616fa0, type: 3}
 --- !u!4 &6181327463436991985 stripped
@@ -726,6 +774,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4186669880049412, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198281471970050376, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198281471970050376, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198510783975693786, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198510783975693786, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198611643686241898, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198611643686241898, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198970117737909700, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198970117737909700, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 199080083443614320, guid: fb7f1bbeeea92914c9091afff70aee0a, type: 3}
@@ -813,6 +893,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4290283023539298, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198144061166377996, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

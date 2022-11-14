@@ -45,7 +45,7 @@ public abstract class EffectEventsBase : NetworkBehaviour
         if (!audioSource)
             return;
 
-        if (audioSource.isPlaying)
+        if (audioSource.clip != null && audioSource.isPlaying)
             audioSource.Stop();
     }
 
@@ -74,16 +74,29 @@ public abstract class EffectEventsBase : NetworkBehaviour
     protected void StartParticleEffect(ParticleSystem[] emitters)
     {
         foreach (ParticleSystem emitter in emitters)
+        {
             if (emitter && !emitter.isEmitting)
+            {
                 emitter.Play();
+                for (int i = 0; i < emitter.transform.childCount; i++)
+                    emitter.transform.GetChild(i).GetComponent<ParticleSystem>()?.Play();
+            }
+        }
+        
     }
 
 
     protected void StopParticleEffect(ParticleSystem[] emitters)
     {
         foreach (ParticleSystem emitter in emitters)
+        {
             if (emitter && emitter.isEmitting)
+            {
                 emitter.Stop();
+                for (int i = 0; i < emitter.transform.childCount; i++)
+                    emitter.transform.GetChild(i).GetComponent<ParticleSystem>()?.Stop();
+            }
+        }
     }
 
     #endregion

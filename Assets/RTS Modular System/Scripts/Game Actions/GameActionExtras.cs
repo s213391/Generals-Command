@@ -14,6 +14,7 @@ namespace RTSModularSystem
         enter,
         immediate,
         duration,
+        trigger,
         none //does not end
     }
 
@@ -58,7 +59,7 @@ namespace RTSModularSystem
         [ConditionalHide("type", "proximityToObjects")]
         public PlayerObjectData objectsType;
         [ConditionalHide("type", "proximityToObjects")]
-        public DS_BasicCombat.TargetType teamsToCheck;
+        public RTSModularSystem.BasicCombat.TargetType teamsToCheck;
         [ConditionalHide("type", "collidingWithLayers")]
         public LayerMask layers;
         [ConditionalHide("type", "onTerrain")]
@@ -106,6 +107,8 @@ namespace RTSModularSystem
         public bool snapToObject;
         [ConditionalHide("snapToObject", "true")] [Tooltip("The distance at which this object will check for nearby objects to snap to")]
         public float snapDistance;
+        [ConditionalHide("location", "atMouse"), Tooltip("Only move the spawned object when the cursor is over it, else fix the object relative to the camera")]
+        public bool onlyMoveWhenUnderCursor;
         [Tooltip("Whether this object will be created on the client at the start of the action, or the end of it")]
         public bool createAfterAction;
         [Tooltip("Whether this object will be destroyed when this action ends. \nUseful for clientside visual effects such as building placement")]
@@ -122,6 +125,7 @@ namespace RTSModularSystem
         public LayerMask layerMask;
         public bool snapping;
         public float snapDistance;
+        public bool onlyMoveWhenUnderCursor;
     }
 
 
@@ -152,5 +156,15 @@ namespace RTSModularSystem
     {
         public GameActionData action;
         public bool autoStart;
+    }
+
+
+    //holds reference to a trigger that can be used to end an action
+    public struct ActionTrigger
+    {
+        public PlayerObject objectPerformingAction;
+        public GameActionData actionBeingPerformed;
+        public bool successful;
+        public bool triggered;
     }
 }

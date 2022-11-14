@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DS_Selection
+namespace RTSModularSystem.Selection
 {
     //Class that handles the selection and deselection of objects with a Selectable component
     [DisallowMultipleComponent]
