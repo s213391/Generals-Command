@@ -42,4 +42,5 @@ public abstract class MovableEvents : EffectEventsBase
 
     public abstract void OnMovementBegin();
     public abstract void OnMovementEnd();
+    public abstract void OnUpdate(float forward, float right);
 }

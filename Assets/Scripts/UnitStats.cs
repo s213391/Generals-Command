@@ -51,7 +51,7 @@ public class UnitStats : MonoBehaviour
         }
         else
         {
-            healthText.text = attackable.currentHealth.ToString() + "/" + attackable.maxHealth.ToString();
+            healthText.text = attackable.currentHealth.ToString();
 
             List<int> resistances = attackable.GetResistances();
             resistance1Text.text = resistances[0].ToString() + "%";

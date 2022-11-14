@@ -46,4 +46,14 @@ public class GenericMovableEvents : MovableEvents
 
         SetAnimationBool(animators, "IsMoving", false);
     }
+
+
+    public override void OnUpdate(float forward, float right)
+    {
+        foreach (Animator animator in animators)
+        {
+            animator.SetFloat("forward", forward);
+            animator.SetFloat("right", right);
+        }
+    }
 }
