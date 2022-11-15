@@ -28,7 +28,6 @@ public class GUIPlayerScore : MonoBehaviour
         instance = this;
 
         rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 10f + playerScores.Count * 20f);
         playerObjectHealths = new List<int>();
 
         for (int i = 0; i < 4; i++)
