@@ -25,7 +25,7 @@ public class CommandCenterEvents : AttackableEvents
         PlayOneShotAudio(_audioSource, damageSounds);
         StartParticleEffect(damageParticles);
 
-        GUIPlayerScore.instance.UpdateHealth((int)(GetComponent<PlayerObject>().owningPlayer - 1), (newHealth / 10));
+        GUIPlayerScore.instance.UpdateHealth((int)(GetComponent<PlayerObject>().owningPlayer - 1), newHealth);
     }
 
 
