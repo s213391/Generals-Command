@@ -123,6 +123,41 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &164631453 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3580376560542115636, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
+  m_PrefabInstance: {fileID: 3580376560595542619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &164631454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164631453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 003cc413958b7434bb92b4bc09bef8c8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &396143020
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,9 +604,25 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4278190080
       objectReference: {fileID: 0}
+    - target: {fileID: 3580376560542115627, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580376560542115627, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580376560542115636, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
+      propertyPath: m_Name
+      value: Back arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580376560758574152, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 3580376560758574159, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_Type
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3580376560758574159, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_Sprite
@@ -748,10 +799,10 @@ PrefabInstance:
     - target: {fileID: 3580376561432852052, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 2fccb27a41cb01144955c160f94e3d25, type: 3}
+      objectReference: {fileID: 21300000, guid: 3d0c819e3456b55419b008dd38bc2230, type: 3}
     - target: {fileID: 3580376561432852052, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3580376561432852053, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_Transition
@@ -760,18 +811,18 @@ PrefabInstance:
     - target: {fileID: 3580376561432852053, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_SpriteState.m_PressedSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0b773afd4c361d34c897b7429c73b22d, type: 3}
+      objectReference: {fileID: 21300000, guid: be853821a709b5440afb33cda0a120c0, type: 3}
     - target: {fileID: 3580376561432852053, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_SpriteState.m_HighlightedSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0b773afd4c361d34c897b7429c73b22d, type: 3}
+      objectReference: {fileID: 21300000, guid: be853821a709b5440afb33cda0a120c0, type: 3}
     - target: {fileID: 3580376561432852054, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 70
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3580376561432852054, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 70
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3580376561432852054, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -889,5 +940,6 @@ PrefabInstance:
       propertyPath: m_PixelsPerUnitMultiplier
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3580376560542115626, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 81ba19a26c3d69347939578648800bf8, type: 3}
