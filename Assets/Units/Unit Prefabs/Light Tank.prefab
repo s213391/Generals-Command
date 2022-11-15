@@ -208,11 +208,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
-  m_audioClip: {fileID: 8300000, guid: ddf8a9fed6f10d34f9193d999fe31fd9, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -352,7 +352,8 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 1550942886173042885}
-  attackSounds: []
+  attackSounds:
+  - {fileID: 8300000, guid: ddf8a9fed6f10d34f9193d999fe31fd9, type: 3}
   attackParticles:
   - {fileID: 3405138884981548289}
   killSounds: []

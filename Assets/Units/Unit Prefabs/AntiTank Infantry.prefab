@@ -178,17 +178,17 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 10
-  MaxDistance: 80
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -299,11 +299,18 @@ MonoBehaviour:
   - {fileID: 7465417969304834621}
   - {fileID: 4338973637363642931}
   - {fileID: 758120745626282803}
-  damageSounds: []
+  damageSounds:
+  - {fileID: 8300000, guid: 6566ab515f6a464418d1f17d691c4eeb, type: 3}
+  - {fileID: 8300000, guid: 44f2bfb3cae026e48a0609f0c35c45da, type: 3}
+  - {fileID: 8300000, guid: d1a1b5697c47e1e45a3b93ec8047e01b, type: 3}
   damageParticles: []
   healSounds: []
   healParticles: []
-  deathSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: 954121abe5529a646a0dc818b0d685c7, type: 3}
+  - {fileID: 8300000, guid: 43be654a41ead7049aae1c89a440962d, type: 3}
+  - {fileID: 8300000, guid: e81834573d4df4f468eabaf381bd19e7, type: 3}
+  - {fileID: 8300000, guid: 6566ab515f6a464418d1f17d691c4eeb, type: 3}
   deathParticles:
   - {fileID: 260375174556629771}
   - {fileID: 2218280721259587607}
@@ -326,7 +333,10 @@ MonoBehaviour:
   - {fileID: 7465417969304834621}
   - {fileID: 4338973637363642931}
   - {fileID: 758120745626282803}
-  attackSounds: []
+  attackSounds:
+  - {fileID: 8300000, guid: 9a4389003e59ac24c8b6f79da83103c9, type: 3}
+  - {fileID: 8300000, guid: fe1f55cc0e8b1b74098846888b901426, type: 3}
+  - {fileID: 8300000, guid: 54b2c473e68d40f4882d032fc1c0fc94, type: 3}
   attackParticles:
   - {fileID: 3976469174693763595}
   - {fileID: 3035285121746103268}
@@ -351,7 +361,12 @@ MonoBehaviour:
   - {fileID: 7465417969304834621}
   - {fileID: 4338973637363642931}
   - {fileID: 758120745626282803}
-  movementBeginSounds: []
+  movementBeginSounds:
+  - {fileID: 8300000, guid: 1d0cf90434f3474419030c04baa1fdc7, type: 3}
+  - {fileID: 8300000, guid: 5030e4d9a47361446ad743d7fc40a2cf, type: 3}
+  - {fileID: 8300000, guid: 65f14c6453db52b4db121c795fae9a22, type: 3}
+  - {fileID: 8300000, guid: 0717f5f8b72b2a946acbc739249abcd4, type: 3}
+  - {fileID: 8300000, guid: 1a75d82a2b4fda54c96fe0fa219a3406, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []
