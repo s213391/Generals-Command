@@ -253,10 +253,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -378,7 +378,9 @@ MonoBehaviour:
   damageParticles: []
   healSounds: []
   healParticles: []
-  deathSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: ecc517e7a0e396e42a4f3012969ff7d3, type: 3}
+  - {fileID: 8300000, guid: 97c597387e0de7d469f84feeb907f33d, type: 3}
   deathParticles:
   - {fileID: 5004971087947592375}
   - {fileID: 7231078456798013778}
@@ -401,7 +403,10 @@ MonoBehaviour:
   - {fileID: 8270287668209757478}
   - {fileID: 3987268983761615197}
   - {fileID: 5659146766499501730}
-  movementBeginSounds: []
+  movementBeginSounds:
+  - {fileID: 8300000, guid: f74b5b252300aae489eb51fee951cfac, type: 3}
+  - {fileID: 8300000, guid: 895ae579099737047a3f5fbb36bbe72b, type: 3}
+  - {fileID: 8300000, guid: b09b02454b4af844d93882d212e491b3, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []

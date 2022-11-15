@@ -209,10 +209,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -350,7 +350,9 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 4333301137155946829}
-  attackSounds: []
+  attackSounds:
+  - {fileID: 8300000, guid: 428eb2dc45fb22b46ae124ba04472094, type: 3}
+  - {fileID: 8300000, guid: 4d10f8d1306fffe47aa6d22cdc9860b0, type: 3}
   attackParticles: []
   killSounds: []
   killParticles: []
@@ -370,7 +372,11 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 4333301137155946829}
-  movementBeginSounds: []
+  movementBeginSounds:
+  - {fileID: 8300000, guid: 0e4d7fffdff665244960e838a7460496, type: 3}
+  - {fileID: 8300000, guid: 0a7c03121252644499335fa72b0b7b94, type: 3}
+  - {fileID: 8300000, guid: 4dc84248b0beac6489c00a792c73e5ca, type: 3}
+  - {fileID: 8300000, guid: 42815c1493bcbd8449d1a242e904a336, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []

@@ -137,18 +137,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
-  m_audioClip: {fileID: 8300000, guid: f52f98181eec6104bb194fe15c62b0cf, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 10
-  MaxDistance: 80
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -261,13 +261,14 @@ MonoBehaviour:
   - {fileID: 9023018000352442532}
   - {fileID: 6438899385057267681}
   - {fileID: 3100614502976845937}
-  damageSounds:
-  - {fileID: 0}
+  damageSounds: []
   damageParticles: []
   healSounds: []
   healParticles: []
   deathSounds:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 97c597387e0de7d469f84feeb907f33d, type: 3}
+  - {fileID: 8300000, guid: 4b4a8793b8ba95e459dd09718f856151, type: 3}
+  - {fileID: 8300000, guid: 43be654a41ead7049aae1c89a440962d, type: 3}
   deathParticles:
   - {fileID: 7558896187902850836}
   - {fileID: 8039306749688277502}
@@ -326,7 +327,12 @@ MonoBehaviour:
   - {fileID: 9023018000352442532}
   - {fileID: 6438899385057267681}
   - {fileID: 3100614502976845937}
-  movementBeginSounds: []
+  movementBeginSounds:
+  - {fileID: 8300000, guid: 9d6658e7fcc381c40a8a5fb71eb80ba5, type: 3}
+  - {fileID: 8300000, guid: 1d0cf90434f3474419030c04baa1fdc7, type: 3}
+  - {fileID: 8300000, guid: 02b959b22b3454a45895f0b5941e81be, type: 3}
+  - {fileID: 8300000, guid: f6ed218267c6a174eb3dce51e6ad28d2, type: 3}
+  - {fileID: 8300000, guid: ecbf3fb8ed16c5d47a2553e1c0c4cd09, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []
