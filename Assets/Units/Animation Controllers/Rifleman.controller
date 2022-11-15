@@ -66,47 +66,55 @@ BlendTree:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
+  m_Name: Rifle Run
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: a94a54919100f3a45b5666cf1b9bf7c7, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0, y: 0}
+    m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 34c284047c1e631409ae557178a7f26b, type: 2}
-    m_Threshold: 0.33333334
-    m_Position: {x: 0, y: 0}
+    m_Threshold: 0.1875
+    m_Position: {x: 0, y: -1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 79bafd3e2228d2940998e9aa83e6025f, type: 2}
-    m_Threshold: 0.6666667
-    m_Position: {x: 0, y: 0}
+    m_Threshold: 0.375
+    m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 980202d91aafd694a8c49b4514751869, type: 2}
-    m_Threshold: 1
-    m_Position: {x: 0, y: 0}
+    m_Threshold: 0.5625
+    m_Position: {x: 1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: f8027f36ee2ddbf498857f6dd8b2d627, type: 2}
+    m_Threshold: 0.75
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: ForwardFacing
+    m_Mirror: 0
   m_BlendParameter: RightFacing
   m_BlendParameterY: ForwardFacing
   m_MinThreshold: 0
-  m_MaxThreshold: 1
+  m_MaxThreshold: 0.75
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
-  m_BlendType: 3
+  m_BlendType: 1
 --- !u!1101 &-7677549792586971123
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
