@@ -186,7 +186,7 @@ public class HUD : MonoBehaviour
             saveButton.interactable = false;
             if (!saveButtonText)
                 saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            saveButtonText.text = "Apply Settings";
+            saveButtonText.text = "Apply";
         }
     }
 
@@ -208,7 +208,7 @@ public class HUD : MonoBehaviour
         saveButton.interactable = true;
         if (!saveButtonText)
             saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        saveButtonText.text = "Apply Settings";
+        saveButtonText.text = "Apply";
     }
 
 
@@ -218,7 +218,7 @@ public class HUD : MonoBehaviour
         saveButton.interactable = false;
         if (!saveButtonText)
             saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        saveButtonText.text = "Settings Applied";
+        saveButtonText.text = "Applied";
 
         Settings.Save();
     }
@@ -237,7 +237,7 @@ public class HUD : MonoBehaviour
         saveButton.interactable = false;
         if (!saveButtonText)
             saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        saveButtonText.text = "Settings Applied";
+        saveButtonText.text = "Applied";
     }
 
     #endregion
