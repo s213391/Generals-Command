@@ -178,22 +178,27 @@ namespace RTSModularSystem
             }
             
             //if the touch/click began this frame and is not over UI, turn on selection box
-            if (dragSelectionEnabled && down && !touchStartedOverUI)
+            if (down)
             {
-                selectionBox.sizeDelta = Vector2.zero;
-                selectionImage.enabled = true;
                 downTime = 0.0f;
 
-                if (device == DeviceType.Desktop)
-                    originalPos = Input.mousePosition;
-                else if (device == DeviceType.Handheld)
-                    originalPos = Input.GetTouch(0).rawPosition;
+                if (dragSelectionEnabled && !touchStartedOverUI)
+                {
+                    selectionBox.sizeDelta = Vector2.zero;
+                    selectionImage.enabled = true;
+
+                    if (device == DeviceType.Desktop)
+                        originalPos = Input.mousePosition;
+                    else if (device == DeviceType.Handheld)
+                        originalPos = Input.GetTouch(0).rawPosition;
+                }
             }
             //if the touch/click is still down, update timer and selection box
             else if (held && selectionImage.enabled == true)
             {
                 downTime += Time.deltaTime;
-                if (downTime >= dragDelay)
+
+                if (selectionImage.enabled == true && downTime >= dragDelay)
                 {
                     float width = 0.0f;
                     float height = 0.0f;
@@ -228,9 +233,6 @@ namespace RTSModularSystem
                 //only check the box if the touch/click has been down for a set delay
                 if (dragSelectionEnabled && downTime > dragDelay)
                 {
-                    if (!dragSelectionEnabled)
-                        return;
-                    
                     selectedThisFrame = true;
 
                     //create a bounding box in screen space and select every owned player object in the world space of that box

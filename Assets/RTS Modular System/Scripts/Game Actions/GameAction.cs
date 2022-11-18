@@ -193,7 +193,7 @@ namespace RTSModularSystem
                         return ae;
 
                     case ActionEndType.duration:
-                        if (duration >= ae.seconds)
+                        if (duration >= ProductionModifier.GetModifiedDuration(data))
                             return ae;
                         break;
 
@@ -344,8 +344,8 @@ namespace RTSModularSystem
             PlayerObject playerObject = functionCaller.GetComponent<PlayerObject>();
 
             //track duration regardless of endConditions
-            float duration = 0.0f;
-            int durationIndex = data.endConditions.FindIndex(x => x.type == ActionEndType.duration && x.successfulEnd);
+            float elapsedDuration = 0.0f;
+            float duration = ProductionModifier.GetModifiedDuration(data);
 
             bool previousCameraState = CameraController.instance.movementEnabled;
             bool previousDragSelectionState = PlayerInput.instance.dragSelectionEnabled;
@@ -377,12 +377,12 @@ namespace RTSModularSystem
             do
             {
                 //reset duration each loop if duration is a successful action end
-                if (loop && durationIndex != -1)
+                if (loop && duration != 0.0f)
                 {
-                    if (duration >= data.endConditions[durationIndex].seconds)
-                        duration -= data.endConditions[durationIndex].seconds;
+                    if (elapsedDuration >= duration)
+                        elapsedDuration -= duration;
                     else
-                        duration = 0.0f;
+                        elapsedDuration = 0.0f;
                 }
                 
                 List<GameObject> objectsCreated = new List<GameObject>();
@@ -511,7 +511,7 @@ namespace RTSModularSystem
                     //exit conditions can be accidentally triggered by the input that started this action, delay exit checking for one frame
                     if (!firstTime)
                     {
-                        duration += Time.deltaTime;
+                        elapsedDuration += Time.deltaTime;
 
                         //get the mouse's position and update any objects following it
                         //it is impractical to send the position of the clients mouse over the network every frame, so only clientside allows mouse tracking
@@ -601,7 +601,7 @@ namespace RTSModularSystem
                             }
                         }
 
-                        ActionEnd actionEnd = EndConditionActive(data.endConditions, duration, playerObject, data);
+                        ActionEnd actionEnd = EndConditionActive(data.endConditions, elapsedDuration, playerObject, data);
                         if (actionEnd.type != ActionEndType.none)
                         {
                             //evaluate conditions to choose whether this action will end as a success or a failure
@@ -614,9 +614,9 @@ namespace RTSModularSystem
                             if (success && !data.changeResourcesAtStart && data.resourceChange.Count > 0)
                             {
                                 if (!data.clientSide)
-                                    success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, data.resourceChange);
-                                else if (ResourceManager.instance.IsResourceChangeValid(playerObject.owningPlayer, owningPlayer, data.resourceChange, false, true))
-                                    CmdOneOffResourceChange(owningPlayer, data.resourceChange);
+                                    success = ResourceManager.instance.OneOffResourceChange(playerObject.owningPlayer, owningPlayer, CostModifier.GetModifiedCost(data));
+                                else if (ResourceManager.instance.IsResourceChangeValid(playerObject.owningPlayer, owningPlayer, CostModifier.GetModifiedCost(data), false, true))
+                                    CmdOneOffResourceChange(owningPlayer, CostModifier.GetModifiedCost(data));
                                 else
                                     success = false;
                             }

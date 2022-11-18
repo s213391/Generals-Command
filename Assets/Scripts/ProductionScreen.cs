@@ -33,7 +33,7 @@ public class ProductionScreen : MonoBehaviour
         partsCost.text = "0";
         uraniumCost.text = "0";
 
-        foreach (ResourceQuantity cost in data.resourceChange)
+        foreach (ResourceQuantity cost in CostModifier.GetModifiedCost(data))
         {
             switch (cost.resourceType)
             {
