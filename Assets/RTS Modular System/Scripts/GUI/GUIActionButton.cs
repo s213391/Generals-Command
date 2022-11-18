@@ -8,15 +8,15 @@ using TMPro;
 
 public class GUIActionButton : MonoBehaviour
 {
-    private List<ResourceQuantity> costs;
+    private GameActionData action;
     private List<ResourceQuantity> currentResources;
     private Button button;
     private uint ID;
     public List<TextMeshProUGUI> costTexts;
     
-    public void Init(List<ResourceQuantity> cost)
+    public void Init(GameActionData data)
     {
-        costs = cost;
+        action = data;
         button = GetComponent<Button>();
         ID = RTSPlayer.GetID();
     }
@@ -29,7 +29,7 @@ public class GUIActionButton : MonoBehaviour
         for (int i = 0; i < costTexts.Count; i++)
         {
             bool found = false;
-            foreach (ResourceQuantity cost in costs)
+            foreach (ResourceQuantity cost in CostModifier.GetModifiedCost(action))
             {
                 if ((int)cost.resourceType == i)
                 {

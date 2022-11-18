@@ -30,6 +30,7 @@ public class LobbyPlayerUI : MonoBehaviour
     public void Init()
     {
         isOccupied = false;
+        nameField.onSelect.AddListener(NameFieldSelected);
         nameField.onEndEdit.AddListener(ServerLobby.instance.SetPlayerName);
         colourDropdown.Init(0);
         colourDropdown.onValueChanged.AddListener(ServerLobby.instance.SetChosenOption);
@@ -93,5 +94,13 @@ public class LobbyPlayerUI : MonoBehaviour
             return colourDropdown;
         else
             return teamDropdown;
+    }
+
+
+    //removes the appended (You) from the text field when selected
+    public void NameFieldSelected(string text)
+    {
+        if (text.Substring(text.Length - 6, 6) == " (You)")
+            nameField.text = text.Substring(0, text.Length - 6);
     }
 }

@@ -101,7 +101,7 @@ namespace RTSModularSystem
 
                 //initialise button to check resource values
                 buttons.Add(guiActionButton);
-                guiActionButton.Init(actionData.resourceChange);
+                guiActionButton.Init(actionData);
 
                 //set name and sprite from action data
                 icon.sprite = actionData.icon;

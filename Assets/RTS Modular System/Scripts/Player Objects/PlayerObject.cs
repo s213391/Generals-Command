@@ -271,7 +271,7 @@ namespace RTSModularSystem
             GameActionData actionData = data.actions[index].action;
 
             if (actionData.changeResourcesAtStart && actionData.resourceChange.Count > 0)
-                RTSPlayer.ApplyCost(actionData.resourceChange, owningPlayer);
+                RTSPlayer.ApplyCost(CostModifier.GetModifiedCost(actionData), owningPlayer);
 
             if (actionData.queueAction)
             {
