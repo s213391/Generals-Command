@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
+  m_Name: Spawn Nuclear Missile
+  m_EditorClassIdentifier: 
+  description: Placeholder
+  cooldown: 0
+  clientSide: 1
+  lockInput: 0
+  lockCamera: 0
+  showOnActionBar: 1
+  queueAction: 1
+  icon: {fileID: 21300000, guid: 3993a55e98a1ad544ae0525da58a69f0, type: 3}
+  interruptionTolerance: 3
+  objectsToSpawn:
+  - prefab: {fileID: 151736284277679920, guid: cee7b702d81c3e94f8d41a5f6e7fcd4b, type: 3}
+    location: 0
+    worldPosition: 0
+    position: {x: 20, y: 0, z: 0}
+    worldRotation: 0
+    rotation: {x: 0, y: 0, z: 0}
+    mouseLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    snapToObject: 0
+    snapDistance: 0
+    onlyMoveWhenUnderCursor: 0
+    createAfterAction: 1
+    destroyAfterAction: 1
+    serverSpawnAfterAction: 1
+  changeResourcesAtStart: 1
+  resourceChange:
+  - resourceType: 0
+    quantity: 5
+  - resourceType: 1
+    quantity: 5
+  - resourceType: 2
+    quantity: 5
+  - resourceType: 3
+    quantity: 5
+  - resourceType: 4
+    quantity: 5
+  incomeChange: []
+  loopOnSuccessfulEnd: 0
+  endConditions:
+  - successfulEnd: 1
+    type: 5
+    seconds: 60
+  successConditions: []
+  nextActionsOnSuccess: []
+  nextActionsOnFailure: []
+  onActionStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6614102653497272768, guid: 08b657289bbdb634facb062ee73f99b6, type: 3}
+        m_TargetAssemblyTypeName: ShowUnitProduction, Assembly-CSharp
+        m_MethodName: Icon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onActionEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onConditionEvaluate:
+    m_PersistentCalls:
+      m_Calls: []

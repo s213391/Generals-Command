@@ -63,7 +63,8 @@ namespace RTSModularSystem
         //update all components of the gui
         public static void OnUpdate()
         {
-            guiResources.OnUpdate();
+            if (guiResources.isActiveAndEnabled)
+                guiResources.OnUpdate();
         }
     }
 }

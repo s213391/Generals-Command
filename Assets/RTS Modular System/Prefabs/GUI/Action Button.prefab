@@ -287,6 +287,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd29bc82e253a04468f3934b3f7a9fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  costTexts:
+  - {fileID: 8877756341250432387}
+  - {fileID: 8280062858308175676}
+  - {fileID: 8279805642069593934}
+  - {fileID: 4199408429631926512}
+  - {fileID: 2185371062368444004}
 --- !u!1 &146996518225793797
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +529,7 @@ GameObject:
   - component: {fileID: 8457644265102259463}
   - component: {fileID: 3637092120977834848}
   m_Layer: 5
-  m_Name: Resource Count (2)
+  m_Name: Oil Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -569,7 +575,7 @@ GameObject:
   - component: {fileID: 8695547808706445510}
   - component: {fileID: 5488971245615615434}
   m_Layer: 5
-  m_Name: Resource Count
+  m_Name: Money Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1582,7 +1588,7 @@ GameObject:
   - component: {fileID: 2800454984027180826}
   - component: {fileID: 1307764922512184882}
   m_Layer: 5
-  m_Name: Resource Count (4)
+  m_Name: Uranium Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1628,7 +1634,7 @@ GameObject:
   - component: {fileID: 7727425978343818552}
   - component: {fileID: 150525901041215332}
   m_Layer: 5
-  m_Name: Resource Count (1)
+  m_Name: Scrap Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1674,7 +1680,7 @@ GameObject:
   - component: {fileID: 1726605896368535339}
   - component: {fileID: 7913632711581050742}
   m_Layer: 5
-  m_Name: Resource Count (3)
+  m_Name: Parts Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

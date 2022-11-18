@@ -12,7 +12,6 @@ public class GUIPlayerScore : MonoBehaviour
     public float flashDuration = 0.2f;
     public int commandCentreHealth = 2000;
 
-    private RectTransform rectTransform;
     private List<TextMeshProUGUI> playerNames = new List<TextMeshProUGUI>();
     private List<TextMeshProUGUI> playerHealth = new List<TextMeshProUGUI>();
     private List<bool> playerHealthFlashing = new List<bool>();
@@ -29,9 +28,6 @@ public class GUIPlayerScore : MonoBehaviour
         instance = this;
 
         playerObjectHealths = new List<int>();
-
-        for (int i = 0; i < 4; i++)
-            playerScores[i].SetActive(false);
         
         for (int i = 0; i < GameData.instance.playerData.Count; i++)
         {
@@ -48,6 +44,9 @@ public class GUIPlayerScore : MonoBehaviour
             playerObjectHealths.Add(commandCentreHealth);
             playerHealthFlashing.Add(false);
         }
+
+        for (int i = GameData.instance.playerData.Count; i < playerScores.Count;i++)
+            playerScores[i].SetActive(false);
     }
 
 

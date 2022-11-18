@@ -13,7 +13,7 @@ public abstract class EffectEventsBase : NetworkBehaviour
         else if (clips.Length == 1)
             audioSource.PlayOneShot(clips[0]);
         else
-            audioSource.PlayOneShot(clips[(int)Random.Range(1, clips.Length)]);
+            audioSource.PlayOneShot(clips[Random.Range(0, clips.Length)]);
     }
 
 
