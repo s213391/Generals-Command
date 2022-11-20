@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4271690238267761831}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -40}
+  m_LocalPosition: {x: -10.49, y: 0, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 741354323708535263}
@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 8824255175272344473}
   - component: {fileID: 1287279899953743038}
   - component: {fileID: 9156423007430148016}
+  - component: {fileID: 7415925781189625725}
   m_Layer: 0
   m_Name: Command Center
   m_TagString: Untagged
@@ -353,6 +354,27 @@ MonoBehaviour:
   healParticles: []
   deathSounds: []
   deathParticles: []
+--- !u!114 &7415925781189625725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852773982916845588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618d5a512709b854794f5deef2f49bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  fadeOutTime: 1
+  blackScreenDuration: 1
+  fadeInTime: 1
+  cameraDistance: 50
+  missileData: {fileID: 11400000, guid: 319d39ced5a923c45878f71715ec694b, type: 2}
+  launchButtonPrefab: {fileID: 8855649258719456708, guid: 7864c955e9dfe2a40a25341040114ae1, type: 3}
+  launchCountdownPrefab: {fileID: 6073136772782330199, guid: bfdcc211e1f30434492385e540f8af5c, type: 3}
 --- !u!1001 &1454370830870896437
 PrefabInstance:
   m_ObjectHideFlags: 0

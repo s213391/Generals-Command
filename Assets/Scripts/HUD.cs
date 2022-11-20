@@ -7,6 +7,8 @@ using TMPro;
 
 public class HUD : MonoBehaviour
 {   
+    public static HUD instance { get; private set; }
+    
     [Header("Minimap")]
     public GameObject minimapExpanded;
     public GameObject minimapMinimised;
@@ -37,6 +39,16 @@ public class HUD : MonoBehaviour
     TextMeshProUGUI saveButtonText;
 
 
+    //setup the singleton
+    private void Start()
+    {
+        if (instance != null && instance != this)
+            Destroy(this);
+        else
+            instance = this;
+    }
+
+
     //sets the HUD to default state on GUI initialise
     public void Init()
     {
@@ -46,6 +58,13 @@ public class HUD : MonoBehaviour
         ToggleInGameMenu(false);
         ToggleAddToGroupMenu(false);
         ToggleOptionsMenu(false);
+    }
+
+
+    //enables/disables the HUD
+    public void SetEnabled(bool enable)
+    {
+        gameObject.SetActive(enable);
     }
 
 
@@ -167,7 +186,7 @@ public class HUD : MonoBehaviour
             saveButton.interactable = false;
             if (!saveButtonText)
                 saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            saveButtonText.text = "Apply Settings";
+            saveButtonText.text = "Apply";
         }
     }
 
@@ -189,7 +208,7 @@ public class HUD : MonoBehaviour
         saveButton.interactable = true;
         if (!saveButtonText)
             saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        saveButtonText.text = "Apply Settings";
+        saveButtonText.text = "Apply";
     }
 
 
@@ -199,7 +218,7 @@ public class HUD : MonoBehaviour
         saveButton.interactable = false;
         if (!saveButtonText)
             saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        saveButtonText.text = "Settings Applied";
+        saveButtonText.text = "Applied";
 
         Settings.Save();
     }
@@ -218,7 +237,7 @@ public class HUD : MonoBehaviour
         saveButton.interactable = false;
         if (!saveButtonText)
             saveButtonText = saveButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        saveButtonText.text = "Settings Applied";
+        saveButtonText.text = "Applied";
     }
 
     #endregion

@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using RTSModularSystem.GameResources;
 using RTSModularSystem;
+using TMPro;
 
 public class GUIActionButton : MonoBehaviour
 {
-    private List<ResourceQuantity> cost;
+    private GameActionData action;
+    private List<ResourceQuantity> currentResources;
     private Button button;
     private uint ID;
+    public List<TextMeshProUGUI> costTexts;
     
-    public void Init(List<ResourceQuantity> costs)
+    public void Init(GameActionData data)
     {
-        cost = costs;
+        action = data;
         button = GetComponent<Button>();
         ID = RTSPlayer.GetID();
     }
@@ -21,9 +24,31 @@ public class GUIActionButton : MonoBehaviour
     
     public void OnUpdate()
     {
-        if (ResourceManager.instance.IsResourceChangeValid(ID, ID, cost, false, true))
-            button.interactable = true;
-        else
-            button.interactable = false;
+        /*currentResources = ResourceManager.instance.GetResourceValues(ID, ID);
+
+        for (int i = 0; i < costTexts.Count; i++)
+        {
+            bool found = false;
+            foreach (ResourceQuantity cost in CostModifier.GetModifiedCost(action))
+            {
+                if ((int)cost.resourceType == i)
+                {
+                    costTexts[i].text = (-cost.quantity).ToString();
+                    found = true;
+                    if (currentResources[i].quantity > -cost.quantity)
+                        costTexts[i].color = Color.white;
+                    else
+                        costTexts[i].color = Color.red;
+
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                costTexts[i].text = "0";
+                costTexts[i].color = Color.white;
+            }
+        }*/
     }
 }

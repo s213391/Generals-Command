@@ -1,51 +1,100 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 public class GameTimer : MonoBehaviour
 {
+    public int secondsDuration;
+    public bool showMinutes;
+    public bool showSeconds;
+    public bool showMilliseconds;
+
+    [Space]
+    public TextMeshProUGUI timerText;
+    public UnityEvent onTimerEnd;
+
     float secondsLeft;
-    TextMeshProUGUI timerText;
-    
-    // Start is called before the first frame update
+
+
+    //set up timer
     void Start()
     {
-        timerText = GetComponentInChildren<TextMeshProUGUI>();
-        
-        secondsLeft = 300f;
-        timerText.text = "5:00";
+        if (!timerText)
+            timerText = GetComponentInChildren<TextMeshProUGUI>();
+
+        secondsLeft = secondsDuration;
+        timerText.text = GetTimeString();
     }
 
-    // Update is called once per frame
+
+    //count timer down then disable script
     void Update()
     {
-
+        secondsLeft -= Time.deltaTime;
         if (secondsLeft > 0)
         {
-            secondsLeft -= Time.deltaTime;
-            if ((int)secondsLeft % 60 < 10)
-                timerText.text = ((int)secondsLeft / 60).ToString() + ":0" + ((int)secondsLeft % 60).ToString();
-            else
-                timerText.text = ((int)secondsLeft / 60).ToString() + ":" + ((int)secondsLeft % 60).ToString();
-
+            timerText.text = GetTimeString();
             return;
         }
 
-        int highestHealthPlayer = -1;
-        int highestHealth = 0;
-        for (int i = 0; i < GameData.instance.playerData.Count; i++)
+        secondsLeft = 0.0001f;
+        timerText.text = GetTimeString();
+
+        onTimerEnd.Invoke();
+        enabled = false;
+    }
+
+
+    //get text that shows current time remaining
+    string GetTimeString()
+    {
+        string timeText = "";
+
+        if (showMinutes)
+            timeText = MinutesString();
+
+        if (showSeconds)
         {
-            if (GUIPlayerScore.instance.playerObjectHealths[i] > highestHealth)
-            { 
-                highestHealth = GUIPlayerScore.instance.playerObjectHealths[i];
-                highestHealthPlayer = i;
-            }
+            if (showMinutes)
+                timeText += ":";
+
+            timeText += SecondsString();
         }
 
-        if (highestHealthPlayer == GameData.instance.localPlayerNumber)
-            GameOver.instance.TriggerGameOver(true);
+        if (showMilliseconds)
+        {
+            if (showSeconds)
+                timeText += ".";
+
+            timeText += MillisecondsString();
+        }
+
+        return timeText;
+    }
+
+
+    //convert seconds float into minutes string
+    string MinutesString()
+    {
+        return ((int)secondsLeft / 60).ToString();
+    }
+
+
+    //convert seconds float into seconds string
+    string SecondsString()
+    {
+        int seconds = (int)secondsLeft % 60;
+        
+        if (showMinutes && seconds < 10)
+            return "0" + seconds.ToString();
         else
-            GameOver.instance.TriggerGameOver(false);
+            return seconds.ToString();
+    }
+
+
+    //convert seconds float into milliseconds string
+    string MillisecondsString()
+    {
+        return (secondsLeft.ToString() + "000").Substring(2,3);
     }
 }

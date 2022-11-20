@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
   m_Name: Spawn Supply Center
   m_EditorClassIdentifier: 
+  description: 
   cooldown: 0
   clientSide: 1
   lockInput: 0
@@ -22,9 +23,9 @@ MonoBehaviour:
   interruptionTolerance: 1
   objectsToSpawn:
   - prefab: {fileID: 8904034498900065490, guid: dde0f9bc96916ce4b90a52181f5c6ab6, type: 3}
-    location: 2
+    location: 0
     worldPosition: 0
-    position: {x: -1.5, y: 0, z: 30}
+    position: {x: 0, y: 0, z: -40}
     worldRotation: 0
     rotation: {x: 0, y: 270, z: 0}
     mouseLayerMask:
@@ -32,6 +33,7 @@ MonoBehaviour:
       m_Bits: 0
     snapToObject: 0
     snapDistance: 0
+    onlyMoveWhenUnderCursor: 0
     createAfterAction: 0
     destroyAfterAction: 1
     serverSpawnAfterAction: 1
@@ -47,6 +49,9 @@ MonoBehaviour:
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
   onActionStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onActionEnd:
     m_PersistentCalls:
       m_Calls: []
   onConditionEvaluate:

@@ -20,59 +20,31 @@ public class ProductionScreen : MonoBehaviour
     public Button cancelButton;
     public Button placeButton;
     public Button closeButton;
-    
+
+    PlayerObject playerObject;
+    GameActionData gameActionData;
+    List<ResourceQuantity> currentResources;
+
     public void OpenScreen(PlayerObject po, GameActionData data)
     {
-        title.text = data.name;
-        description.text = data.description;
-        preview.sprite = data.icon;
+        playerObject = po;
+        gameActionData = data;
 
-        moneyCost.text = "0";
-        scrapCost.text = "0";
-        oilCost.text = "0";
-        partsCost.text = "0";
-        uraniumCost.text = "0";
+        title.text = gameActionData.name;
+        description.text = gameActionData.description;
+        preview.sprite = gameActionData.icon;
 
-        foreach (ResourceQuantity cost in data.resourceChange)
+        DisplayCosts();
+
+        produceButton.onClick.AddListener(delegate
         {
-            switch (cost.resourceType)
-            {
-                case ResourceType.Money:
-                    moneyCost.text = cost.quantity.ToString();
-                    if (moneyCost.text.StartsWith("-"))
-                        moneyCost.text = moneyCost.text.Substring(1);
-                    break;
-                case ResourceType.Scrap:
-                    scrapCost.text = cost.quantity.ToString();
-                    if (scrapCost.text.StartsWith("-"))
-                        scrapCost.text = scrapCost.text.Substring(1);
-                    break;
-                case ResourceType.Oil:
-                    oilCost.text = cost.quantity.ToString();
-                    if (oilCost.text.StartsWith("-"))
-                        oilCost.text = oilCost.text.Substring(1);
-                    break;
-                case ResourceType.MechanicalParts:
-                    partsCost.text = cost.quantity.ToString();
-                    if (partsCost.text.StartsWith("-"))
-                        partsCost.text = partsCost.text.Substring(1);
-                    break;
-                case ResourceType.Uranium:
-                    uraniumCost.text = cost.quantity.ToString();
-                    if (uraniumCost.text.StartsWith("-"))
-                        uraniumCost.text = uraniumCost.text.Substring(1);
-                    break;
-            }
-        }
-
-        produceButton.onClick.AddListener(delegate { 
-            if (!data.queueAction)
+            if (!gameActionData.queueAction)
             {
                 placeButton.gameObject.SetActive(true);
                 closeButton.gameObject.SetActive(true);
                 placeButton.onClick.AddListener(delegate
                 {
-                    RTSPlayer.localPlayer.SetTrigger(po, data, true);
+                    RTSPlayer.localPlayer.SetTrigger(playerObject, gameActionData, true);
                     placeButton.onClick.RemoveAllListeners();
                     closeButton.onClick.RemoveAllListeners();
                     placeButton.gameObject.SetActive(false);
@@ -80,7 +52,7 @@ public class ProductionScreen : MonoBehaviour
                 });
                 closeButton.onClick.AddListener(delegate
                 {
-                    RTSPlayer.localPlayer.SetTrigger(po, data, false);
+                    RTSPlayer.localPlayer.SetTrigger(playerObject, gameActionData, false);
                     placeButton.onClick.RemoveAllListeners();
                     closeButton.onClick.RemoveAllListeners();
                     placeButton.gameObject.SetActive(false);
@@ -88,7 +60,7 @@ public class ProductionScreen : MonoBehaviour
                 });
             }
 
-            po.StartAction(po.GetActionIndex(data));
+            playerObject.StartAction(playerObject.GetActionIndex(gameActionData));
             CloseScreen();
         });
         cancelButton.onClick.AddListener(CloseScreen);
@@ -113,5 +85,88 @@ public class ProductionScreen : MonoBehaviour
         cancelButton.onClick.RemoveAllListeners();
 
         gameObject.SetActive(false);
+    }
+
+
+    void Update()
+    {
+        DisplayCosts();
+    }
+
+
+    void DisplayCosts()
+    {
+        moneyCost.text = "0";
+        scrapCost.text = "0";
+        oilCost.text = "0";
+        partsCost.text = "0";
+        uraniumCost.text = "0";
+
+        moneyCost.color = Color.black;
+        scrapCost.color = Color.black;
+        oilCost.color = Color.black;
+        partsCost.color = Color.black;
+        uraniumCost.color = Color.black;
+
+        currentResources = ResourceManager.instance.GetResourceValues(RTSPlayer.GetID(), RTSPlayer.GetID());
+
+        bool canAfford = true;
+
+        foreach (ResourceQuantity cost in CostModifier.GetModifiedCost(gameActionData))
+        {
+            switch (cost.resourceType)
+            {
+                case ResourceType.Money:
+                    moneyCost.text = (-cost.quantity).ToString();
+                    if (currentResources[0].quantity < -cost.quantity)
+                    {
+                        moneyCost.color = Color.red;
+                        canAfford = false;
+                    }
+                    break;
+
+
+                case ResourceType.Scrap:
+                    scrapCost.text = (-cost.quantity).ToString();
+                    if (currentResources[1].quantity < -cost.quantity)
+                    {
+                        scrapCost.color = Color.red;
+                        canAfford = false;
+                    }
+                    break;
+
+
+                case ResourceType.Oil:
+                    oilCost.text = (-cost.quantity).ToString();
+                    if (currentResources[2].quantity < -cost.quantity)
+                    {
+                        oilCost.color = Color.red;
+                        canAfford = false;
+                    }
+                    break;
+
+
+                case ResourceType.MechanicalParts:
+                    partsCost.text = (-cost.quantity).ToString();
+                    if (currentResources[3].quantity < -cost.quantity)
+                    {
+                        partsCost.color = Color.red;
+                        canAfford = false;
+                    }
+                    break;
+
+
+                case ResourceType.Uranium:
+                    uraniumCost.text = (-cost.quantity).ToString();
+                    if (currentResources[4].quantity < -cost.quantity)
+                    {
+                        uraniumCost.color = Color.red;
+                        canAfford = false;
+                    }
+                    break;
+            }
+        }
+
+        produceButton.gameObject.SetActive(canAfford);
     }
 }

@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a783e4ada470300448b05d52e35aa215, type: 3}
+  m_Name: Engineer
+  m_EditorClassIdentifier: 
+  objectType: 1
+  attackable: 1
+  maxHealth: 1
+  resistances:
+  - damageType: 0
+    percentageResistance: 0
+  - damageType: 1
+    percentageResistance: 0
+  - damageType: 2
+    percentageResistance: 0
+  - damageType: 3
+    percentageResistance: 0
+  healthBarHeight: 5
+  healthBarWidth: 1
+  xpOnDeath: 0
+  persistAtZeroHealth: 0
+  attacker: 0
+  attackType: 0
+  damageType: 0
+  targetType: 0
+  attackDamage: 5
+  attackRange: 0.5
+  attackDuration: 1
+  canAutoTarget: 0
+  autoTargetRange: 1
+  levelable: 0
+  level: 1
+  nextLevel: {fileID: 0}
+  xpRequirement: -1
+  moveable: 1
+  moveSpeed: 20
+  acceleration: 40
+  angularSpeed: 120
+  agentHeight: 2
+  agentWidth: 3.6
+  pathfingPriority: 50
+  passThroughOtherAgents: 1
+  unitCap: -1
+  visibilityRanges: []
+  sprite: {fileID: 21300000, guid: c40e439d60bc69744a50d2c1c741edb8, type: 3}
+  selectable: 1
+  actions:
+  - action: {fileID: 11400000, guid: 05c86614eff4b7442b0865623a960d18, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: b7420b50a40e8824fa5a75d696db1699, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: 12b17aa38eb307b45b936788d7e8c6d8, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: 93cc34f61015f27449d1cc066bcb73e7, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: d56b170d890292c43a4ed8a69e116897, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: b2a37f4b2cb31e24f92ef0284d12c781, type: 2}
+    autoStart: 0
+  - action: {fileID: 11400000, guid: 800c1023229170f468f0539178624bf0, type: 2}
+    autoStart: 0

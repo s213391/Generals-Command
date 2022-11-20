@@ -22,16 +22,16 @@ namespace RTSModularSystem
         //each ring will be the size of the previous ring, plus unit spacing and the radii of the largest agents from each of the two rings
         //the centrepoint can be another agent whose size will determine the radius of the first ring
         //must specify if target is enemy or not to use a target, if an enemy, ranged units' destinations will be at their max range away from the enemy
-        public void AssignDestination(List<NavMeshAgent> agents, Vector3 centrepoint, bool isTargetAnEnemy = false, PlayerObject target = null)
+        public void AssignDestination(List<Moveable> moveables, Vector3 centrepoint, bool playerTriggered, bool isTargetAnEnemy = false, PlayerObject target = null)
         {
-            if (agents.Count == 0)
+            if (moveables.Count == 0)
                 return;
             
             //if there is a target, the centrepoint does not need to be (and likely isn't) on the navmesh
             if (target == null)
             {
                 //do not set any destinations if there is no target and the given point is off the navmesh
-                if (!NavMesh.SamplePosition(centrepoint, out NavMeshHit centreHit, 0.2f, NavMesh.AllAreas) || agents.Count == 0)
+                if (!NavMesh.SamplePosition(centrepoint, out NavMeshHit centreHit, 0.2f, 1))
                     return;
                 else
                     //make sure the centrepoint is on the navmesh
@@ -50,50 +50,45 @@ namespace RTSModularSystem
             ringRadii = new List<float>();
             ringAngleOffset = new List<int>();
 
-            //sort list of agents, largest to smallest
-            agents.Sort((y, x) => x.radius.CompareTo(y.radius));
+            //create zeroth ring
+            ringRadii.Add(0);
+            spaceLeftInRing.Add(0);
+            ringAngleOffset.Add(0);
 
+            //sort list of agents, largest to smallest
+            moveables.Sort((y, x) => x.width.CompareTo(y.width));
+
+            int startIndex;
             //initialise first ring based on whether a target exists
-            int loopStart;
             if (target != null)
             {
-                //create zeroth ring
-                ringRadii.Add(0);
-                spaceLeftInRing.Add(0);
-                ringAngleOffset.Add(0);
-
                 //set radius of first ring based on target size
                 if (targetAgent)
                     ringRadii.Add(targetAgent.radius + unitSpacing);
                 else if (targetObstacle)
                     ringRadii.Add(targetObstacle.radius + unitSpacing);
 
-                loopStart = 0;
+                startIndex = 0;
             }
             else
             {
-                RTSPlayer.localPlayer.CmdMoveUnit(agents[0].gameObject, centrepoint);
-
-                //if there is only one agent and no target, there is no need for calculating rings
-                if (agents.Count == 1)
-                    return;
-
-                //create zeroth ring
-                ringRadii.Add(0);
-                spaceLeftInRing.Add(0);
-                ringAngleOffset.Add(0);
-
                 //set radius of first ring based on the largest agent's size
-                ringRadii.Add(agents[0].radius + unitSpacing);
-                loopStart = 1;
+                ringRadii.Add(moveables[0].width + unitSpacing);
+                if (Physics.OverlapSphere(centrepoint, moveables[0].width, LayerMask.GetMask("Movement")).Length == 0)
+                {
+                    RTSPlayer.localPlayer.CmdMoveUnit(moveables[0].gameObject, centrepoint, playerTriggered);
+                    startIndex = 1;
+                }
+                else
+                    startIndex = 0;
             }
 
             //set up rest of first ring based on the radius
-            spaceLeftInRing.Add(ringRadii[0] * 2 * Mathf.PI);
+            spaceLeftInRing.Add(ringRadii[1] * 2 * Mathf.PI);
             ringAngleOffset.Add(Random.Range(0, 360));
 
             //set the destination of each agent in rings expanding out from the centrepoint
-            for (int i = loopStart; i < agents.Count; i++)
+            for (int i = startIndex; i < moveables.Count; i++)
             {
                 int attemptCount = 0;
                 //choose a ring and position until one is found that is on the navmesh
@@ -110,10 +105,10 @@ namespace RTSModularSystem
                         return;
                     }
 
-                    int ring = ChooseRing(agents[i]);
-                    Vector3 position = centrepoint + ChoosePosition(agents[i], ring);
+                    int ring = ChooseRing(moveables[i]);
+                    Vector3 position = centrepoint + ChoosePosition(moveables[i], ring);
 
-                    if (NavMesh.SamplePosition(position, out NavMeshHit agentHit, heightTolerance, agents[i].areaMask))
+                    if (NavMesh.SamplePosition(position, out NavMeshHit agentHit, heightTolerance, 1))
                     {
                         Vector3 samplePosition = agentHit.position;
 
@@ -121,34 +116,37 @@ namespace RTSModularSystem
                         if (Mathf.Abs(position.x - samplePosition.x) > 0.5f * unitSpacing || Mathf.Abs(position.z - samplePosition.z) > 0.5f * unitSpacing)
                             continue;
 
-                        RTSPlayer.localPlayer.CmdMoveUnit(agents[i].gameObject, agentHit.position);
+                        //check that another moveable hasn't claimed this position
+                        if (Physics.OverlapSphere(samplePosition, moveables[i].width, LayerMask.GetMask("Movement")).Length > 0)
+                            continue;
+
+                        if (target)
+                            RTSPlayer.localPlayer.CmdSetUnitFollowTarget(moveables[i].gameObject, target.gameObject, samplePosition, !isTargetAnEnemy, playerTriggered);
+                        else
+                            RTSPlayer.localPlayer.CmdMoveUnit(moveables[i].gameObject, agentHit.position, playerTriggered);
+
                         break;
                     }
                 }
             }
-
-            //cleanup
-            spaceLeftInRing.Clear();
-            ringRadii.Clear();
-            ringAngleOffset.Clear();
         }
 
 
         //returns the index of the first ring with enough space to hold an agent of the given size
         //checks if the second largest ring has enough space remaining, if not, will create a new ring and set the previous second largest to no space remaining
-        private int ChooseRing(NavMeshAgent agent)
+        private int ChooseRing(Moveable moveable)
         {
             int largestIndex = spaceLeftInRing.Count - 1;
-            if (spaceLeftInRing[largestIndex - 1] >= 2 * agent.radius + unitSpacing)
+            if (spaceLeftInRing[largestIndex - 1] >= 2 * moveable.width + unitSpacing)
                 return largestIndex - 1;
 
             //second largest ring does not have enough space, adjust largest ring size and create space for agents
             spaceLeftInRing[largestIndex - 1] = 0;
-            ringRadii[largestIndex] += agent.radius;
+            ringRadii[largestIndex] += moveable.width;
             spaceLeftInRing[largestIndex] = ringRadii[largestIndex] * 2 * Mathf.PI;
 
             //create new larger ring but do not calculate circumference yet as we do not know yet what the largest agent in this ring will be
-            ringRadii.Add(ringRadii[largestIndex] + unitSpacing + agent.radius);
+            ringRadii.Add(ringRadii[largestIndex] + unitSpacing + moveable.width);
             ringAngleOffset.Add(Random.Range(0, 360));
             spaceLeftInRing.Add(0);
 
@@ -157,14 +155,14 @@ namespace RTSModularSystem
 
 
         //returns the position, relative to the centrepoint this agent would fit within the given ring
-        private Vector3 ChoosePosition(NavMeshAgent agent, int ring)
+        private Vector3 ChoosePosition(Moveable moveable, int ring)
         {
             //get the ring's circumference and the angle of this position
             float circumference = ringRadii[ring] * 2 * Mathf.PI;
-            float angleToPosition = 360.0f * (spaceLeftInRing[ring] - agent.radius) / circumference;
+            float angleToPosition = 360.0f * (spaceLeftInRing[ring] - moveable.width) / circumference;
 
             //remove the space this agent would occupy from the ring
-            spaceLeftInRing[ring] -= (2 * agent.radius + unitSpacing);
+            spaceLeftInRing[ring] -= (2 * moveable.width + unitSpacing);
 
             Vector3 radius = new Vector3(0.0f, 0.0f, ringRadii[ring]);
             Quaternion angle = Quaternion.Euler(0.0f, angleToPosition + ringAngleOffset[ring], 0.0f);

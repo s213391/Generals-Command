@@ -21,6 +21,12 @@ namespace RTSModularSystem.BasicCombat
 
         private List<Attackable> attackablesToBeDestroyed = new List<Attackable>();
 
+        struct AttackableDistance
+        {
+            public Attackable target;
+            public float range;
+        }
+
         //set up singleton and create all lists automatically
         void Start()
         {
@@ -55,8 +61,6 @@ namespace RTSModularSystem.BasicCombat
                 {
                     //set variables now so they persist after the foreach loop
                     Vector3 attackerPosition = attacker.transform.position;
-                    Attackable closestAttackable = null;
-                    float closestDistance = attacker.TargetRange() + 1.0f;
 
                     //check if attacker is on friendly layer
                     bool attackerIsFriendly = (friendlyObjectLayers & (1 << attacker.gameObject.layer)) != 0;
@@ -83,25 +87,34 @@ namespace RTSModularSystem.BasicCombat
 
                     //use a sphere collision check to see if any attackables are in range
                     Collider[] objectsInRange = Physics.OverlapSphere(attackerPosition, attacker.TargetRange(), targetLayers);
+                    List<AttackableDistance> potentialTargets = new List<AttackableDistance>();
+
                     foreach (Collider collider in objectsInRange)
                     {
-                        //if the collider does not have an Attackable, it cannot be targetted
-                        if (!collider.TryGetComponent<Attackable>(out Attackable attackable))
-                            continue;
-
-                        //check if this Attackable is the closest
-                        Vector3 point = collider.ClosestPoint(attackerPosition);
-                        float distance = Vector3.Distance(point, attackerPosition);
-                        if (distance != 0 && distance < closestDistance)
+                        if (collider.TryGetComponent<Attackable>(out Attackable attackable))
                         {
-                            closestAttackable = attackable;
-                            closestDistance = distance;
+                            float distance = Vector3.Distance(collider.ClosestPoint(attackerPosition), attackerPosition);
+
+                            AttackableDistance potentialTarget = new AttackableDistance() { target = attackable, range = distance };
+                            potentialTargets.Add(potentialTarget);
                         }
                     }
 
-                    //set the closest attackable as the attacker's new target
-                    if (closestAttackable != null)
-                        attacker.TrySetTarget(closestAttackable, closestDistance, false);
+                    potentialTargets.Sort((x,y) => x.range.CompareTo(y.range));
+
+                    if (attacker.attackType == AttackType.rangedDirect)
+                    {
+                        foreach (AttackableDistance ad in potentialTargets)
+                        {
+                            if (!Physics.Linecast(attackerPosition + Vector3.up, ad.target.transform.position + Vector3.up, LayerMask.GetMask("Default", "Terrain")))
+                            {
+                                attacker.TrySetTarget(ad.target, ad.range, false);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                        attacker.TrySetTarget(potentialTargets[0].target, potentialTargets[0].range, false);
                 }
 
                 //try to attack target

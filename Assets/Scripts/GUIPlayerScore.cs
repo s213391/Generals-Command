@@ -10,8 +10,8 @@ public class GUIPlayerScore : MonoBehaviour
     public List<GameObject> playerScores;
     public List<int> playerObjectHealths;
     public float flashDuration = 0.2f;
+    public int commandCentreHealth = 2000;
 
-    private RectTransform rectTransform;
     private List<TextMeshProUGUI> playerNames = new List<TextMeshProUGUI>();
     private List<TextMeshProUGUI> playerHealth = new List<TextMeshProUGUI>();
     private List<bool> playerHealthFlashing = new List<bool>();
@@ -27,12 +27,7 @@ public class GUIPlayerScore : MonoBehaviour
 
         instance = this;
 
-        rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 10f + playerScores.Count * 20f);
         playerObjectHealths = new List<int>();
-
-        for (int i = 0; i < 4; i++)
-            playerScores[i].SetActive(false);
         
         for (int i = 0; i < GameData.instance.playerData.Count; i++)
         {
@@ -46,16 +41,20 @@ public class GUIPlayerScore : MonoBehaviour
             playerNames[i].color = GameData.instance.playerData[i].colour;
             playerHealth[i].color = GameData.instance.playerData[i].colour;
 
-            playerObjectHealths.Add(1000);
+            playerObjectHealths.Add(commandCentreHealth);
             playerHealthFlashing.Add(false);
         }
+
+        for (int i = GameData.instance.playerData.Count; i < playerScores.Count;i++)
+            playerScores[i].SetActive(false);
     }
 
 
     //updates health values for the given player
     public void UpdateHealth(int playerNumber, int newHealth)
     {
-        playerHealth[playerNumber].text = newHealth.ToString() + "%";
+        int percent = 100 * newHealth / commandCentreHealth;
+        playerHealth[playerNumber].text = percent.ToString() + "%";
         playerObjectHealths[playerNumber] = newHealth;
 
         if (!playerHealthFlashing[playerNumber])
