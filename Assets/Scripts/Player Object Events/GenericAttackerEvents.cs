@@ -12,6 +12,20 @@ public class GenericAttackerEvents : AttackerEvents
     }
 
 
+    public override void OnTarget()
+    {
+        RpcOnTarget();
+    }
+
+
+    [ClientRpc]
+    public void RpcOnTarget()
+    {
+        PlayOneShotAudio(_audioSource, targetSounds);
+        StartParticleEffect(targetParticles);
+    }
+
+
     public override void OnAttack()
     {
         RpcOnAttack();
@@ -31,5 +45,22 @@ public class GenericAttackerEvents : AttackerEvents
     public override void OnKill()
     {
         
+    }
+
+
+    public override void OnUpdate(float forward, float right)
+    {
+        RpcOnUpdate(forward, right);
+    }
+
+
+    [ClientRpc]
+    public void RpcOnUpdate(float forward, float right)
+    {
+        foreach (Animator animator in animators)
+        {
+            animator.SetFloat("ForwardAiming", forward);
+            animator.SetFloat("RightAiming", right);
+        }
     }
 }

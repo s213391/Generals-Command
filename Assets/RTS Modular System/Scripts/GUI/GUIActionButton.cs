@@ -24,7 +24,7 @@ public class GUIActionButton : MonoBehaviour
     
     public void OnUpdate()
     {
-        currentResources = ResourceManager.instance.GetResourceValues(ID, ID);
+        /*currentResources = ResourceManager.instance.GetResourceValues(ID, ID);
 
         for (int i = 0; i < costTexts.Count; i++)
         {
@@ -49,6 +49,6 @@ public class GUIActionButton : MonoBehaviour
                 costTexts[i].text = "0";
                 costTexts[i].color = Color.white;
             }
-        }
+        }*/
     }
 }

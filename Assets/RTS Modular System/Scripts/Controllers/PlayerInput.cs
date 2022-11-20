@@ -294,12 +294,12 @@ namespace RTSModularSystem
                 return;
 
             //add every selected movable object to a list
-            List<NavMeshAgent> moveables = new List<NavMeshAgent>();
+            List<Moveable> moveables = new List<Moveable>();
             foreach (Selectable selectable in selectionController.selectedObjects)
             {
-                PlayerObject po = selectable.GetComponent<PlayerObject>();
-                if (po && po.data.moveable)
-                    moveables.Add(po.GetComponent<NavMeshAgent>());
+                Moveable moveable = selectable.GetComponent<Moveable>();
+                if (moveable)
+                    moveables.Add(moveable);
             }
 
             if (moveables.Count > 0)
@@ -307,9 +307,9 @@ namespace RTSModularSystem
 
             //check if an object is already at the clicked point and set it as the movement target
             if (objectUnderScreenPoint == null)
-                unitArrangement.AssignDestination(moveables, screenPointWorldSpace);
+                unitArrangement.AssignDestination(moveables, screenPointWorldSpace, true);
             else
-                unitArrangement.AssignDestination(moveables, objectUnderScreenPoint.transform.position, !RTSPlayer.Owns(objectUnderScreenPoint), objectUnderScreenPoint);
+                unitArrangement.AssignDestination(moveables, objectUnderScreenPoint.transform.position, true, !RTSPlayer.Owns(objectUnderScreenPoint), objectUnderScreenPoint);
         }
 
 

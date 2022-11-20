@@ -16,14 +16,13 @@ namespace RTSModularSystem
         [SerializeField] [Tooltip("The PlayerObjectData that dictates how this object behaves")]
         public PlayerObjectData data;
 
-        public int currentXP { get; private set; }
         public bool isHidden { get; private set; }
 
-        private NavMeshAgent agent;
         private Attackable attackable;
         private Attacker attacker;
         private Selectable selectable;
-        private MovableEvents movableEvents;
+        private Moveable moveable;
+
         public List<GameActionData> queuedActions;
 
         private bool initialised = false;
@@ -65,7 +64,6 @@ namespace RTSModularSystem
 
             //set up basic properties
             interrupt = 0;
-            currentXP = 0;
             gameObject.SetActive(true);
 
             //set up selection
@@ -94,30 +92,11 @@ namespace RTSModularSystem
                 }
             }
 
-            //REFACTOR Moveable
             //set up movement
             if (data.moveable)
             {
-                agent = gameObject.GetComponent<NavMeshAgent>();
-                if (agent == null)
-                    agent = gameObject.AddComponent<NavMeshAgent>();
-
-                agent.speed = data.moveSpeed;
-                agent.acceleration = data.acceleration;
-                agent.angularSpeed = data.angularSpeed;
-                agent.height = data.agentHeight;
-                agent.radius = data.agentWidth;
-                agent.avoidancePriority = data.pathfingPriority;
-                agent.autoTraverseOffMeshLink = false;
-
-                if (data.passThroughOtherAgents)
-                    agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-                else
-                    agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
-
-                movableEvents = GetComponent<MovableEvents>();
-                if (movableEvents)
-                    movableEvents.Init();
+                moveable = gameObject.AddComponent<Moveable>();
+                moveable.Init(data.moveSpeed, data.acceleration, data.angularSpeed, data.agentHeight, data.agentWidth, data.pathfingPriority, data.passThroughOtherAgents);
             }
             //REFACTOR Obstacle
             else
@@ -161,13 +140,9 @@ namespace RTSModularSystem
             Color colour = GameData.instance.playerData[(int)owningPlayer - 1].colour;
             LayerMask mask;
             if (ownedByLocalPlayer)
-            {
                 mask = LayerMask.NameToLayer("Friendly");
-            }
             else
-            {
                 mask = LayerMask.NameToLayer("Enemy");
-            }
 
             foreach (Transform trans in transforms)
             {
@@ -178,26 +153,25 @@ namespace RTSModularSystem
                 if (renderer == null)
                     continue;
 
-                //set the Replaceable material to team colour
+                //set the material to show team colour
                 Material material = renderer.material;
                 material.SetColor("_TeamColour", colour);
-
-                //hide mobile enemy units
-                /*if (!ownedByLocalPlayer && data.moveable)
-                {
-                    isHidden = true;
-                    renderer.enabled = false;
-                }*/
             }
 
             //add to object data manager for quick reference
             ObjectDataManager.AddPlayerObject(owningPlayer, this);
+
+            //add to minimap
+            Minimap.instance.RegisterIcon(this, data.sprite, colour);
 
             //start any actions marked as auto start
             if (ownedByLocalPlayer)
                 foreach (StartingAction sa in data.actions)
                     if (sa.autoStart)
                         RTSPlayer.StartAction(sa.action, this);
+
+            if (TryGetComponent(out PlayerObjectEvents events))
+                events.OnSpawn();
         }
 
 
@@ -205,36 +179,17 @@ namespace RTSModularSystem
         private void Update()
         {
             //calls init once the owning player ID has set
-            if (!initialised && RTSPlayer.localPlayer && owningPlayer != 9999)
-                Init();
+            if (!initialised)
+            {
+                if (RTSPlayer.localPlayer && owningPlayer != 9999)
+                    Init();
+                else
+                    return;
+            }
 
             //update components
             attackable?.OnUpdate();
-
-            NavMeshAgent nva = GetComponent<NavMeshAgent>();
-            if (nva)
-            {
-                if (nva.velocity.magnitude > 0.2f)
-                    movableEvents?.OnMovementBegin();
-                else
-                    movableEvents?.OnMovementEnd();
-            }
-
-            //only update visibilty on initialised moveable enemy objects
-            /*if (owningPlayer == 9999 || !data.moveable || (RTSPlayer.localPlayer && RTSPlayer.Owns(this)))
-                return;
-
-            bool visible = RTSPlayer.fogSampler.IsVisible(transform.position);
-
-            if (visible != isHidden)
-                return;
-
-            isHidden = !visible;
-
-            //update the state of the renderers
-            Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
-            foreach (Renderer renderer in renderers)
-                renderer.enabled = visible;*/
+            moveable?.OnUpdate();
         }
 
 
@@ -261,6 +216,7 @@ namespace RTSModularSystem
 
             interrupt = 9;
             Destroy(gameObject);
+            Minimap.instance.UnRegisterIcon(this);
             return;
         }
 
@@ -312,14 +268,6 @@ namespace RTSModularSystem
                 return data.actions[index].action;
             //no match return null
             return null;
-        }
-
-
-        //REFACTOR Moveable
-        //moves the object to the given position
-        public void MoveTo(Vector3 pos)
-        {
-            agent.SetDestination(pos);
         }
     }
 }

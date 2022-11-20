@@ -196,9 +196,17 @@ namespace RTSModularSystem
 
         [Command]
         //updates the destination of a unit serverside
-        public void CmdMoveUnit(GameObject unit, Vector3 destination)
+        public void CmdMoveUnit(GameObject unit, Vector3 destination, bool playEvent)
         {
-            unitArrangement.MoveUnit(unit, destination);
+            unit.GetComponent<Moveable>().SetDestination(destination, playEvent);
+        }
+
+
+        [Command]
+        //sets the follow target of a unit serverside
+        public void CmdSetUnitFollowTarget(GameObject unit, GameObject target, Vector3 destination, bool friendly, bool playEvent)
+        {
+            unit.GetComponent<Moveable>().SetTarget(target.transform, destination, friendly, playEvent);
         }
 
 

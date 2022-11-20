@@ -62,6 +62,9 @@ namespace RTSModularSystem.BasicCombat
         private bool targetCheckedRecently = false;
         private bool currentlyAttacking = false;
 
+        private float forwardAiming = 1.0f;
+        private float rightAiming = 1.0f;
+
         private AttackerEvents attackerEvents;
 
         // Start is called before the first frame update
@@ -94,6 +97,24 @@ namespace RTSModularSystem.BasicCombat
         }
 
 
+        //checks the angle towards the target and passes it to the animator
+        public void OnUpdate()
+        {
+            if (target)
+            {
+                forwardAiming = Vector3.Dot(transform.forward, target.transform.position - transform.position);
+                rightAiming = Vector3.Dot(transform.right, target.transform.position - transform.position);
+            }
+            else
+            {
+                forwardAiming = 1.0f;
+                rightAiming = 0.0f;
+            }
+
+            attackerEvents?.OnUpdate(forwardAiming, rightAiming);
+        }
+
+
         //sets the given Attackable as target if it is in range or set by the player
         public void TrySetTarget(Attackable attackable, float distance, bool setByPlayer)
         {
@@ -101,6 +122,8 @@ namespace RTSModularSystem.BasicCombat
             {
                 target = attackable;
                 targetWasSetByPlayer = setByPlayer;
+                if (targetWasSetByPlayer)
+                    attackerEvents?.OnTarget();
             }
         }
 
@@ -126,6 +149,13 @@ namespace RTSModularSystem.BasicCombat
                 attackerEvents?.OnAttack();
             }
         }
+
+
+        //the attacker will make an AOE attack at the given position
+        /*public void MakeAOEAttack(Vector3 position, float radius)
+        {
+            Physics.OverlapSphere(position, radius, )
+        }*/
 
 
         //updates the xp total
@@ -156,10 +186,18 @@ namespace RTSModularSystem.BasicCombat
                 return false;
             }
             //if target was auto set and is not in attack range, remove target and return false
-            else if (!targetWasSetByPlayer && (target.transform.position - transform.position).magnitude > attackRange)
+            else if (!targetWasSetByPlayer)
             {
-                target = null;
-                return false;
+                if ((target.transform.position - transform.position).magnitude > attackRange)
+                { 
+                    target = null;
+                    return false;
+                }
+                else if (attackType == AttackType.rangedDirect && Physics.Linecast(transform.position + Vector3.up, target.transform.position + Vector3.up, LayerMask.GetMask("Default", "Terrain")))
+                {
+                    target = null;
+                    return false;
+                }
             }
 
             //target is not invalid, return true
