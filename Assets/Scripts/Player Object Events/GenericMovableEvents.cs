@@ -12,6 +12,7 @@ public class GenericMovableEvents : MovableEvents
     }
 
 
+    [Server]
     public override void OnMovementBegin()
     {
         RpcOnMovementBegin();
@@ -22,7 +23,6 @@ public class GenericMovableEvents : MovableEvents
     public void RpcOnMovementBegin()
     {
         PlayOneShotAudio(_audioSource, movementBeginSounds);
-        PlayLoopingSound(_audioSource, movementOngoingSounds);
         StartParticleEffect(movementBeginParticles);
         StartParticleEffect(movementOngoingParticles);
 
@@ -30,6 +30,7 @@ public class GenericMovableEvents : MovableEvents
     }
 
 
+    [Server]
     public override void OnMovementEnd()
     {
         if (GameData.instance.isHost)
@@ -40,7 +41,6 @@ public class GenericMovableEvents : MovableEvents
     [ClientRpc]
     public void RpcOnMovementEnd()
     {
-        StopLoopingSound(_audioSource);
         SetAnimationBool(animators, "IsMoving", false);
         StopParticleEffect(movementOngoingParticles);
 
@@ -48,12 +48,20 @@ public class GenericMovableEvents : MovableEvents
     }
 
 
+    [Server]
     public override void OnUpdate(float forward, float right)
+    {
+        RpcOnUpdate(forward, right);
+    }
+
+
+    [ClientRpc]
+    public void RpcOnUpdate(float forward, float right)
     {
         foreach (Animator animator in animators)
         {
-            animator.SetFloat("forward", forward);
-            animator.SetFloat("right", right);
+            animator.SetFloat("ForwardFacing", forward);
+            animator.SetFloat("RightFacing", right);
         }
     }
 }
