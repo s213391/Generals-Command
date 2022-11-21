@@ -20,7 +20,7 @@ MonoBehaviour:
   lockCamera: 1
   showOnActionBar: 1
   queueAction: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 741a5c61af033c1438ce3553665962c9, type: 3}
   interruptionTolerance: 1
   objectsToSpawn:
   - prefab: {fileID: 2944867985040915856, guid: 0c92f890accd2bd479f5878fbd3e73a5, type: 3}
@@ -62,7 +62,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     maximumHeightAllowed: 0
-  - conditionMet: 1
+  - conditionMet: 0
     successIfConditionMet: 0
     type: 1
     objectToBeChecked: 1
