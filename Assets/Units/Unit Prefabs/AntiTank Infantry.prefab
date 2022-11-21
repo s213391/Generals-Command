@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1890647689142859608}
   - component: {fileID: 2364811035325341218}
   - component: {fileID: -8091648680028973239}
+  - component: {fileID: 7021035549236011495}
   m_Layer: 0
   m_Name: AntiTank Infantry
   m_TagString: Untagged
@@ -333,6 +334,10 @@ MonoBehaviour:
   - {fileID: 7465417969304834621}
   - {fileID: 4338973637363642931}
   - {fileID: 758120745626282803}
+  targetSounds:
+  - {fileID: 8300000, guid: 8dc550d9eccfde2468f7d91806698d5b, type: 3}
+  - {fileID: 8300000, guid: 7a598b4dc16f08a4e9558534f417d74c, type: 3}
+  targetParticles: []
   attackSounds:
   - {fileID: 8300000, guid: 9a4389003e59ac24c8b6f79da83103c9, type: 3}
   - {fileID: 8300000, guid: fe1f55cc0e8b1b74098846888b901426, type: 3}
@@ -387,6 +392,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7021035549236011495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3352760121285526402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea2aa51afc4414a9b135df12b55e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  spawnSounds:
+  - {fileID: 8300000, guid: 33dd10ea0b719e646bb65742ad5f2d44, type: 3}
+  spawnParticles: []
 --- !u!1 &7459408549727188498
 GameObject:
   m_ObjectHideFlags: 0

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 4970215012834105193}
   - component: {fileID: 5708407882456071684}
   - component: {fileID: -5770997938640656918}
+  - component: {fileID: -2327354145625572783}
   m_Layer: 0
   m_Name: Engineer-Bravo
   m_TagString: Untagged
@@ -427,6 +428,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2327354145625572783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673862430685067604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea2aa51afc4414a9b135df12b55e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  spawnSounds:
+  - {fileID: 8300000, guid: 5a4404ce2ad1b084a9915dc451dfb067, type: 3}
+  - {fileID: 8300000, guid: 8a16128a3d45f57449778a2a1c8b6843, type: 3}
+  spawnParticles: []
 --- !u!1001 &2297893170085653299
 PrefabInstance:
   m_ObjectHideFlags: 0

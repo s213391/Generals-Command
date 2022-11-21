@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5475588629675220649}
   - component: {fileID: 3282726362785749237}
   - component: {fileID: 2493424627054874498}
+  - component: {fileID: 4517153987252035293}
   m_Layer: 0
   m_Name: Rifleman-Bravo
   m_TagString: Untagged
@@ -295,6 +296,10 @@ MonoBehaviour:
   - {fileID: 9023018000352442532}
   - {fileID: 6438899385057267681}
   - {fileID: 3100614502976845937}
+  targetSounds:
+  - {fileID: 8300000, guid: 0999239cc059aba4982e1741d2a20429, type: 3}
+  - {fileID: 8300000, guid: e31cb4f1b7421e84e895bb21001c7942, type: 3}
+  targetParticles: []
   attackSounds:
   - {fileID: 8300000, guid: f52f98181eec6104bb194fe15c62b0cf, type: 3}
   - {fileID: 8300000, guid: a749e69b66eae6443a0978d66b0ece31, type: 3}
@@ -330,9 +335,8 @@ MonoBehaviour:
   movementBeginSounds:
   - {fileID: 8300000, guid: 9d6658e7fcc381c40a8a5fb71eb80ba5, type: 3}
   - {fileID: 8300000, guid: 1d0cf90434f3474419030c04baa1fdc7, type: 3}
-  - {fileID: 8300000, guid: 02b959b22b3454a45895f0b5941e81be, type: 3}
-  - {fileID: 8300000, guid: f6ed218267c6a174eb3dce51e6ad28d2, type: 3}
   - {fileID: 8300000, guid: ecbf3fb8ed16c5d47a2553e1c0c4cd09, type: 3}
+  - {fileID: 8300000, guid: f6ed218267c6a174eb3dce51e6ad28d2, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []
@@ -355,6 +359,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4517153987252035293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3182519460791625515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea2aa51afc4414a9b135df12b55e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  spawnSounds:
+  - {fileID: 8300000, guid: 02b959b22b3454a45895f0b5941e81be, type: 3}
+  spawnParticles: []
 --- !u!1 &8391933921266020746
 GameObject:
   m_ObjectHideFlags: 0

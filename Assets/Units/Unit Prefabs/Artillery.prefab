@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 9074188381485805286}
   - component: {fileID: 1588526207892554957}
   - component: {fileID: 4554953354905879313}
+  - component: {fileID: 3884206194093997293}
   m_Layer: 0
   m_Name: Artillery
   m_TagString: Untagged
@@ -332,7 +333,11 @@ MonoBehaviour:
   damageParticles: []
   healSounds: []
   healParticles: []
-  deathSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: 99e8e80ac247e4b4e8d2786ce2250792, type: 3}
+  - {fileID: 8300000, guid: 9fbc2f4c177b8994bbc79f6bbb809a43, type: 3}
+  - {fileID: 8300000, guid: 57ccba27959d75a43895db864c35364e, type: 3}
+  - {fileID: 8300000, guid: 8f4deffb5f337eb44a3a83b429060676, type: 3}
   deathParticles: []
 --- !u!114 &9074188381485805286
 MonoBehaviour:
@@ -350,6 +355,9 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 4333301137155946829}
+  targetSounds:
+  - {fileID: 8300000, guid: 7dd0690d59e857543b614eedcfca40d9, type: 3}
+  targetParticles: []
   attackSounds:
   - {fileID: 8300000, guid: 428eb2dc45fb22b46ae124ba04472094, type: 3}
   - {fileID: 8300000, guid: 4d10f8d1306fffe47aa6d22cdc9860b0, type: 3}
@@ -373,10 +381,8 @@ MonoBehaviour:
   animators:
   - {fileID: 4333301137155946829}
   movementBeginSounds:
-  - {fileID: 8300000, guid: 0e4d7fffdff665244960e838a7460496, type: 3}
-  - {fileID: 8300000, guid: 0a7c03121252644499335fa72b0b7b94, type: 3}
-  - {fileID: 8300000, guid: 4dc84248b0beac6489c00a792c73e5ca, type: 3}
-  - {fileID: 8300000, guid: 42815c1493bcbd8449d1a242e904a336, type: 3}
+  - {fileID: 8300000, guid: 8577178c5a1005f418c83eed75a6b5e9, type: 3}
+  - {fileID: 8300000, guid: c95017b2450ae33429a998bd546f1529, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []
@@ -394,6 +400,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3884206194093997293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978581094077902860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea2aa51afc4414a9b135df12b55e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  spawnSounds:
+  - {fileID: 8300000, guid: 755be07e6a1703647936d08b41dcd154, type: 3}
+  spawnParticles: []
 --- !u!1001 &3066410307594820903
 PrefabInstance:
   m_ObjectHideFlags: 0
