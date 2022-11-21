@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3738683270318365647}
   - component: {fileID: 3177837687557823869}
   - component: {fileID: -7639783740388458121}
+  - component: {fileID: 7617794938940119361}
   m_Layer: 0
   m_Name: Turret-Jeep
   m_TagString: Untagged
@@ -134,19 +135,19 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
+  m_PlayOnAwake: 1
+  m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 10
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -154,23 +155,41 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.125
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -8.0032
+      outSlope: -8.0032
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.25
+      value: 0.5
+      inSlope: -2.0008
+      outSlope: -2.0008
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.48999786
+      value: 0.19093323
+      inSlope: -0.65171796
+      outSlope: -0.65171796
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.44117877
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.12505
+      outSlope: -0.12505
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -179,7 +198,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -240,7 +259,11 @@ MonoBehaviour:
   - {fileID: 6208895656618140588}
   healSounds: []
   healParticles: []
-  deathSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: 99e8e80ac247e4b4e8d2786ce2250792, type: 3}
+  - {fileID: 8300000, guid: 9fbc2f4c177b8994bbc79f6bbb809a43, type: 3}
+  - {fileID: 8300000, guid: 57ccba27959d75a43895db864c35364e, type: 3}
+  - {fileID: 8300000, guid: 8f4deffb5f337eb44a3a83b429060676, type: 3}
   deathParticles:
   - {fileID: 7666354603965542424}
 --- !u!114 &3738683270318365647
@@ -259,7 +282,12 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 1852466725299756727}
-  attackSounds: []
+  targetSounds:
+  - {fileID: 8300000, guid: c1b3d1018413469439983151ddc0f3a9, type: 3}
+  - {fileID: 8300000, guid: 62d9a984cdc72404d9f6705e0ec60134, type: 3}
+  targetParticles: []
+  attackSounds:
+  - {fileID: 8300000, guid: 54c8a03972819f8459fde9e3e184483d, type: 3}
   attackParticles:
   - {fileID: 6754833291069155073}
   killSounds: []
@@ -280,7 +308,8 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 1852466725299756727}
-  movementBeginSounds: []
+  movementBeginSounds:
+  - {fileID: 8300000, guid: 52e6043ed12ac9548beb4aec05fcda91, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []
@@ -299,6 +328,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7617794938940119361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013203187297138121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea2aa51afc4414a9b135df12b55e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  spawnSounds:
+  - {fileID: 8300000, guid: 33dd10ea0b719e646bb65742ad5f2d44, type: 3}
+  spawnParticles: []
 --- !u!1 &8569827788147861832
 GameObject:
   m_ObjectHideFlags: 0

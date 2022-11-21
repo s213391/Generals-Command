@@ -28,8 +28,9 @@ public class HUD : MonoBehaviour
     public GameObject optionsMenuExpanded;
     public Slider panSpeedSlider;
     public Slider zoomSpeedSlider;
-    public Slider minZoomSlider;
-    public Slider maxZoomSlider;
+    public Slider masterVolumeSlider;
+    public Slider musicVolumeSlider;
+    public Slider sfxVolumeSlider;
 
     private CameraController cameraController;
     private PlayerInput playerInput;
@@ -45,7 +46,10 @@ public class HUD : MonoBehaviour
         if (instance != null && instance != this)
             Destroy(this);
         else
+        {
             instance = this;
+            Settings.ApplySettings();
+        }
     }
 
 
@@ -170,6 +174,12 @@ public class HUD : MonoBehaviour
 
     #region optionsMenu
 
+    public void Load()
+    {
+        Settings.Load();
+    }
+
+
     //opens the options sub menu
     public void ToggleOptionsMenu(bool open)
     {
@@ -180,8 +190,9 @@ public class HUD : MonoBehaviour
 
             panSpeedSlider.value = Settings.panSpeed;
             zoomSpeedSlider.value = Settings.zoomSpeed;
-            minZoomSlider.value = Settings.zoomMin;
-            maxZoomSlider.value = Settings.zoomMax;
+            masterVolumeSlider.value = Settings.masterVolume;
+            musicVolumeSlider.value = Settings.musicVolume;
+            sfxVolumeSlider.value = Settings.sfxVolume;
 
             saveButton.interactable = false;
             if (!saveButtonText)
@@ -198,6 +209,9 @@ public class HUD : MonoBehaviour
         {
             Settings.panSpeed = panSpeedSlider.value;
             Settings.zoomSpeed = zoomSpeedSlider.value;
+            Settings.masterVolume = masterVolumeSlider.value;
+            Settings.musicVolume = musicVolumeSlider.value;
+            Settings.sfxVolume = sfxVolumeSlider.value;
         }
     }
 
@@ -231,8 +245,9 @@ public class HUD : MonoBehaviour
 
         panSpeedSlider.value = Settings.panSpeed;
         zoomSpeedSlider.value = Settings.zoomSpeed;
-        minZoomSlider.value = Settings.zoomMin;
-        maxZoomSlider.value = Settings.zoomMax;
+        masterVolumeSlider.value = Settings.masterVolume;
+        musicVolumeSlider.value = Settings.musicVolume;
+        sfxVolumeSlider.value = Settings.sfxVolume;
 
         saveButton.interactable = false;
         if (!saveButtonText)

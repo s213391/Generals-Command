@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 4970215012834105193}
   - component: {fileID: 5708407882456071684}
   - component: {fileID: -5770997938640656918}
+  - component: {fileID: -2327354145625572783}
   m_Layer: 0
   m_Name: Engineer-Bravo
   m_TagString: Untagged
@@ -253,10 +254,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -378,7 +379,9 @@ MonoBehaviour:
   damageParticles: []
   healSounds: []
   healParticles: []
-  deathSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: ecc517e7a0e396e42a4f3012969ff7d3, type: 3}
+  - {fileID: 8300000, guid: 97c597387e0de7d469f84feeb907f33d, type: 3}
   deathParticles:
   - {fileID: 5004971087947592375}
   - {fileID: 7231078456798013778}
@@ -401,7 +404,10 @@ MonoBehaviour:
   - {fileID: 8270287668209757478}
   - {fileID: 3987268983761615197}
   - {fileID: 5659146766499501730}
-  movementBeginSounds: []
+  movementBeginSounds:
+  - {fileID: 8300000, guid: f74b5b252300aae489eb51fee951cfac, type: 3}
+  - {fileID: 8300000, guid: 895ae579099737047a3f5fbb36bbe72b, type: 3}
+  - {fileID: 8300000, guid: b09b02454b4af844d93882d212e491b3, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []
@@ -422,6 +428,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2327354145625572783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673862430685067604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea2aa51afc4414a9b135df12b55e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  spawnSounds:
+  - {fileID: 8300000, guid: 5a4404ce2ad1b084a9915dc451dfb067, type: 3}
+  - {fileID: 8300000, guid: 8a16128a3d45f57449778a2a1c8b6843, type: 3}
+  spawnParticles: []
 --- !u!1001 &2297893170085653299
 PrefabInstance:
   m_ObjectHideFlags: 0

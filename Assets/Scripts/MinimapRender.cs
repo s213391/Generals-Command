@@ -26,7 +26,7 @@ public class MinimapRender : MonoBehaviour
 
         renderCamera.Render();
 
-        mapRender = new Texture2D(renderCamera.targetTexture.width, renderCamera.targetTexture.height);
+        mapRender = new Texture2D(renderCamera.targetTexture.width, renderCamera.targetTexture.height, TextureFormat.RGB24, false, true);
         mapRender.ReadPixels(new Rect(0, 0, renderCamera.targetTexture.width, renderCamera.targetTexture.height), 0, 0);
         mapRender.Apply();
         RenderTexture.active = currentRT;

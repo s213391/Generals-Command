@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 6514839469120016064}
   - component: {fileID: 7146260345166761794}
   - component: {fileID: 1523169136977869459}
+  - component: {fileID: 2120632602806647939}
   m_Layer: 0
   m_Name: Light Tank
   m_TagString: Untagged
@@ -208,11 +209,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6169436299569385268, guid: ceddc4db8372a2d42ab9a1136e280822, type: 2}
-  m_audioClip: {fileID: 8300000, guid: ddf8a9fed6f10d34f9193d999fe31fd9, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -333,7 +334,11 @@ MonoBehaviour:
   - {fileID: 7332229400673968038}
   healSounds: []
   healParticles: []
-  deathSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: 99e8e80ac247e4b4e8d2786ce2250792, type: 3}
+  - {fileID: 8300000, guid: 9fbc2f4c177b8994bbc79f6bbb809a43, type: 3}
+  - {fileID: 8300000, guid: 57ccba27959d75a43895db864c35364e, type: 3}
+  - {fileID: 8300000, guid: 8f4deffb5f337eb44a3a83b429060676, type: 3}
   deathParticles:
   - {fileID: 6271057797468655291}
 --- !u!114 &6514839469120016064
@@ -352,7 +357,11 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 1550942886173042885}
-  attackSounds: []
+  targetSounds:
+  - {fileID: 8300000, guid: 06aaf8e17f4ebc74fbf4097b266ba564, type: 3}
+  targetParticles: []
+  attackSounds:
+  - {fileID: 8300000, guid: ddf8a9fed6f10d34f9193d999fe31fd9, type: 3}
   attackParticles:
   - {fileID: 3405138884981548289}
   killSounds: []
@@ -373,7 +382,9 @@ MonoBehaviour:
   syncInterval: 0.1
   animators:
   - {fileID: 1550942886173042885}
-  movementBeginSounds: []
+  movementBeginSounds:
+  - {fileID: 8300000, guid: 9fcea5aab543a704e9f7a8e6f92274e8, type: 3}
+  - {fileID: 8300000, guid: b7d69caf7f4926f4ea6dc177c3e0921c, type: 3}
   movementBeginParticles: []
   movementEndSounds: []
   movementEndParticles: []
@@ -392,6 +403,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2120632602806647939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621937889023251508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea2aa51afc4414a9b135df12b55e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  spawnSounds:
+  - {fileID: 8300000, guid: a0cae832a5be6894789fa5a47d2b60e9, type: 3}
+  spawnParticles: []
 --- !u!1001 &3278946879017564747
 PrefabInstance:
   m_ObjectHideFlags: 0

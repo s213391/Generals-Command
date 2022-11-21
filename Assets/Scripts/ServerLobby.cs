@@ -28,7 +28,7 @@ public class ServerLobby : NetworkBehaviour
 
     [Header("Internal Values")]
     [SerializeField]
-    private int maxPlayerNumber = 4;
+    private int maxPlayerNumber = 2;
     [SerializeField]
     private int localPlayerNumber;
     [SerializeField]
@@ -49,6 +49,8 @@ public class ServerLobby : NetworkBehaviour
     private float productionMultiplier = 1.0f;
     [SerializeField]
     private float resourceMultiplier = 1.0f;
+    [SerializeField]
+    private float costMultiplier = 1.0f;
     [SerializeField]
     private int mapIndex = 0;
 

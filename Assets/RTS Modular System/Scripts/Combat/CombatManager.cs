@@ -13,6 +13,10 @@ namespace RTSModularSystem.BasicCombat
         public LayerMask friendlyObjectLayers;
         public LayerMask enemyObjectLayers;
 
+        public float downtimeBeforeCombatOver;
+        float timeSinceCombat = 0.0f;
+        public static bool inCombat { get; private set; }
+
         //private HashSet<Attacker> attackers;
         //private HashSet<Attackable> attackables;
 
@@ -43,6 +47,9 @@ namespace RTSModularSystem.BasicCombat
 
                 //attackers = new HashSet<Attacker>();
                 //attackables = new HashSet<Attackable>();
+
+                timeSinceCombat = downtimeBeforeCombatOver;
+                inCombat = false;
             }
         }
 
@@ -124,6 +131,13 @@ namespace RTSModularSystem.BasicCombat
             foreach (Attackable attackable in attackablesToBeDestroyed)
                 RemoveCombatObject(attackable.gameObject);
             attackablesToBeDestroyed.Clear();
+
+            timeSinceCombat += Time.deltaTime;
+
+            if (timeSinceCombat < downtimeBeforeCombatOver)
+                inCombat = true;
+            else
+                inCombat = false;
         }
 
 
@@ -195,6 +209,14 @@ namespace RTSModularSystem.BasicCombat
         {
             if (!attackablesToBeDestroyed.Contains(attackable))
                 attackablesToBeDestroyed.Add(attackable);
+        }
+
+
+        //tells the combat manager to consider this player in combat
+        public void CombatOccured()
+        {
+            timeSinceCombat = 0.0f;
+            inCombat = true;
         }
     }
 }

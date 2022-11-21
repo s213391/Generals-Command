@@ -12,7 +12,7 @@ using Selectable = RTSModularSystem.Selection.Selectable;
 public class UnitStats : MonoBehaviour
 {
     public TextMeshProUGUI healthText;
-    public RawImage damageImage;
+    public Image damageImage;
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI resistance1Text;
     public TextMeshProUGUI resistance2Text;
@@ -21,7 +21,7 @@ public class UnitStats : MonoBehaviour
 
     PlayerObject currentObject;
 
-    public List<Texture> damageIcons = new List<Texture>();
+    public List<Sprite> damageIcons = new List<Sprite>();
 
     // Update is called once per frame
     void Update()
@@ -72,7 +72,7 @@ public class UnitStats : MonoBehaviour
             damageText.text = attacker.attackDamage.ToString();
 
             damageImage.enabled = true;
-            damageImage.texture = damageIcons[(int)attacker.damageType];
+            damageImage.sprite = damageIcons[(int)attacker.damageType];
         }
     }
 }
