@@ -30,7 +30,6 @@ public class NuclearLaunch : NetworkBehaviour
     }
 
 
-    [Server]
     //tells the server to notify clients that a nuclear missile is about to launch
     public void BeginLaunch(PlayerObject missile)
     {
