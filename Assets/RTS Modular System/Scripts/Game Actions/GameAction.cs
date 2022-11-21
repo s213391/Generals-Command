@@ -163,7 +163,7 @@ namespace RTSModularSystem
 
 
         //returns the first end condition that is active this frame, defaults to none condition
-        private ActionEnd EndConditionActive(List<ActionEnd> endConditions, float duration, PlayerObject functionCaller, GameActionData data)
+        private ActionEnd EndConditionActive(List<ActionEnd> endConditions, float elapsedDuration, PlayerObject functionCaller, GameActionData data, float duration)
         {
             foreach (ActionEnd ae in endConditions)
             {
@@ -193,7 +193,7 @@ namespace RTSModularSystem
                         return ae;
 
                     case ActionEndType.duration:
-                        if (duration >= ProductionModifier.GetModifiedDuration(data))
+                        if (elapsedDuration >= duration)
                             return ae;
                         break;
 
@@ -601,7 +601,7 @@ namespace RTSModularSystem
                             }
                         }
 
-                        ActionEnd actionEnd = EndConditionActive(data.endConditions, elapsedDuration, playerObject, data);
+                        ActionEnd actionEnd = EndConditionActive(data.endConditions, elapsedDuration, playerObject, data, duration);
                         if (actionEnd.type != ActionEndType.none)
                         {
                             //evaluate conditions to choose whether this action will end as a success or a failure

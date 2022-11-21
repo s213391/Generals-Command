@@ -36,7 +36,7 @@ public class NotificationManager : MonoBehaviour
         activeNotificationTypes[notificationType] = true;
 
         if (notificationType == 3)
-            notificationPanels[index].OpenPanel(3, $"Your {unitName} {notificationTexts[3]}", notificationSounds[3]);
+            notificationPanels[index].OpenPanel(3, $"Your {unitName} is under attack", notificationSounds[3]);
         else
             notificationPanels[index].OpenPanel(notificationType, notificationTexts[notificationType], notificationSounds[notificationType]);
     }

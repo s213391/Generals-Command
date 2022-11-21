@@ -3155,7 +3155,7 @@ MonoBehaviour:
   unreadyButton: {fileID: 3580376560368286173}
   blockoutPanel: {fileID: 7711087367987110448}
   startGameButton: {fileID: 3580376561915631185}
-  maxPlayerNumber: 4
+  maxPlayerNumber: 2
   localPlayerNumber: 0
   clientsNeedUpdating: 0
   clientsAcknowledgedStart: 0
@@ -3164,6 +3164,7 @@ MonoBehaviour:
   teamsAllowed: 0
   productionMultiplier: 1
   resourceMultiplier: 1
+  costMultiplier: 1
   mapIndex: 0
 --- !u!114 &3580376560957503872
 MonoBehaviour:
