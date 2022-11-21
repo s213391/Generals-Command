@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.75
   m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 0, g: 0.20803715, b: 0.6226415, a: 1}
+  m_SubtractiveShadowColor: {r: 0, g: 0.16981141, b: 0.509434, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.621
   m_FlareStrength: 1
@@ -35,10 +35,10 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 16
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 986430218}
-  m_IndirectSpecularColor: {r: 0.18266717, g: 0.22837761, b: 0.30712554, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5630,7 +5630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b25249008ff7e4e931a940c7c6084f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostPosition: {x: 330, y: 30, z: 670}
+  hostPosition: {x: 330, y: 30, z: 680}
   hostRotation: {x: 0, y: 270, z: 0}
   clientPosition: {x: 360, y: 30, z: 100}
   clientRotation: {x: 0, y: 90, z: 0}
