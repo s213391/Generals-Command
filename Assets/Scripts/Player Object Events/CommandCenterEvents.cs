@@ -1,5 +1,6 @@
 using UnityEngine;
 using RTSModularSystem;
+using RTSModularSystem.BasicCombat;
 using Mirror;
 
 public class CommandCenterEvents : AttackableEvents
@@ -15,6 +16,8 @@ public class CommandCenterEvents : AttackableEvents
 
     public override void OnDamage(int newHealth, int oldHealth)
     {
+        CombatManager.instance.CombatOccured();
+        NotificationManager.instance.RequestNotification(0);
         RpcOnDamage(newHealth, oldHealth);
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using RTSModularSystem.BasicCombat;
 using Mirror;
 
 public class GenericAttackerEvents : AttackerEvents
@@ -28,6 +29,7 @@ public class GenericAttackerEvents : AttackerEvents
 
     public override void OnAttack()
     {
+        CombatManager.instance.CombatOccured();
         RpcOnAttack();
     }
 
