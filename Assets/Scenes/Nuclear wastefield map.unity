@@ -5717,7 +5717,7 @@ MonoBehaviour:
   finalCostPercentage: 0.5
   finalBuildTimePercentage: 0.5
   totalReductions: 5
-  secondsBetweenReductions: 2
+  secondsBetweenReductions: 30
   buildNuclearMissile: {fileID: 11400000, guid: 13afe05d57f4aa8418aa951833ba5dac, type: 2}
 --- !u!114 &36415996
 MonoBehaviour:
@@ -33966,7 +33966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8179344943698005630, guid: 2554554fa93a77c47825c7f8b4f00cb1, type: 3}
       propertyPath: secondsDuration
-      value: 65
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 8179344943698005630, guid: 2554554fa93a77c47825c7f8b4f00cb1, type: 3}
       propertyPath: onTimerEnd.m_PersistentCalls.m_Calls.Array.size
