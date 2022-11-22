@@ -51,8 +51,6 @@ namespace RTSModularSystem
 
                 //replace actions if necessary
                 ReplaceActions();
-                foreach (GUIActionButton button in buttons)
-                    button.OnUpdate();
             }
             else
             {
@@ -95,25 +93,11 @@ namespace RTSModularSystem
                     continue;
 
                 GameObject button = Instantiate(actionButtonPrefab, actionsGridLayout.transform);
-                Image icon = button.GetComponentInChildren<Image>();
-                TextMeshProUGUI textMesh = button.GetComponentInChildren<TextMeshProUGUI>();
                 GUIActionButton guiActionButton = button.GetComponent<GUIActionButton>();
 
                 //initialise button to check resource values
                 buttons.Add(guiActionButton);
-                guiActionButton.Init(actionData);
-
-                //set name and sprite from action data
-                icon.sprite = actionData.icon;
-                if (actionData.name.Length > 5 && actionData.name.Substring(0,5) == "Spawn")
-                    textMesh.text = actionData.name.Substring(6);
-                else
-                    textMesh.text = actionData.name;
-
-                //the value of i and currentObject will change, create dummy variables for the listener
-                int j = i;
-                PlayerObject po = currentObject;
-                button.GetComponent<Button>().onClick.AddListener(delegate { productionScreen.OpenScreen(po, po.GetActionData(j)); });
+                guiActionButton.Init(currentObject, actionData, productionScreen);
             }
 
             //show menu if this object has an action that appears on the action bar

@@ -215,4 +215,10 @@ public class Moveable : MonoBehaviour
             followingUpdatedRecently = false;
         }
     }
+
+
+    private void OnDestroy()
+    {
+        Destroy(agent);
+    }
 }

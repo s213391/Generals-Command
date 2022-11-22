@@ -213,11 +213,17 @@ namespace RTSModularSystem
         public void DestroyPlayerObject()
         {
             ObjectDataManager.RemovePlayerObject(owningPlayer, this);
+            if (attackable)
+                Destroy(attackable);
+            if (attacker)
+                Destroy(attacker);
+            if (moveable)
+                Destroy(moveable);
+            if (selectable)
+                Destroy(selectable);
 
             interrupt = 9;
-            Destroy(gameObject);
             Minimap.instance.UnRegisterIcon(this);
-            return;
         }
 
 

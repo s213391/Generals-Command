@@ -8,47 +8,18 @@ using TMPro;
 
 public class GUIActionButton : MonoBehaviour
 {
-    private GameActionData action;
-    private List<ResourceQuantity> currentResources;
-    private Button button;
-    private uint ID;
-    public List<TextMeshProUGUI> costTexts;
-    
-    public void Init(GameActionData data)
+    public Button button;
+    public Image icon;
+    public TextMeshProUGUI textMesh;
+
+    public void Init(PlayerObject po, GameActionData data, ProductionScreen productionScreen)
     {
-        action = data;
-        button = GetComponent<Button>();
-        ID = RTSPlayer.GetID();
-    }
-    
-    
-    public void OnUpdate()
-    {
-        /*currentResources = ResourceManager.instance.GetResourceValues(ID, ID);
+        icon.sprite = data.icon;
+        if (data.name.Length > 5 && data.name.Substring(0, 5) == "Spawn")
+            textMesh.text = data.name.Substring(6);
+        else
+            textMesh.text = data.name;
 
-        for (int i = 0; i < costTexts.Count; i++)
-        {
-            bool found = false;
-            foreach (ResourceQuantity cost in CostModifier.GetModifiedCost(action))
-            {
-                if ((int)cost.resourceType == i)
-                {
-                    costTexts[i].text = (-cost.quantity).ToString();
-                    found = true;
-                    if (currentResources[i].quantity > -cost.quantity)
-                        costTexts[i].color = Color.white;
-                    else
-                        costTexts[i].color = Color.red;
-
-                    break;
-                }
-            }
-
-            if (!found)
-            {
-                costTexts[i].text = "0";
-                costTexts[i].color = Color.white;
-            }
-        }*/
+        button.onClick.AddListener(delegate { productionScreen.OpenScreen(po, data); });
     }
 }

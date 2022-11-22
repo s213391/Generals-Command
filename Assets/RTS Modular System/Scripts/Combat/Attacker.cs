@@ -65,7 +65,7 @@ namespace RTSModularSystem.BasicCombat
         private float forwardAiming = 1.0f;
         private float rightAiming = 1.0f;
 
-        private AttackerEvents attackerEvents;
+        public AttackerEvents attackerEvents;
 
         // Start is called before the first frame update
         void Start()
@@ -141,10 +141,11 @@ namespace RTSModularSystem.BasicCombat
             //begin attack and start the attack cooldown
             if (distance <= attackRange)
             {
-                CombatManager.instance.Attack(target, damageType, attackDamage, this);
+                if (!(attackType == AttackType.rangedArc))
+                    CombatManager.instance.Attack(target, damageType, attackDamage, this);
+
                 currentlyAttacking = true;
                 StartCoroutine(AttackDuration());
-                transform.LookAt(target.transform);
 
                 attackerEvents?.OnAttack();
             }

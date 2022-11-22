@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using RTSModularSystem;
 using RTSModularSystem.BasicCombat;
@@ -53,5 +54,13 @@ public class GenericAttackableEvents : AttackableEvents
         SetAnimationTrigger(animators, "Death");
 
         GetComponent<PlayerObject>().DestroyPlayerObject();
+        StartCoroutine(DestroyAfterTime());
+    }
+
+
+    IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Destroy(gameObject);
     }
 }

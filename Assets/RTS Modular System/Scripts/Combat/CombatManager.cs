@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
@@ -109,19 +110,10 @@ namespace RTSModularSystem.BasicCombat
 
                     potentialTargets.Sort((x,y) => x.range.CompareTo(y.range));
 
-                    if (attacker.attackType == AttackType.rangedDirect)
-                    {
-                        foreach (AttackableDistance ad in potentialTargets)
-                        {
-                            if (!Physics.Linecast(attackerPosition + Vector3.up, ad.target.transform.position + Vector3.up, LayerMask.GetMask("Default", "Terrain")))
-                            {
-                                attacker.TrySetTarget(ad.target, ad.range, false);
-                                break;
-                            }
-                        }
-                    }
-                    else
-                        attacker.TrySetTarget(potentialTargets[0].target, potentialTargets[0].range, false);
+                    attacker.TrySetTarget(potentialTargets[0].target, potentialTargets[0].range, false);
+
+                    if (attacker.attackType == AttackType.rangedArc)
+                        StartCoroutine(ArcedAttack(attacker, potentialTargets[0].target.transform.position, targetLayers));
                 }
 
                 //try to attack target
@@ -217,6 +209,20 @@ namespace RTSModularSystem.BasicCombat
         {
             timeSinceCombat = 0.0f;
             inCombat = true;
+        }
+
+
+        //triggers an AOE attack after a set amount of time
+        IEnumerator ArcedAttack(Attacker attacker, Vector3 attackPosition, LayerMask targetLayers)
+        {
+            yield return new WaitForSeconds(1.5f);
+            
+            Collider[] objectsInRange = Physics.OverlapSphere(attackPosition, 25.0f, targetLayers);
+            attacker.attackerEvents?.OnAttack();
+
+            foreach (Collider collider in objectsInRange)
+                if (collider.TryGetComponent(out Attackable attackable))
+                    Attack(attackable, DamageType.artillery, attacker.attackDamage, attacker);
         }
     }
 }
