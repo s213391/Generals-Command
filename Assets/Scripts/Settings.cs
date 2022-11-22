@@ -80,8 +80,8 @@ public class Settings : MonoBehaviour
     //reset player prefs to default values on device
     public static void ResetPrefs()
     {
-        masterVolume = -16f;
-        musicVolume = 0.0f;
+        masterVolume = -16.0f;
+        musicVolume = -20.0f;
         sfxVolume = 0.0f;
         panSpeed = 5.0f;
         zoomSpeed = 2.0f;

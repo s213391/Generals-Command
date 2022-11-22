@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RTSModularSystem.BasicCombat;
 
 public class NotificationManager : MonoBehaviour
 {
     public static NotificationManager instance { get; private set; }
 
     public NotificationPanel[] notificationPanels = new NotificationPanel[2];
+    public GameObject nuclearCountdownTimer;
     public string[] notificationTexts = new string[4];
     public AudioClip[] notificationSounds = new AudioClip[4];
     bool[] activeNotificationTypes = new bool[4];
@@ -36,7 +38,10 @@ public class NotificationManager : MonoBehaviour
         activeNotificationTypes[notificationType] = true;
 
         if (notificationType == 3)
-            notificationPanels[index].OpenPanel(3, $"Your {unitName} is under attack", notificationSounds[3]);
+        {
+            if (!CombatManager.inCombat)
+                notificationPanels[index].OpenPanel(3, $"Your {unitName} is under attack", notificationSounds[3]);
+        }
         else
             notificationPanels[index].OpenPanel(notificationType, notificationTexts[notificationType], notificationSounds[notificationType]);
     }

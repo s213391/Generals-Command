@@ -52374,19 +52374,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6599532215976200144, guid: 3f33f6589cc7ea644b9c239645dfa4ed, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99427
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6599532215976200144, guid: 3f33f6589cc7ea644b9c239645dfa4ed, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6599532215976200144, guid: 3f33f6589cc7ea644b9c239645dfa4ed, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.106897354
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6599532215976200144, guid: 3f33f6589cc7ea644b9c239645dfa4ed, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6599532215976200144, guid: 3f33f6589cc7ea644b9c239645dfa4ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -52394,7 +52394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6599532215976200144, guid: 3f33f6589cc7ea644b9c239645dfa4ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -12.273
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6599532215976200144, guid: 3f33f6589cc7ea644b9c239645dfa4ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -54766,8 +54766,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 730268750}
   canMoveTarget: 1
-  defaultDistance: 5
-  currentDistance: 5
+  defaultDistance: 30
+  currentDistance: 30
   xAngle: 45
   zoomSpeed: 5
   minZoom: 30
@@ -55028,7 +55028,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   calmMusic: {fileID: 1546076794}
   combatMusic: {fileID: 1546076795}
-  inCombat: 0
   combatTransitionValue: 0
 --- !u!1001 &1561253175
 PrefabInstance:

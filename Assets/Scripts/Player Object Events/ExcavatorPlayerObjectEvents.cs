@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Mirror;
+using UnityEngine;
 
-public class GenericPlayerObjectEvents : PlayerObjectEvents
+public class ExcavatorPlayerObjectEvents : PlayerObjectEvents
 {
     AudioSource _audioSource;
 
@@ -19,6 +17,8 @@ public class GenericPlayerObjectEvents : PlayerObjectEvents
     {
         if (localOwned)
             RpcOnSpawn();
+        else
+            NotificationManager.instance.RequestNotification(2);
     }
 
 

@@ -16,8 +16,8 @@ public class CommandCenterEvents : AttackableEvents
 
     public override void OnDamage(int newHealth, int oldHealth)
     {
-        CombatManager.instance.CombatOccured();
         NotificationManager.instance.RequestNotification(0);
+        CombatManager.instance.CombatOccured();
         RpcOnDamage(newHealth, oldHealth);
     }
 

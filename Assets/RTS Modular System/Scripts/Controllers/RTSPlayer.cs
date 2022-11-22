@@ -214,5 +214,19 @@ namespace RTSModularSystem
         {
             gameAction.SetTrigger(po, data, successful);
         }
+
+
+        [Command]
+        public void CmdMissileBuildStart()
+        {
+            RpcMissileNotification();
+        }
+
+
+        [ClientRpc]
+        public void RpcMissileNotification()
+        {
+            NotificationManager.instance.RequestNotification(1);
+        }
     }
 }

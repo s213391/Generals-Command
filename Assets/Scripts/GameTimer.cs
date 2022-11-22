@@ -95,6 +95,6 @@ public class GameTimer : MonoBehaviour
     //convert seconds float into milliseconds string
     string MillisecondsString()
     {
-        return (secondsLeft.ToString() + "000").Substring(2,3);
+        return (secondsLeft.ToString() + "0000").Substring(2,3);
     }
 }

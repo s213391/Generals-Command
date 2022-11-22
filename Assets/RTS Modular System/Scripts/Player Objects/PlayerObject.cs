@@ -171,7 +171,7 @@ namespace RTSModularSystem
                         RTSPlayer.StartAction(sa.action, this);
 
             if (TryGetComponent(out PlayerObjectEvents events))
-                events.OnSpawn();
+                events.OnSpawn(ownedByLocalPlayer);
         }
 
 

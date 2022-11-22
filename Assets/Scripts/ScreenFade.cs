@@ -35,6 +35,8 @@ public class ScreenFade : MonoBehaviour
 
         while (timer < seconds)
         {
+            timer += Time.deltaTime;
+            
             if (fadeIn)
                 panelColour.a = 1 - timer / seconds;
             else

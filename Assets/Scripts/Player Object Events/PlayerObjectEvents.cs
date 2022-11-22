@@ -18,5 +18,5 @@ public abstract class PlayerObjectEvents : EffectEventsBase
         }
     }
 
-    public abstract void OnSpawn();
+    public abstract void OnSpawn(bool localOwned);
 }

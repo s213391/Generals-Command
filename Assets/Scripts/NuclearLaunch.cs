@@ -10,6 +10,7 @@ public class NuclearLaunch : NetworkBehaviour
 {
     public static NuclearLaunch instance { get; private set; }
 
+    public float missileFlightTime = 10.0f;
     public float fadeOutTime = 1.0f;
     public float blackScreenDuration = 1.0f;
     public float fadeInTime = 1.0f;
@@ -17,7 +18,7 @@ public class NuclearLaunch : NetworkBehaviour
 
     public PlayerObjectData missileData;
     public GameObject launchButtonPrefab;
-    public GameObject launchCountdownPrefab;
+    GameObject launchButton;
 
     GameObject cameraTarget;
     bool missileLaunching = false;
@@ -46,30 +47,43 @@ public class NuclearLaunch : NetworkBehaviour
             return;
 
         missileLaunching = true;
-        RpcShowLaunchTimer(missileObject);
+        RpcShowLaunchTimer();
+        NotificationManager.instance.nuclearCountdownTimer.GetComponentInChildren<GameTimer>().onTimerEnd.AddListener(delegate { MissileLaunch(missileObject); });
     }
 
 
     [ClientRpc]
     //spawns and starts the launch counter on clients
-    void RpcShowLaunchTimer(GameObject missileObject)
+    void RpcShowLaunchTimer()
     {
-        Transform missileTransform = missileObject.transform;
-        GameObject launchButton = Instantiate(launchButtonPrefab);
-        launchButton.GetComponent<GameTimer>().onTimerEnd.AddListener(delegate { StartCoroutine(FadeToMissile(missileTransform)); });
+        NotificationManager.instance.nuclearCountdownTimer.SetActive(true);
+    }
+
+
+    [Server]
+    public void MissileLaunch(GameObject missile)
+    {
+        if (missileLaunching)
+            RpcMissileLaunch(missile);
+    }
+
+
+    [ClientRpc]
+    void RpcMissileLaunch(GameObject missile)
+    {
+        StartCoroutine(FadeToMissile(missile.transform));
     }
 
 
     //disables all player interaction and fades to the missile
     public IEnumerator FadeToMissile(Transform missileTransform)
     {
-        if (!missileLaunching)
-            yield break;
-        
+        launchButton?.SetActive(false);
         ScreenFade.Out(fadeOutTime);
         yield return new WaitForSeconds(fadeOutTime);
         
         SelectionController.instance.DeselectAll();
+        CameraController.instance.canMoveTarget = false;
         PlayerInput.instance.ToggleSingleSelectionInputs(false);
         PlayerInput.instance.ToggleDragSelectionInputs(false);
         PlayerInput.instance.ToggleMovementInputs(false);
@@ -78,25 +92,43 @@ public class NuclearLaunch : NetworkBehaviour
 
         cameraTarget = CameraController.instance.target;
         cameraTarget.transform.SetPositionAndRotation(missileTransform.position, missileTransform.rotation);
+        if (!RTSPlayer.Owns(missileTransform.GetComponent<PlayerObject>()))
+        {
+            if (CameraController.instance.xAngle != 135.0f)
+                CameraController.instance.xAngle = 135.0f;
+            else
+                CameraController.instance.xAngle = 45.0f;
+        }
         CameraController.instance.currentDistance = cameraDistance;
         yield return new WaitForSeconds(blackScreenDuration);
 
         ScreenFade.In(fadeInTime);
         yield return new WaitForSeconds(fadeInTime);
 
-        StartCoroutine(FollowMissile(missileTransform));
+        StartCoroutine(MissileFlight(missileTransform));
     }
 
 
-    //move the camera target to follow the xz coordinates of the missile
-    public IEnumerator FollowMissile(Transform missileTransform)
+    //sets the nuclear button variable
+    public void SetButton(GameObject button)
     {
-        while (true)
+        launchButton = button;
+    }    
+
+
+    //move the camera target to follow the xz coordinates of the missile
+    public IEnumerator MissileFlight(Transform missileTransform)
+    {
+        float timer = 0.0f;
+        while (timer < missileFlightTime)
         { 
+            timer += Time.deltaTime;
+            
             Vector3 missilePosition = missileTransform.position;
             missilePosition.y = cameraTarget.transform.position.y;
 
             cameraTarget.transform.position = missilePosition;
+            yield return null;
         }
     }
 }

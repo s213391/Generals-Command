@@ -8,8 +8,6 @@ public class GameMusic : MonoBehaviour
     public AudioSource calmMusic;
     public AudioSource combatMusic;
 
-    public bool inCombat;
-
     [Range(0,1)]
     public float combatTransitionValue = 0.0f;
     
@@ -25,7 +23,7 @@ public class GameMusic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inCombat)
+        if (CombatManager.inCombat)
             combatTransitionValue += Time.deltaTime;
         else
             combatTransitionValue -= Time.deltaTime;
