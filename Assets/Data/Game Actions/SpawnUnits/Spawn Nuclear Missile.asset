@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e8763a929fe7c4b8898bc9ade93e7b, type: 3}
   m_Name: Spawn Nuclear Missile
   m_EditorClassIdentifier: 
-  description: Placeholder
+  description: Mutually assured destruction who? Constructing this before your enemy
+    allows you to entirely erase their base.
   cooldown: 0
   clientSide: 1
   lockInput: 0
@@ -25,7 +26,7 @@ MonoBehaviour:
   - prefab: {fileID: 151736284277679920, guid: cee7b702d81c3e94f8d41a5f6e7fcd4b, type: 3}
     location: 0
     worldPosition: 0
-    position: {x: 20, y: 0, z: 0}
+    position: {x: -0.56, y: -12.09, z: 9.42}
     worldRotation: 0
     rotation: {x: 0, y: 0, z: 0}
     mouseLayerMask:
