@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using RTSModularSystem;
 
-public class MissilePlayerObjectEvents : PlayerObjectEvents
+public class MissileSpawn : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnMissileSpawn(PlayerObject commandCenter, GameActionData data)
     {
-        
-    }
-
-    public override void OnSpawn(bool localOwned)
-    {
-        if (localOwned)
+        if (RTSPlayer.Owns(commandCenter))
         {
             GameObject launchButton = (GameObject)Instantiate(NuclearLaunch.instance.launchButtonPrefab);
             launchButton.GetComponentInChildren<NuclearLaunchButton>().Init(GetComponent<PlayerObject>());

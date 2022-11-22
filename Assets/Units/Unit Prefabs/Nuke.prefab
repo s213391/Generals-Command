@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: -3628637897741005261}
   - component: {fileID: 3904104716817419206}
   - component: {fileID: 727830174353999790}
-  - component: {fileID: 3500275061512769072}
-  - component: {fileID: -1830594590145606363}
   m_Layer: 0
   m_Name: Nuke
   m_TagString: Untagged
@@ -203,40 +201,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &3500275061512769072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151736284277679920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cab7816fd80ae524ebda557f942b809a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  owningPlayer: 9999
-  data: {fileID: 11400000, guid: 319d39ced5a923c45878f71715ec694b, type: 2}
-  queuedActions: []
---- !u!114 &-1830594590145606363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151736284277679920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c3f36b2e06c9d74f9242380df80135b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  animators: []
-  spawnSounds: []
-  spawnParticles: []
 --- !u!1001 &2921078941204365037
 PrefabInstance:
   m_ObjectHideFlags: 0
