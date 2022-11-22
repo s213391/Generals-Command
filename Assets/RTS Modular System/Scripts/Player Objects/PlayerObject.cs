@@ -65,6 +65,7 @@ namespace RTSModularSystem
             //set up basic properties
             interrupt = 0;
             gameObject.SetActive(true);
+            queuedActions = new List<GameActionData>();
 
             //set up selection
             if (data.selectable)

@@ -108,12 +108,15 @@ namespace RTSModularSystem.BasicCombat
                         }
                     }
 
-                    potentialTargets.Sort((x,y) => x.range.CompareTo(y.range));
+                    if (potentialTargets.Count > 0)
+                    {
+                        potentialTargets.Sort((x, y) => x.range.CompareTo(y.range));
 
-                    attacker.TrySetTarget(potentialTargets[0].target, potentialTargets[0].range, false);
+                        attacker.TrySetTarget(potentialTargets[0].target, potentialTargets[0].range, false);
 
-                    if (attacker.attackType == AttackType.rangedArc)
-                        StartCoroutine(ArcedAttack(attacker, potentialTargets[0].target.transform.position, targetLayers));
+                        if (attacker.attackType == AttackType.rangedArc)
+                            StartCoroutine(ArcedAttack(attacker, potentialTargets[0].target.transform.position, targetLayers));
+                    }
                 }
 
                 //try to attack target
