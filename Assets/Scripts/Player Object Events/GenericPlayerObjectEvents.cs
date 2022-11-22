@@ -14,18 +14,12 @@ public class GenericPlayerObjectEvents : PlayerObjectEvents
     }
 
 
-    [Server]
     public override void OnSpawn(bool localOwned)
     {
         if (localOwned)
-            RpcOnSpawn();
-    }
-
-
-    [ClientRpc]
-    public void RpcOnSpawn()
-    {
-        PlayOneShotAudio(_audioSource, spawnSounds);
-        StartParticleEffect(spawnParticles);
+        {
+            PlayOneShotAudio(_audioSource, spawnSounds);
+            StartParticleEffect(spawnParticles);
+        }
     }
 }

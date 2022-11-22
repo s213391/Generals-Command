@@ -16,8 +16,6 @@ public class GenericAttackableEvents : AttackableEvents
 
     public override void OnDamage(int newHealth, int oldHealth)
     {
-        NotificationManager.instance.RequestNotification(3, GetComponent<PlayerObject>().data.name);
-        CombatManager.instance.CombatOccured();
         RpcOnDamage(newHealth, oldHealth);
     }
 
@@ -27,6 +25,10 @@ public class GenericAttackableEvents : AttackableEvents
     {
         PlayOneShotAudio(_audioSource, damageSounds);
         StartParticleEffect(damageParticles);
+
+        if (RTSPlayer.Owns(GetComponent<PlayerObject>()))
+            NotificationManager.instance.RequestNotification(3, GetComponent<PlayerObject>().data.name);
+        CombatManager.instance.CombatOccured();
     }
 
 

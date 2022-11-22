@@ -60,6 +60,7 @@ namespace RTSModularSystem.Selection
             outline.enabled = false;
             OnDeselect?.Invoke();
             Debug.Log(name + " deselected");
+            GetComponent<PlayerObject>().SetInterrupt(5);
         }
 
 
