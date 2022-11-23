@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: APC SHOOT
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: APC.001
+    m_Weight: 0
+  - m_Path: APC.001/Bone
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Back-Wheel-Axel.L.001
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Back-Wheel-Axel.L.001/APC-Back-Wheel.L.001
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Back-Wheel-Axel.L.001/APC-Back-Wheel.L.001/APC-Back-Wheel.L.001_end
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Back-Wheel-Axel.R.001
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Back-Wheel-Axel.R.001/APC-Back-Wheel.R.001
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Back-Wheel-Axel.R.001/APC-Back-Wheel.R.001/APC-Back-Wheel.R.001_end
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Body
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Body/APC-Turret-Axel
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Body/APC-Turret-Axel/APC-Turret-Barrel
+    m_Weight: 1
+  - m_Path: APC.001/Bone/APC-Body/APC-Turret-Axel/APC-Turret-Barrel/APC-Turret-MUSSLE
+    m_Weight: 1
+  - m_Path: APC.001/Bone/APC-Body/APC-Turret-Axel/APC-Turret-Barrel/APC-Turret-MUSSLE/APC-Turret-MUSSLE_end
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Front-Wheel-Axel.L
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Front-Wheel-Axel.L/APC-Front-Wheel.L
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Front-Wheel-Axel.L/APC-Front-Wheel.L/APC-Front-Wheel.L_end
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Front-Wheel-Axel.R
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Front-Wheel-Axel.R/APC-Front-Wheel.R
+    m_Weight: 0
+  - m_Path: APC.001/Bone/APC-Front-Wheel-Axel.R/APC-Front-Wheel.R/APC-Front-Wheel.R_end
+    m_Weight: 0
+  - m_Path: APC.002
+    m_Weight: 1
