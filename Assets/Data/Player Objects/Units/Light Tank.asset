@@ -23,7 +23,7 @@ MonoBehaviour:
   - damageType: 2
     percentageResistance: 10
   - damageType: 3
-    percentageResistance: 30
+    percentageResistance: 60
   healthBarHeight: 5
   healthBarWidth: 1
   xpOnDeath: 0
@@ -33,10 +33,10 @@ MonoBehaviour:
   damageType: 1
   targetType: 0
   attackDamage: 200
-  attackRange: 20
+  attackRange: 30
   attackDuration: 15
   canAutoTarget: 1
-  autoTargetRange: 15
+  autoTargetRange: 30
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}

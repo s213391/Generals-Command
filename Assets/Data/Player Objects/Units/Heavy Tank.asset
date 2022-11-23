@@ -23,7 +23,7 @@ MonoBehaviour:
   - damageType: 2
     percentageResistance: 50
   - damageType: 3
-    percentageResistance: 80
+    percentageResistance: 99
   healthBarHeight: 5
   healthBarWidth: 1
   xpOnDeath: 0
@@ -33,17 +33,17 @@ MonoBehaviour:
   damageType: 2
   targetType: 0
   attackDamage: 500
-  attackRange: 20
+  attackRange: 30
   attackDuration: 15
   canAutoTarget: 1
-  autoTargetRange: 20
+  autoTargetRange: 30
   levelable: 0
   level: 1
   nextLevel: {fileID: 0}
   xpRequirement: -1
   moveable: 1
-  moveSpeed: 4
-  acceleration: 4
+  moveSpeed: 8
+  acceleration: 8
   angularSpeed: 120
   agentHeight: 2
   agentWidth: 3.93905
