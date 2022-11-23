@@ -26,21 +26,21 @@ MonoBehaviour:
   changeResourcesAtStart: 1
   resourceChange:
   - resourceType: 0
-    quantity: -2000
+    quantity: 0
   - resourceType: 1
-    quantity: -2000
+    quantity: 0
   - resourceType: 2
-    quantity: -1000
+    quantity: 0
   - resourceType: 3
-    quantity: -25
+    quantity: 0
   - resourceType: 4
-    quantity: -20
+    quantity: 0
   incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
     type: 5
-    seconds: 60
+    seconds: 6
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
@@ -73,7 +73,19 @@ MonoBehaviour:
         m_CallState: 2
   onActionEnd:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4425882843981498043, guid: 08b657289bbdb634facb062ee73f99b6, type: 3}
+        m_TargetAssemblyTypeName: TellCommandCenterNukeBuilt, Assembly-CSharp
+        m_MethodName: OnMissileSpawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onConditionEvaluate:
     m_PersistentCalls:
       m_Calls: []

@@ -10,7 +10,7 @@ public class NuclearLaunch : NetworkBehaviour
 {
     public static NuclearLaunch instance { get; private set; }
 
-    public float missileFlightTime = 10.0f;
+    public float missileFlightTime = 5.0f;
     public float fadeOutTime = 1.0f;
     public float blackScreenDuration = 1.0f;
     public float fadeInTime = 1.0f;
@@ -32,23 +32,19 @@ public class NuclearLaunch : NetworkBehaviour
 
 
     //tells the server to notify clients that a nuclear missile is about to launch
-    public void BeginLaunch(PlayerObject missile)
+    public void BeginLaunch(GameObject commandCenter, GameObject deadCenter)
     {
-        CmdBeginLaunch(missile.gameObject);
+        CmdBeginLaunch(commandCenter, deadCenter);
     }
 
 
     [Command]
     //notifies clients that a missile is about to launch if it exists on the server
-    void CmdBeginLaunch(GameObject missileObject)
+    void CmdBeginLaunch(GameObject commandCenter, GameObject deadCenter)
     { 
-        PlayerObject missile = missileObject?.GetComponent<PlayerObject>();
-        if (!missile || missile.data != missileData)
-            return;
-
         missileLaunching = true;
         RpcShowLaunchTimer();
-        NotificationManager.instance.nuclearCountdownTimer.GetComponentInChildren<GameTimer>().onTimerEnd.AddListener(delegate { MissileLaunch(missileObject); });
+        NotificationManager.instance.nuclearCountdownTimer.GetComponentInChildren<GameTimer>().onTimerEnd.AddListener(delegate { MissileLaunch(commandCenter, deadCenter); });
     }
 
 
@@ -61,22 +57,22 @@ public class NuclearLaunch : NetworkBehaviour
 
 
     [Server]
-    public void MissileLaunch(GameObject missile)
+    public void MissileLaunch(GameObject commandCenter, GameObject deadCenter)
     {
         if (missileLaunching)
-            RpcMissileLaunch(missile);
+            RpcMissileLaunch(commandCenter, deadCenter);
     }
 
 
     [ClientRpc]
-    void RpcMissileLaunch(GameObject missile)
+    void RpcMissileLaunch(GameObject commandCenter, GameObject deadCenter)
     {
-        StartCoroutine(FadeToMissile(missile.transform));
+        StartCoroutine(FadeToMissile(commandCenter.transform.GetChild(2), deadCenter.GetComponent<PlayerObject>()));
     }
 
 
     //disables all player interaction and fades to the missile
-    public IEnumerator FadeToMissile(Transform missileTransform)
+    public IEnumerator FadeToMissile(Transform missileTransform, PlayerObject deadCenter)
     {
         launchButton?.SetActive(false);
         ScreenFade.Out(fadeOutTime);
@@ -92,7 +88,7 @@ public class NuclearLaunch : NetworkBehaviour
 
         cameraTarget = CameraController.instance.target;
         cameraTarget.transform.SetPositionAndRotation(missileTransform.position, missileTransform.rotation);
-        if (!RTSPlayer.Owns(missileTransform.GetComponent<PlayerObject>()))
+        if (RTSPlayer.Owns(deadCenter))
         {
             if (CameraController.instance.xAngle != 135.0f)
                 CameraController.instance.xAngle = 135.0f;
@@ -105,7 +101,8 @@ public class NuclearLaunch : NetworkBehaviour
         ScreenFade.In(fadeInTime);
         yield return new WaitForSeconds(fadeInTime);
 
-        StartCoroutine(MissileFlight(missileTransform));
+        missileTransform.GetComponent<Animator>().speed = 1.0f;
+        StartCoroutine(MissileFlight(missileTransform, deadCenter));
     }
 
 
@@ -117,7 +114,7 @@ public class NuclearLaunch : NetworkBehaviour
 
 
     //move the camera target to follow the xz coordinates of the missile
-    public IEnumerator MissileFlight(Transform missileTransform)
+    public IEnumerator MissileFlight(Transform missileTransform, PlayerObject deadCenter)
     {
         float timer = 0.0f;
         while (timer < missileFlightTime)
@@ -130,5 +127,10 @@ public class NuclearLaunch : NetworkBehaviour
             cameraTarget.transform.position = missilePosition;
             yield return null;
         }
+
+        missileTransform.gameObject.SetActive(false);
+        deadCenter.transform.GetChild(3).gameObject.SetActive(true);
+        if (isServer)
+            deadCenter.GetComponent<CommandCenterEvents>().OnDeath();
     }
 }

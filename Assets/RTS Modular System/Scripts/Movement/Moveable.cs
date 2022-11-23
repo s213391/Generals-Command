@@ -144,8 +144,7 @@ public class Moveable : MonoBehaviour
                 oldTarget.RemoveTargetted(this);
         }
 
-        if (playEvent)
-            movableEvents.OnMovementBegin();
+        movableEvents.OnMovementBegin();
     }
 
 

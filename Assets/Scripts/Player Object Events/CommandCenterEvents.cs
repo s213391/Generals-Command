@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using RTSModularSystem;
 using RTSModularSystem.BasicCombat;
@@ -52,6 +53,13 @@ public class CommandCenterEvents : AttackableEvents
 
         SetAnimationTrigger(animators, "Death");
 
+        StartCoroutine(CameraSlowdown());
+    }
+
+
+    IEnumerator CameraSlowdown()
+    {
+        yield return new WaitForSeconds(4.0f);
         if (GetComponent<PlayerObject>().owningPlayer == GameData.instance.localPlayerNumber + 1)
             GameOver.instance.TriggerGameOver(false);
         else

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
@@ -217,7 +216,7 @@ namespace RTSModularSystem
                     switch (finger.phase)
                     { 
                         case TouchPhase.Began:
-                            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                            if (EventSystem.current.IsPointerOverGameObject(finger.touchId))
                                 touchStartedOverUI = true;
                             break;
 

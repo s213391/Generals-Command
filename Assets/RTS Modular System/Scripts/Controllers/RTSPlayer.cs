@@ -15,6 +15,7 @@ namespace RTSModularSystem
     public class RTSPlayer : NetworkBehaviour
     {
         public static RTSPlayer localPlayer { get; private set; }
+        public static RTSPlayer otherPlayer { get; private set; }
         public static NetworkIdentity identity { get; private set; }
         public static CameraController camController { get; private set; }
         public static SelectionController selectionController { get; private set; }
@@ -51,7 +52,10 @@ namespace RTSModularSystem
                     Init();
             }
             else
+            {
+                otherPlayer = this;
                 enabled = false;
+            }
         }
 
 
