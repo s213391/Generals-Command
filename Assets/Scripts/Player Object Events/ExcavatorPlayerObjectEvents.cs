@@ -12,20 +12,14 @@ public class ExcavatorPlayerObjectEvents : PlayerObjectEvents
     }
 
 
-    [Server]
     public override void OnSpawn(bool localOwned)
     {
         if (localOwned)
-            RpcOnSpawn();
+        {
+            PlayOneShotAudio(_audioSource, spawnSounds);
+            StartParticleEffect(spawnParticles);
+        }
         else
             NotificationManager.instance.RequestNotification(2);
-    }
-
-
-    [ClientRpc]
-    public void RpcOnSpawn()
-    {
-        PlayOneShotAudio(_audioSource, spawnSounds);
-        StartParticleEffect(spawnParticles);
     }
 }

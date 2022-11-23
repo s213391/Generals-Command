@@ -18,10 +18,10 @@ namespace RTSModularSystem
 
         public bool isHidden { get; private set; }
 
-        private Attackable attackable;
-        private Attacker attacker;
-        private Selectable selectable;
-        private Moveable moveable;
+        private Attackable attackable = null;
+        private Attacker attacker = null;
+        private Selectable selectable = null;
+        private Moveable moveable = null;
 
         public List<GameActionData> queuedActions;
 
@@ -222,6 +222,11 @@ namespace RTSModularSystem
                 Destroy(moveable);
             if (selectable)
                 Destroy(selectable);
+
+            attackable = null;
+            attacker = null;
+            moveable = null;
+            selectable = null;
 
             interrupt = 9;
             Minimap.instance.UnRegisterIcon(this);
