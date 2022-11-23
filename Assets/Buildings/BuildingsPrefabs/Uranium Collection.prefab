@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 344648071154657338}
   - component: {fileID: -5187166316659797797}
   - component: {fileID: 8471104839100818243}
-  - component: {fileID: -5492467125199430800}
   - component: {fileID: 6579434563478944747}
+  - component: {fileID: 5537414417281213560}
   m_Layer: 0
   m_Name: Uranium Collection
   m_TagString: Untagged
@@ -247,28 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b540a36564165344897190620d61d803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-5492467125199430800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456422188585449799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3f4f4b1ba749942b5660b3b90a386e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  animators: []
-  damageSounds: []
-  damageParticles: []
-  healSounds: []
-  healParticles: []
-  deathSounds: []
-  deathParticles:
-  - {fileID: 2634348980218352488}
 --- !u!114 &6579434563478944747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +264,28 @@ MonoBehaviour:
   animators: []
   spawnSounds: []
   spawnParticles: []
+--- !u!114 &5537414417281213560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456422188585449799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6814838823522de42a984919ddc4ba75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animators: []
+  damageSounds: []
+  damageParticles: []
+  healSounds: []
+  healParticles: []
+  deathSounds: []
+  deathParticles:
+  - {fileID: 2634348980218352488}
 --- !u!1001 &716898823534084019
 PrefabInstance:
   m_ObjectHideFlags: 0
