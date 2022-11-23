@@ -26,21 +26,21 @@ MonoBehaviour:
   changeResourcesAtStart: 1
   resourceChange:
   - resourceType: 0
-    quantity: 0
+    quantity: -2000
   - resourceType: 1
-    quantity: 0
+    quantity: -1500
   - resourceType: 2
-    quantity: 0
+    quantity: -1500
   - resourceType: 3
-    quantity: 0
+    quantity: -25
   - resourceType: 4
-    quantity: 0
+    quantity: -20
   incomeChange: []
   loopOnSuccessfulEnd: 0
   endConditions:
   - successfulEnd: 1
     type: 5
-    seconds: 6
+    seconds: 60
   successConditions: []
   nextActionsOnSuccess: []
   nextActionsOnFailure: []
