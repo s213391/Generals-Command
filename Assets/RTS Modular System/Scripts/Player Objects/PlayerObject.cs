@@ -190,6 +190,7 @@ namespace RTSModularSystem
 
             //update components
             attackable?.OnUpdate();
+            attacker?.OnUpdate();
             moveable?.OnUpdate();
         }
 

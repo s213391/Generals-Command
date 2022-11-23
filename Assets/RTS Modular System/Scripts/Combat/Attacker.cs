@@ -100,6 +100,9 @@ namespace RTSModularSystem.BasicCombat
         //checks the angle towards the target and passes it to the animator
         public void OnUpdate()
         {
+            if (!GameData.instance.isHost)
+                return;
+
             if (target)
             {
                 forwardAiming = Vector3.Dot(transform.forward, target.transform.position - transform.position);
