@@ -44,11 +44,14 @@ public class SuddenDeath : MonoBehaviour
 
         for (int i = 1; i <= totalReductions; i++)
         {
-            yield return new WaitForSeconds(secondsBetweenReductions);
             currentCostPercentage = Mathf.Lerp(1.0f, finalCostPercentage, (float)i / (float)totalReductions);
             CostModifier.SetActionModifier(buildNuclearMissile, currentCostPercentage);
             currentBuildTimePercentage = Mathf.Lerp(1.0f, finalBuildTimePercentage, (float)i / (float)totalReductions);
             ProductionModifier.SetActionModifier(buildNuclearMissile, currentBuildTimePercentage);
+
+
+
+            yield return new WaitForSeconds(secondsBetweenReductions);
         }
     }
 }

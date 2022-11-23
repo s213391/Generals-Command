@@ -59,7 +59,7 @@ public class Minimap : MonoBehaviour
         {
             int index = mapIcons.IndexOf(po);
             mapIcons.RemoveAt(index);
-            Destroy(renderTexture.transform.GetChild(index));
+            Destroy(renderTexture.transform.GetChild(index).gameObject);
         }
     }
 }
