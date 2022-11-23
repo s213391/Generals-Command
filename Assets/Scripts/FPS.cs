@@ -23,11 +23,10 @@ public class FPS : MonoBehaviour
 
         if (timeSinceLastSecond >= 1.0f)
         {
-            textMeshProUGUI.text = "FPS: " + framesSinceLastSecond;
+            textMeshProUGUI.text = framesSinceLastSecond + " FPS";
 
             timeSinceLastSecond -= 1.0f;
             framesSinceLastSecond = 0;
         }
-        
     }
 }
