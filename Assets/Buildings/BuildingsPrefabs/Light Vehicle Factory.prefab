@@ -250,7 +250,13 @@ MonoBehaviour:
   damageParticles: []
   healSounds: []
   healParticles: []
-  deathSounds: []
+  deathSounds:
+  - {fileID: 8300000, guid: 8824699cddc64eb49a0d0490c52fd0b3, type: 3}
+  - {fileID: 8300000, guid: f5473dcdab2d70b478adc4e4f67e91b7, type: 3}
+  - {fileID: 8300000, guid: 1647c4314d39a35449592544cf031d83, type: 3}
+  - {fileID: 8300000, guid: b5fec12846929da4587c047a876fd2ab, type: 3}
+  - {fileID: 8300000, guid: f8dcf2f4949d25548a441e0db118b9b3, type: 3}
+  - {fileID: 8300000, guid: 769e2e3f5b9111845a49f1f021ace279, type: 3}
   deathParticles:
   - {fileID: 2084897699521353683}
 --- !u!1 &5907588415409381631
