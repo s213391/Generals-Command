@@ -194,7 +194,7 @@ namespace RTSModularSystem
                 }
             }
             //if the touch/click is still down, update timer and selection box
-            else if (held && selectionImage.enabled == true)
+            else if (held)
             {
                 downTime += Time.deltaTime;
 
