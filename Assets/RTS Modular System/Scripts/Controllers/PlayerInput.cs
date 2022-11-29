@@ -294,13 +294,9 @@ namespace RTSModularSystem
                 return;
 
             //add every selected movable object to a list
-            List<Moveable> moveables = new List<Moveable>();
+            List<GameObject> moveables = new List<GameObject>();
             foreach (Selectable selectable in selectionController.selectedObjects)
-            {
-                Moveable moveable = selectable.GetComponent<Moveable>();
-                if (moveable)
-                    moveables.Add(moveable);
-            }
+                moveables.Add(selectable.gameObject);
 
             if (moveables.Count > 0)
                 StartCoroutine(SpawnMovementIndicator());

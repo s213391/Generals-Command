@@ -197,11 +197,20 @@ public class Moveable : MonoBehaviour
     void UpdateFollowingObjects()
     {
         followingUpdatedRecently = true;
-        
+        List<GameObject> followingObjects = new List<GameObject>();
+
         if (friendlyFollowingObjects.Count > 0)
-            RTSPlayer.unitArrangement.AssignDestination(friendlyFollowingObjects, transform.position, false, false, GetComponent<PlayerObject>());
+        {
+            foreach (Moveable moveable in friendlyFollowingObjects)
+                followingObjects.Add(moveable.gameObject);
+            RTSPlayer.unitArrangement.AssignDestination(followingObjects, transform.position, false, false, GetComponent<PlayerObject>());
+        }
         if (enemyFollowingObjects.Count > 0)
-            RTSPlayer.unitArrangement.AssignDestination(enemyFollowingObjects, transform.position, false, true, GetComponent<PlayerObject>());
+        {
+            foreach (Moveable moveable in enemyFollowingObjects)
+                followingObjects.Add(moveable.gameObject);
+            RTSPlayer.unitArrangement.AssignDestination(followingObjects, transform.position, false, true, GetComponent<PlayerObject>());
+        }
     }
 
 

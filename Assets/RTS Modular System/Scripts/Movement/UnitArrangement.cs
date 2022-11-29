@@ -17,13 +17,31 @@ namespace RTSModularSystem
         List<float> spaceLeftInRing; //the amount of the ring's perimeter that is not occupied left
         List<float> ringRadii; //each ring's radius
         List<int> ringAngleOffset; //a randomly selected angle offset to break up the pattern
+        public void AssignDestination(List<GameObject> moveables, Vector3 centrepoint, bool playerTriggered, bool isTargetAnEnemy = false, PlayerObject target = null)
+        { 
+            if (GameData.instance.isHost)
+                ServerAssignDestination(moveables, centrepoint, playerTriggered, isTargetAnEnemy, target);
+            else
+                RTSPlayer.localPlayer.AssignDestination(moveables, centrepoint, playerTriggered, isTargetAnEnemy, target);
+        }
 
         //assigns different, valid destinations in rings around a centrepoint to every given agent
         //each ring will be the size of the previous ring, plus unit spacing and the radii of the largest agents from each of the two rings
         //the centrepoint can be another agent whose size will determine the radius of the first ring
         //must specify if target is enemy or not to use a target, if an enemy, ranged units' destinations will be at their max range away from the enemy
-        public void AssignDestination(List<Moveable> moveables, Vector3 centrepoint, bool playerTriggered, bool isTargetAnEnemy = false, PlayerObject target = null)
+        public void ServerAssignDestination(List<GameObject> moveableObjects, Vector3 centrepoint, bool playerTriggered, bool isTargetAnEnemy, PlayerObject target)
         {
+
+            List<Moveable> moveables = new List<Moveable>();
+            foreach (GameObject go in moveableObjects)
+            {
+                Moveable moveable = go.GetComponent<Moveable>();
+                if (moveable)
+                    moveables.Add(moveable);
+            }
+
+
+            Debug.Log($"Units recieving destination: {moveables.Count}. On host: {GameData.instance.isHost}");
             if (moveables.Count == 0)
                 return;
             
@@ -84,7 +102,7 @@ namespace RTSModularSystem
             }
 
             //set up rest of first ring based on the radius
-            spaceLeftInRing.Add(ringRadii[1] * 2 * Mathf.PI);
+            spaceLeftInRing.Add(ringRadii[0] * 2 * Mathf.PI);
             ringAngleOffset.Add(Random.Range(0, 360));
 
             //set the destination of each agent in rings expanding out from the centrepoint

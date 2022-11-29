@@ -198,6 +198,19 @@ namespace RTSModularSystem
         }
 
 
+        public void AssignDestination(List<GameObject> moveables, Vector3 centrepoint, bool playerTriggered, bool isTargetAnEnemy, PlayerObject target)
+        {
+            CmdAssignDestination(moveables, centrepoint, playerTriggered, isTargetAnEnemy, target);
+        }
+
+
+        [Command]
+        public void CmdAssignDestination(List<GameObject> moveables, Vector3 centrepoint, bool playerTriggered, bool isTargetAnEnemy, PlayerObject target)
+        {
+            unitArrangement.ServerAssignDestination(moveables, centrepoint, playerTriggered, isTargetAnEnemy, target);
+        }
+
+
         [Command]
         //updates the destination of a unit serverside
         public void CmdMoveUnit(GameObject unit, Vector3 destination, bool playEvent)

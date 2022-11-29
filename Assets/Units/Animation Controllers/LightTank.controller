@@ -293,7 +293,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Death
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 9081859513850230715}
   m_Solo: 0
@@ -380,7 +383,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: af1b3e9d1bf304047901e6e4da0da44c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1fab57c1a0c76ef44b52aa0c74b67395, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -466,7 +469,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Movement
     m_StateMachine: {fileID: -8368180834138220511}
-    m_Mask: {fileID: 31900000, guid: 42b2dbf40cde67149a90a1b75d4c5091, type: 2}
+    m_Mask: {fileID: 31900000, guid: e364a52cd0b3ba24fa9c69020ccfec28, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -478,7 +481,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Aiming
     m_StateMachine: {fileID: -7953738121100545700}
-    m_Mask: {fileID: 31900000, guid: 2a32d8ee89384a54895eda64f1fa4fd9, type: 2}
+    m_Mask: {fileID: 31900000, guid: d38aa70371f81794c824c94ea737d26d, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -490,7 +493,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Shooting
     m_StateMachine: {fileID: 7343204722296211151}
-    m_Mask: {fileID: 31900000, guid: 58a5ad78e15086f4284dd4d26f194ebb, type: 2}
+    m_Mask: {fileID: 31900000, guid: 1f67718beb1d27d4c8a495f00d267ec3, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -581,7 +584,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: dc6c8c405f0efc146b68522819bcf76c, type: 2}
     m_Threshold: 1
-    m_Position: {x: 1, y: 0}
+    m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: ForwardFacing
@@ -589,7 +592,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 36efbf65d41d78e428a33160baeaddf4, type: 2}
     m_Threshold: 2
-    m_Position: {x: -1, y: 0}
+    m_Position: {x: 1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: ForwardFacing
@@ -700,7 +703,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: af1b3e9d1bf304047901e6e4da0da44c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1fab57c1a0c76ef44b52aa0c74b67395, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

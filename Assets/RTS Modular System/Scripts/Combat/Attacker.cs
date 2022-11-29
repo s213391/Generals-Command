@@ -105,8 +105,8 @@ namespace RTSModularSystem.BasicCombat
 
             if (target)
             {
-                forwardAiming = Vector3.Dot(transform.forward, target.transform.position - transform.position);
-                rightAiming = Vector3.Dot(transform.right, target.transform.position - transform.position);
+                forwardAiming = Vector3.Dot(transform.forward, (target.transform.position - transform.position).normalized);
+                rightAiming = Vector3.Dot(transform.right, (target.transform.position - transform.position).normalized);
             }
             else
             {

@@ -43,8 +43,6 @@ public class GenericMovableEvents : MovableEvents
     {
         SetAnimationBool(animators, "IsMoving", false);
         StopParticleEffect(movementOngoingParticles);
-
-        SetAnimationBool(animators, "IsMoving", false);
     }
 
 
