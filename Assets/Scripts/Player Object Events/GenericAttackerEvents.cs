@@ -29,7 +29,6 @@ public class GenericAttackerEvents : AttackerEvents
 
     public override void OnAttack()
     {
-        CombatManager.instance.CombatOccured();
         RpcOnAttack();
     }
 
@@ -39,6 +38,7 @@ public class GenericAttackerEvents : AttackerEvents
     {
         PlayOneShotAudio(_audioSource, attackSounds);
         StartParticleEffect(attackParticles);
+        CombatManager.instance.CombatOccured();
 
         SetAnimationTrigger(animators, "Attacking");
     }

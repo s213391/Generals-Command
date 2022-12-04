@@ -91,9 +91,9 @@ public class NuclearLaunch : NetworkBehaviour
         if (RTSPlayer.Owns(deadCenter))
         {
             if (CameraController.instance.xAngle != 135.0f)
-                CameraController.instance.xAngle = 135.0f;
+                CameraController.instance.transform.rotation = Quaternion.Euler(135.0f, 0.0f, 0.0f);
             else
-                CameraController.instance.xAngle = 45.0f;
+                CameraController.instance.transform.rotation = Quaternion.Euler(45.0f, 0.0f, 0.0f);
         }
         CameraController.instance.currentDistance = cameraDistance;
         yield return new WaitForSeconds(blackScreenDuration);

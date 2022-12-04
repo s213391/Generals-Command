@@ -250,6 +250,13 @@ namespace RTSModularSystem
                         else if (!shift)
                             selectionController.Deselect(selectables[i]);
                     }
+                    //hide the selection box
+                    selectionBox.sizeDelta = Vector2.zero;
+                    selectionImage.enabled = false;
+
+                    HUD.instance.ToggleSelection(false);
+                    if (device == DeviceType.Desktop)
+                        downTime = 0.0f;
                 }
                 //else treat as a single click unless over UI
                 else if (singleSelectionEnabled && screenPointWorldSpace != nullState)
@@ -275,10 +282,6 @@ namespace RTSModularSystem
                     else if (device == DeviceType.Desktop && !shift)
                         selectionController.DeselectAll();
                 }
-
-                //hide the selection box
-                selectionBox.sizeDelta = Vector2.zero;
-                selectionImage.enabled = false;
             }
         }
 

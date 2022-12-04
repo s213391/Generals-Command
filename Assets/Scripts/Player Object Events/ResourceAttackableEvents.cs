@@ -8,6 +8,13 @@ using UnityEngine;
 public class ResourceAttackableEvents : AttackableEvents
 {
     AudioSource _audioSource;
+    float timeSinceAttacked = 20.0f;
+
+    private void Update()
+    {
+        timeSinceAttacked += Time.deltaTime;
+    }
+
 
     public override void Init()
     {
@@ -28,8 +35,10 @@ public class ResourceAttackableEvents : AttackableEvents
         PlayOneShotAudio(_audioSource, damageSounds);
         StartParticleEffect(damageParticles);
 
-        if (RTSPlayer.Owns(GetComponent<PlayerObject>()))
+        if (timeSinceAttacked > 20.0f && RTSPlayer.Owns(GetComponent<PlayerObject>()))
             NotificationManager.instance.RequestNotification(3, GetComponent<PlayerObject>().data.name);
+
+        timeSinceAttacked = 0.0f;
         CombatManager.instance.CombatOccured();
     }
 

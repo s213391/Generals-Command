@@ -58,6 +58,17 @@ namespace RTSModularSystem.BasicCombat
         //check all attackers against all opposing attackables and set targets on the server
         void Update()
         {
+            if (instance != this)
+                return;
+
+            timeSinceCombat += Time.deltaTime;
+
+            if (timeSinceCombat < downtimeBeforeCombatOver)
+                inCombat = true;
+            else
+                inCombat = false;
+
+
             //only check combat on server player object
             if (!isServer || !isLocalPlayer)
                 return;
@@ -126,13 +137,6 @@ namespace RTSModularSystem.BasicCombat
             foreach (Attackable attackable in attackablesToBeDestroyed)
                 RemoveCombatObject(attackable.gameObject);
             attackablesToBeDestroyed.Clear();
-
-            timeSinceCombat += Time.deltaTime;
-
-            if (timeSinceCombat < downtimeBeforeCombatOver)
-                inCombat = true;
-            else
-                inCombat = false;
         }
 
 

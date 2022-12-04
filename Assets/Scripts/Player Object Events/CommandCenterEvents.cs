@@ -17,8 +17,6 @@ public class CommandCenterEvents : AttackableEvents
 
     public override void OnDamage(int newHealth, int oldHealth)
     {
-        NotificationManager.instance.RequestNotification(0);
-        CombatManager.instance.CombatOccured();
         RpcOnDamage(newHealth, oldHealth);
     }
 
@@ -28,6 +26,10 @@ public class CommandCenterEvents : AttackableEvents
     {
         PlayOneShotAudio(_audioSource, damageSounds);
         StartParticleEffect(damageParticles);
+        CombatManager.instance.CombatOccured();
+
+        if (RTSPlayer.Owns(GetComponent<PlayerObject>()))
+            NotificationManager.instance.RequestNotification(0);
 
         GUIPlayerScore.instance.UpdateHealth((int)(GetComponent<PlayerObject>().owningPlayer - 1), newHealth);
     }

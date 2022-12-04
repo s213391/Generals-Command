@@ -165,14 +165,17 @@ namespace RTSModularSystem
             //add to minimap
             Minimap.instance.RegisterIcon(this, data.sprite, colour);
 
+            if (TryGetComponent(out PlayerObjectEvents events))
+            {
+                events.Init();
+                events.OnSpawn(ownedByLocalPlayer);
+            }
+
             //start any actions marked as auto start
             if (ownedByLocalPlayer)
                 foreach (StartingAction sa in data.actions)
                     if (sa.autoStart)
                         RTSPlayer.StartAction(sa.action, this);
-
-            if (TryGetComponent(out PlayerObjectEvents events))
-                events.OnSpawn(ownedByLocalPlayer);
         }
 
 

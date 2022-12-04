@@ -29,7 +29,6 @@ public class InfantryAttackerEvents : AttackerEvents
 
     public override void OnAttack()
     {
-        CombatManager.instance.CombatOccured();
         RpcOnAttack();
     }
 
@@ -39,6 +38,7 @@ public class InfantryAttackerEvents : AttackerEvents
     {
         PlayOneShotAudio(_audioSource, attackSounds);
         StartParticleEffect(attackParticles);
+        CombatManager.instance.CombatOccured();
 
         SetAnimationTrigger(animators, "Attacking");
     }
@@ -64,24 +64,10 @@ public class InfantryAttackerEvents : AttackerEvents
             animator.SetFloat("ForwardAiming", forward);
             animator.SetFloat("RightAiming", right);
 
-            if (animator.GetBool("IsMoving"))
-                animator.transform.localRotation = Quaternion.identity;
-            else
-            {
-                //make unit face its target, avoiding NaN errors
-                Vector3 angle = animator.transform.localEulerAngles;
-                if (right == 0.0f)
-                {
-                    if (forward > 0.0f)
-                        angle.y = 0.0f;
-                    else
-                        angle.y = 180.0f;
-                }
-                else
-                    angle.y = Mathf.Atan2(forward, right);
-
-                animator.transform.localEulerAngles = angle;
-            }
+            //make unit face its target
+            Vector3 angle = animator.transform.localEulerAngles;
+            angle.y = (Mathf.Atan2(right, forward) * Mathf.Rad2Deg);
+            animator.transform.localEulerAngles = angle;
         }
     }
 }
